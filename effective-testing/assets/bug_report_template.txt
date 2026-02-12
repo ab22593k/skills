@@ -1,0 +1,21 @@
+TITLE: [Concise description of the problem]
+
+SUMMARY:
+[High-level overview of what's wrong and why it matters]
+
+STEPS TO REPRODUCE:
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+
+EXPECTED RESULT:
+[What should have happened, and based on which oracle (Claim, History, User Expectation, etc.)]
+
+ACTUAL RESULT:
+[What actually happened, including error codes or screenshots/logs if applicable]
+
+SIGNIFICANCE:
+[Impact on the user, business risk, and any workarounds]
+
+ENVIRONMENT:
+[Version, OS, Browser, Data, etc.]

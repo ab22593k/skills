@@ -1,0 +1,33 @@
+PROSPECTIVE TESTING CHECKLIST
+(Testing Requirements, Designs, and Ideas)
+
+TOPIC/FEATURE: [Name]
+STAKEHOLDERS: [BAs, Developers, Users]
+
+MISSION: Identify gaps, risks, and testability needs before implementation.
+
+QUESTIONS TO ASK:
+[ ] 1. What exactly are we talking about? (Define terms, scope, and boundaries)
+[ ] 2. Is this worth discussing here and now? (Check relevance and priority)
+[ ] 3. What exactly are we trying to achieve? (Identify the value proposition)
+[ ] 4. What influences must we consider? (Users, constraints, environment, history)
+[ ] 5. What other features or requirements will be affected? (Identify dependencies)
+[ ] 6. What specific data or conditions must this feature handle? (Edge cases, limits)
+[ ] 7. What are the merits of different ways of designing/implementing this? (Trade-offs)
+[ ] 8. How will the new feature handle errors or recover from failure? (Resilience)
+[ ] 9. How will we test the new feature once it exists? (Check for testability hooks)
+[ ] 10. What could go wrong? (Identify potential failure modes/risks)
+[ ] 11. Who else needs to be involved? (Identify missing expertise/stakeholders)
+
+TESTABILITY REQUIREMENTS IDENTIFIED:
+- [e.g., Log entries for X event]
+- [e.g., API endpoint to reset state Y]
+- [e.g., Ability to bypass Z security for automation]
+
+RISKS IDENTIFIED:
+- [Risk A: Impact/Likelihood]
+- [Risk B: Impact/Likelihood]
+
+NEXT STEPS:
+- [e.g., Follow up with UX on Z]
+- [e.g., Draft test charters for Area X]

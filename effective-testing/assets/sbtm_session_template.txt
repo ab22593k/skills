@@ -1,0 +1,21 @@
+CHARTER:
+[A one-sentence description of the session goal]
+
+AREAS:
+[List of features, screens, or components explored]
+
+START: [Timestamp]
+END:   [Timestamp]
+
+BUGS:
+[Issue ID] - [Brief Title]
+
+TEST NOTES:
+- [Chronological log of activities, ideas, and observations]
+- [Include data used, environment settings, etc.]
+
+NEW IDEAS:
+- [Ideas for future testing that emerged during this session]
+
+OUTLOOK:
+- [What still needs to be explored?]
