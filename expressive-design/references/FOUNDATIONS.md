@@ -127,6 +127,94 @@ M3 Expressive designs are more accessible to users of all ages and abilities. Th
 
 Expressive design requires balancing freshness with familiarity. Too much novelty can confuse users, while too little fails to engage. The M3 Expressive system provides guidance for finding this balance.
 
+## Communication Principles
+
+### Principle 5: Explain Consequences
+
+When users face consequential actions, communicate outcomes in neutral, direct language.
+
+**Do:**
+- State what will happen: "This will delete 12 items from your library"
+- Provide undo information: "You can restore items from trash within 30 days"
+- Use plain, factual descriptions
+
+**Don't:**
+- Use alarming warnings: "Warning: This action is irreversible!"
+- Sound condescending: "Are you sure you want to proceed?"
+- Misrepresent consequences to influence decisions
+- Add unnecessary cautions that intimidate users
+
+The goal is informed consent—users understand the outcome and retain control.
+
+### Principle 6: Use Scannable Words and Formats
+
+Users scan UI text rather than reading it fully. Choose words and formatting that aid rapid comprehension.
+
+**Do:**
+- Use specific headings: "Payment methods" instead of "Settings"
+- Front-load key words: "Delete account" not "Account deletion options"
+- Choose descriptive labels: "Shipping address" not "Address details"
+- Use contractions for natural tone: "can't", "don't", "you'll"
+- Use commas in numbers 1,000–1,000,000
+- Use "M" for millions when showing volume: "2M downloads"
+- Use "&" in headers and buttons where space is tight
+- Use bold for emphasis instead of italics
+- Use italics only for names or titles
+- Use ellipses for in-progress actions or incomplete text
+- Use parentheses to define acronyms: "API (Application Programming Interface)"
+- Omit periods in labels, tooltips, bullets, and single-line text
+- Reserve periods for multiple sentences or complex text
+
+**Don't:**
+- Use vague headings: "General info", "Details", "Miscellaneous"
+- Bury key words mid-sentence
+- Choose generic labels that require context to understand
+- Spell out contractions: "cannot", "do not", "you will"
+- Use commas in identifiers: years, addresses, frequencies
+- Use ampersands in body text—spell out "and"
+- Use italics for emphasis—hard to read
+- Use ellipses in buttons/menu items that open dialogs
+- Use parentheses for side notes—if it matters, integrate into sentence
+- Add periods to single-line UI elements that break scanning rhythm
+
+Specific words, contractions, and clear number formatting help users find what matters during hurried scanning. Use "do not" only when emphasis is needed.
+
+### Principle 7: Use Abbreviations Sparingly
+
+Abbreviations create barriers for comprehension. Spell out words whenever space allows.
+
+**Do:**
+- Write full phrases: "for example" instead of "e.g."
+- Use "and more" or "and others" instead of "etc."
+- Spell out: "Monday" not "Mon", "January" not "Jan"
+- Reserve abbreviations for tight space constraints only
+
+**Don't:**
+- Use Latin abbreviations: "e.g.", "i.e.", "etc."
+- Abbreviate when space permits the full word
+- Create custom abbreviations users won't recognize
+
+Clear, complete words improve comprehension for all users. Use "M" for millions in volume contexts: "2M downloads"
+
+### Principle 8: Address the User Directly
+
+Use second-person pronouns to create personal connection and help users take action. This reinforces M3 Expressive's goal of emotional engagement.
+
+**Do:**
+- Write from user's perspective: "Your files" not "User files"
+- Use "you/your" consistently throughout a screen
+- Use "we" for app-level actions: "We saved your changes"
+- Or remove pronouns entirely if consistency can't be maintained
+
+**Don't:**
+- Mix first and second person: "Your account" ... "My settings" on same screen
+- Use "we/I" for corporate voice: "Google recommends..." instead of "We recommend..."
+- Use third person: "The user must...", "Users can..."
+- Write impersonally: "File not found" instead of "We couldn't find your file"
+- Switch perspectives mid-flow
+
+Consistent, direct address creates emotional connection and helps users understand their relationship to the content. Reserve "we" for app-level feedback, not corporate messaging.
+
 ## When to Apply Expressive Design
 
 ### Recommended Use Cases

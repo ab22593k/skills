@@ -11,7 +11,7 @@ Material 3 Expressive (M3E) is Google's most researched design system update, ba
 
 | Category | Reference | Description |
 |----------|-----------|-------------|
-| Foundations | [FOUNDATIONS.md](references/FOUNDATIONS.md) | Research, principles, core elements |
+| Foundations | [FOUNDATIONS.md](references/FOUNDATIONS.md) | Research, principles, communication, core elements |
 | Color | [COLOR.md](references/COLOR.md) | Tokens, palettes, contrast specs |
 | Typography | [TYPOGRAPHY.md](references/TYPOGRAPHY.md) | Scales, values, treatments |
 | Motion | [MOTION.md](references/MOTION.md) | Durations, easing, transitions |
