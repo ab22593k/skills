@@ -259,7 +259,7 @@ Do not compromise core functionality for visual appeal. No amount of emotion can
 
 ### Iterate and Test
 
-Use research methods to find the right balance. Test designs against established usability metrics and iterate based on user feedback.
+Use research methods to find the right balance. Test designs against established usability metrics and iterate based on user feedback. See [USABILITY.md](USABILITY.md) for detailed design tactics, best practices, and testing guidance.
 
 ### Follow Accessibility Standards
 

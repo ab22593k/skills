@@ -18,6 +18,7 @@ Material 3 Expressive (M3E) is Google's most researched design system update, ba
 | Shapes | [SHAPES.md](references/SHAPES.md) | Radii, tokens, containment |
 | Spacing | [SPACING.md](references/SPACING.md) | Spacing ramps, touch targets |
 | Components | [COMPONENTS.md](references/COMPONENTS.md) | Component specifications |
+| Usability | [USABILITY.md](references/USABILITY.md) | Design tactics, best practices, testing |
 | Migration | [MIGRATION.md](references/MIGRATION.md) | M3 to M3E migration guide |
 | Accessibility | [ACCESSIBILITY.md](references/ACCESSIBILITY.md) | Compliance, testing |
 | Platforms | [PLATFORMS.md](references/PLATFORMS.md) | Android and Linux desktop |
@@ -78,6 +79,7 @@ dependencies:
 5. Apply shapes from [SHAPES.md](references/SHAPES.md)
 6. Configure spacing from [SPACING.md](references/SPACING.md)
 7. Implement components from [COMPONENTS.md](references/COMPONENTS.md)
-8. Migrate existing M3 from [MIGRATION.md](references/MIGRATION.md)
-9. Ensure accessibility with [ACCESSIBILITY.md](references/ACCESSIBILITY.md)
-10. Configure platform-specifics from [PLATFORMS.md](references/PLATFORMS.md)
+8. Apply usability tactics from [USABILITY.md](references/USABILITY.md)
+9. Migrate existing M3 from [MIGRATION.md](references/MIGRATION.md)
+10. Ensure accessibility with [ACCESSIBILITY.md](references/ACCESSIBILITY.md)
+11. Configure platform-specifics from [PLATFORMS.md](references/PLATFORMS.md)

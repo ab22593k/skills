@@ -164,6 +164,14 @@ The surface container system provides five levels of elevation through tonal var
 
 ## Dynamic Color Integration
 
+M3 enables brand colors and user preferences to converge in unique experiences. The color system reflects an app's design sensibility while honoring user-chosen settings.
+
+**Core principles:**
+- Customization creates unique branded products with familiar patterns
+- Dynamic color makes personal devices feel personal
+- Apps retain brand identity while giving users control over styles
+- Product differentiation and user preference work together
+
 ### Android 12+ Implementation
 
 ```dart
