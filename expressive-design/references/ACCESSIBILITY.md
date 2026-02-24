@@ -114,6 +114,58 @@ Expressive design creates interfaces that are both emotionally engaging AND acce
 | 3 | Navigation | Content exploration |
 | 4 | Supplementary actions | Less frequent tasks |
 
+## Structural Landmarks
+
+Assistive technologies (AT) rely on clear, delineated structures to process information. Thinking through structural decisions in advance improves the linear experience for screen reader users.
+
+### Landmark Roles
+
+Landmarks establish high-level structure using ARIA roles to provide easy access to common content areas.
+
+| Role | Description | Constraint |
+|------|-------------|------------|
+| **Navigation** | Contains lists of navigation links | Differentiate if multiple |
+| **Search** | A search field or container | - |
+| **Main** | The primary content area of the page | Only one per page |
+| **Banner** | The header (navigation, toolbars) | Only one per page |
+| **Complementary** | A sidebar or aside to main content | Must be able to stand alone |
+| **Contentinfo** | The footer (copyright, site info) | Only one per page |
+| **Region** | Important content blocks | Must be labeled clearly |
+| **Form** | Container that takes and stores user info | - |
+
+### Accessibility Labels for Landmarks
+
+Add clear and specific labels to landmark roles to help users differentiate information, especially when roles appear multiple times.
+
+**Do:**
+- Label all `region` landmarks
+- Differentiate multiple `navigation` roles (e.g., "Primary", "Social")
+- Explain the purpose of `complementary` sidebars
+- Use labels that enhance meaning for the specific context
+
+**Don't:**
+- Repeat the landmark role within the label (e.g., use "Secondary" not "Secondary Navigation")
+
+## Heading Hierarchy
+
+Assistive technology users navigate primarily through headings. They create a clear structural hierarchy that helps users understand the page layout and take action.
+
+### Heading Identification and Order
+
+Heading levels are informed by the layout's information architecture. The page's visual styling does not need to match the heading levels in terms of prominence.
+
+**Do:**
+- Identify headings based on content hierarchy, rather than visual styling
+- Map content to headings (H1–H6) in sequential order
+- Ensure headings correspond with meaningful titles
+- Use a single H1 for the page title
+
+**Don't:**
+- Skip heading levels (e.g., going from H2 to H4 without an H3)
+- Assign heading levels based on font size or visual weight alone
+
+If a meaningful title doesn't exist for a required heading level, add a label for assistive technology to benefit the experience of all users.
+
 ## Keyboard Navigation
 
 ### Focus Order
@@ -191,7 +243,16 @@ Expressive design creates interfaces that are both emotionally engaging AND acce
 |---------|----------------|---------|
 | Consistent navigation | Same position across screens | Learning curve |
 | Standard gestures | Platform conventions | Familiarity |
-| Clear feedback | Immediate visual response | Understanding |
+| Clear feedback | Immediate visual and touch response | Understanding |
+
+### Intuitive Navigation
+
+| Principle | Implementation | Benefit |
+|-----------|----------------|---------|
+| Clear task flows | Minimal steps, direct paths | Efficiency |
+| Located controls | Easy-to-locate primary actions | Discovery |
+| Clear labeling | Descriptive, specific labels | Clarity |
+| Focus control | Manage focus for frequent tasks | Accessibility |
 
 ### Reduce Cognitive Load
 

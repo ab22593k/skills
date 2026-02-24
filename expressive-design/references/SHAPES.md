@@ -1,6 +1,6 @@
-# Material 3 Expressive Shapes
+# Expressive Shapes
 
-The M3 Expressive shape system uses border radius, form, and containment to create visual boundaries, communicate function, and express brand personality. Expressive shapes go beyond decoration to enhance usability through clear visual grouping.
+The Expressive shape system uses border radius, form, and containment to create visual boundaries, communicate function, and express brand personality. Expressive shapes go beyond decoration to enhance usability through clear visual grouping.
 
 ## Shape Philosophy
 
@@ -10,37 +10,37 @@ Expressive shapes create emotional resonance through form while maintaining clea
 
 ### Size-Based Tokens
 
-| Size | Token | Radius Value | Usage |
-|------|-------|--------------|-------|
-| None | `md.sys.shape.corner-none` | 0dp | Utility components, dividers |
-| Extra Small | `md.sys.shape.corner-extra-small` | 4dp | Chips, small elements |
-| Small | `md.sys.shape.corner-small` | 8dp | Buttons, cards, lists |
-| Medium | `md.sys.shape.corner-medium` | 12dp | Dialogs, sheets |
-| Large | `md.sys.shape.corner-large` | 16dp | Large cards, panels |
-| Extra Large | `md.sys.shape.corner-extra-large` | 24dp | Bottom sheets, modals |
-| Full | `md.sys.shape.corner-full` | 999dp | Circular elements, pills |
+| Size        | Token                             | Radius Value | Usage                        |
+| ----------- | --------------------------------- | ------------ | ---------------------------- |
+| None        | `md.sys.shape.corner-none`        | 0dp          | Utility components, dividers |
+| Extra Small | `md.sys.shape.corner-extra-small` | 4dp          | Chips, small elements        |
+| Small       | `md.sys.shape.corner-small`       | 8dp          | Buttons, cards, lists        |
+| Medium      | `md.sys.shape.corner-medium`      | 12dp         | Dialogs, sheets              |
+| Large       | `md.sys.shape.corner-large`       | 16dp         | Large cards, panels          |
+| Extra Large | `md.sys.shape.corner-extra-large` | 24dp         | Bottom sheets, modals        |
+| Full        | `md.sys.shape.corner-full`        | 999dp        | Circular elements, pills     |
 
 ### Component-Specific Defaults
 
-| Component | Default Size | Token | Override Options |
-|-----------|--------------|-------|------------------|
-| Button (filled) | Small | 8dp | Medium for emphasis |
-| Button (outlined) | Small | 8dp | Medium for emphasis |
-| Elevated Button | Small | 8dp | Medium for emphasis |
-| FAB | Medium | 12dp | Large for emphasis |
-| Extended FAB | Medium | 12dp | Large for emphasis |
-| Card (elevated) | Medium | 12dp | Large for emphasis |
-| Card (outlined) | Medium | 12dp | Large for emphasis |
-| Dialog | Large | 16dp | Extra Large for emphasis |
-| Bottom Sheet | Extra Large | 24dp | Full for expressive |
-| Navigation Drawer | Medium | 12dp | Large for emphasis |
-| Navigation Rail | Medium | 12dp | Large for emphasis |
-| List Item | None/Small | 0-8dp | Medium for cards |
-| Chip | Extra Small | 4dp | Small for emphasis |
-| Text Field | Small | 8dp | Medium for emphasis |
-| Snackbar | Medium | 12dp | Large for emphasis |
-| Banner | Medium | 12dp | Large for emphasis |
-| Toolbar | Medium | 12dp | Large for emphasis |
+| Component         | Default Size | Token | Override Options         |
+| ----------------- | ------------ | ----- | ------------------------ |
+| Button (filled)   | Small        | 8dp   | Medium for emphasis      |
+| Button (outlined) | Small        | 8dp   | Medium for emphasis      |
+| Elevated Button   | Small        | 8dp   | Medium for emphasis      |
+| FAB               | Medium       | 12dp  | Large for emphasis       |
+| Extended FAB      | Medium       | 12dp  | Large for emphasis       |
+| Card (elevated)   | Medium       | 12dp  | Large for emphasis       |
+| Card (outlined)   | Medium       | 12dp  | Large for emphasis       |
+| Dialog            | Large        | 16dp  | Extra Large for emphasis |
+| Bottom Sheet      | Extra Large  | 24dp  | Full for expressive      |
+| Navigation Drawer | Medium       | 12dp  | Large for emphasis       |
+| Navigation Rail   | Medium       | 12dp  | Large for emphasis       |
+| List Item         | None/Small   | 0-8dp | Medium for cards         |
+| Chip              | Extra Small  | 4dp   | Small for emphasis       |
+| Text Field        | Small        | 8dp   | Medium for emphasis      |
+| Snackbar          | Medium       | 12dp  | Large for emphasis       |
+| Banner            | Medium       | 12dp  | Large for emphasis       |
+| Toolbar           | Medium       | 12dp  | Large for emphasis       |
 
 ## Shape Families
 
@@ -48,32 +48,32 @@ Expressive shapes create emotional resonance through form while maintaining clea
 
 Components with fully rounded corners belong to the round family, conveying friendliness and approachability.
 
-| Shape | Radius | Token | Examples |
-|-------|--------|-------|----------|
-| Fully round | 999dp | `corner-full` | FAB, pills, circular buttons |
-| Extra large | 24dp | `corner-extra-large` | Bottom sheets, modals |
-| Large | 16dp | `corner-large` | Large cards, dialogs |
+| Shape       | Radius | Token                | Examples                     |
+| ----------- | ------ | -------------------- | ---------------------------- |
+| Fully round | 999dp  | `corner-full`        | FAB, pills, circular buttons |
+| Extra large | 24dp   | `corner-extra-large` | Bottom sheets, modals        |
+| Large       | 16dp   | `corner-large`       | Large cards, dialogs         |
 
 ### Square Family
 
 Components with minimal rounding belong to the square family, conveying precision and utility.
 
-| Shape | Radius | Token | Examples |
-|-------|--------|-------|----------|
-| None | 0dp | `corner-none` | Dividers, utility panels |
-| Extra small | 4dp | `corner-extra-small` | Technical displays |
-| Small | 8dp | `corner-small` | Utility buttons |
+| Shape       | Radius | Token                | Examples                 |
+| ----------- | ------ | -------------------- | ------------------------ |
+| None        | 0dp    | `corner-none`        | Dividers, utility panels |
+| Extra small | 4dp    | `corner-extra-small` | Technical displays       |
+| Small       | 8dp    | `corner-small`       | Utility buttons          |
 
 ### Mixed Family
 
 Components can use mixed shapes for expressive effects.
 
-| Pattern | Description | Usage |
-|---------|-------------|-------|
-| Top-heavy | Larger top radius | Cards with emphasis |
-| Bottom-heavy | Larger bottom radius | Dropdowns, selects |
-| Left-heavy | Larger left radius | Navigation elements |
-| Right-heavy | Larger right radius | Directional emphasis |
+| Pattern      | Description          | Usage                |
+| ------------ | -------------------- | -------------------- |
+| Top-heavy    | Larger top radius    | Cards with emphasis  |
+| Bottom-heavy | Larger bottom radius | Dropdowns, selects   |
+| Left-heavy   | Larger left radius   | Navigation elements  |
+| Right-heavy  | Larger right radius  | Directional emphasis |
 
 ## Expressive Containment
 
@@ -81,44 +81,44 @@ Components can use mixed shapes for expressive effects.
 
 M3 Expressive uses shapes to reinforce visual hierarchy through containment.
 
-| Level | Shape | Token | Purpose |
-|-------|-------|-------|---------|
-| Surface | Default | `corner-medium` | Base layer |
-| Container | Emphasized | `corner-large` | Content grouping |
-| Elevated | More rounded | `corner-extra-large` | Emphasis |
-| Modal | Most rounded | `corner-full` | Focus attention |
+| Level     | Shape        | Token                | Purpose          |
+| --------- | ------------ | -------------------- | ---------------- |
+| Surface   | Default      | `corner-medium`      | Base layer       |
+| Container | Emphasized   | `corner-large`       | Content grouping |
+| Elevated  | More rounded | `corner-extra-large` | Emphasis         |
+| Modal     | Most rounded | `corner-full`        | Focus attention  |
 
 ### Shape for Function
 
-| Function | Recommended Shape | Rationale |
-|----------|-------------------|-----------|
-| Primary action | Rounded (8-12dp) | Draws attention |
-| Secondary action | Less rounded (4-8dp) | Subtle distinction |
-| Destructive action | Square (0-4dp) | Serious tone |
-| Selection state | Container shape | Visual grouping |
-| Disabled state | Maintain shape | Consistency |
+| Function           | Recommended Shape    | Rationale          |
+| ------------------ | -------------------- | ------------------ |
+| Primary action     | Rounded (8-12dp)     | Draws attention    |
+| Secondary action   | Less rounded (4-8dp) | Subtle distinction |
+| Destructive action | Square (0-4dp)       | Serious tone       |
+| Selection state    | Container shape      | Visual grouping    |
+| Disabled state     | Maintain shape       | Consistency        |
 
 ## Shape and Emotion
 
 ### Emotional Associations
 
-| Shape | Association | Use Cases |
-|-------|-------------|-----------|
-| Round, large | Friendly, welcoming | Consumer apps, social |
-| Round, small | Approachable, modern | Mainstream apps |
-| Square, small | Precise, reliable | Tools, utilities |
-| Square, none | Industrial, technical | Settings, data |
-| Mixed | Dynamic, creative | Creative tools |
+| Shape         | Association           | Use Cases             |
+| ------------- | --------------------- | --------------------- |
+| Round, large  | Friendly, welcoming   | Consumer apps, social |
+| Round, small  | Approachable, modern  | Mainstream apps       |
+| Square, small | Precise, reliable     | Tools, utilities      |
+| Square, none  | Industrial, technical | Settings, data        |
+| Mixed         | Dynamic, creative     | Creative tools        |
 
 ### Shape Application Guidelines
 
-| Emotional Goal | Shape Strategy |
-|----------------|----------------|
-| Welcoming | Larger radii (16-24dp) |
-| Energetic | Dynamic mixed shapes |
-| Professional | Moderate radii (8-12dp) |
-| Trustworthy | Consistent, predictable shapes |
-| Playful | Varied, expressive shapes |
+| Emotional Goal | Shape Strategy                 |
+| -------------- | ------------------------------ |
+| Welcoming      | Larger radii (16-24dp)         |
+| Energetic      | Dynamic mixed shapes           |
+| Professional   | Moderate radii (8-12dp)        |
+| Trustworthy    | Consistent, predictable shapes |
+| Playful        | Varied, expressive shapes      |
 
 ## Platform-Specific Notes
 
@@ -165,15 +165,15 @@ M3 Expressive uses shapes to reinforce visual hierarchy through containment.
 
 ### Reference Values
 
-| Token | Value | CSS Custom Property |
-|-------|-------|---------------------|
-| `md.sys.shape.corner-none` | 0dp | `--md-sys-shape-corner-none` |
-| `md.sys.shape.corner-extra-small` | 4dp | `--md-sys-shape-corner-extra-small` |
-| `md.sys.shape.corner-small` | 8dp | `--md-sys-shape-corner-small` |
-| `md.sys.shape.corner-medium` | 12dp | `--md-sys-shape-corner-medium` |
-| `md.sys.shape.corner-large` | 16dp | `--md-sys-shape-corner-large` |
-| `md.sys.shape.corner-extra-large` | 24dp | `--md-sys-shape-corner-extra-large` |
-| `md.sys.shape.corner-full` | 999dp | `--md-sys-shape-corner-full` |
+| Token                             | Value | CSS Custom Property                 |
+| --------------------------------- | ----- | ----------------------------------- |
+| `md.sys.shape.corner-none`        | 0dp   | `--md-sys-shape-corner-none`        |
+| `md.sys.shape.corner-extra-small` | 4dp   | `--md-sys-shape-corner-extra-small` |
+| `md.sys.shape.corner-small`       | 8dp   | `--md-sys-shape-corner-small`       |
+| `md.sys.shape.corner-medium`      | 12dp  | `--md-sys-shape-corner-medium`      |
+| `md.sys.shape.corner-large`       | 16dp  | `--md-sys-shape-corner-large`       |
+| `md.sys.shape.corner-extra-large` | 24dp  | `--md-sys-shape-corner-extra-large` |
+| `md.sys.shape.corner-full`        | 999dp | `--md-sys-shape-corner-full`        |
 
 ## Testing Checklist
 

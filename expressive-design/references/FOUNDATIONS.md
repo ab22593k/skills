@@ -1,62 +1,3 @@
-# Material 3 Expressive Foundations
-
-Material 3 Expressive (M3E) represents Google's most researched design system update, grounded in extensive user research and validated through comprehensive usability studies.
-
-## Research Overview
-
-### Research Scope
-
-- **46 separate research studies**
-- **18,000+ participants** worldwide
-- **Multiple research methods** employed:
-  - Eye tracking analysis
-  - Surveys and focus groups
-  - Sentiment experiments
-  - Usability testing
-
-### Research Evolution
-
-The M3 Expressive research began in 2022 when a research intern studied user sentiment toward Material Design in Google apps. This sparked a team-wide design debate about visual similarity and the opportunity to enhance emotional engagement. Over three years, the team iterated through dozens of design and research rounds to refine the system.
-
-## Key Research Findings
-
-### User Preference Metrics
-
-| Metric | Finding |
-|--------|---------|
-| Overall preference | Strong positive across all age groups |
-| 18-24 age group | 87% preference for expressive designs |
-| Visual appeal | Consistently rated higher |
-| Intention to use | Significantly increased |
-
-### Usability Improvements
-
-| Metric | Improvement |
-|--------|-------------|
-| Element recognition | 4x faster identification |
-| Tap time on key actions | Decreased by seconds |
-| Age-related gap | Erased entirely |
-| Fixation times | Equal across age groups (45+ performs equal to younger users) |
-
-### Brand Perception Impact
-
-| Attribute | Increase |
-|-----------|----------|
-| Subculture perception | +32% |
-| Modernity | +34% |
-| Rebelliousness | +30% |
-
-### Design Attribute Ratings
-
-Expressive designs are rated higher for:
-
-- **Energetic** - Dynamic and lively visual presentation
-- **Emotive** - Evokes emotional responses
-- **Positive vibe** - Creates welcoming atmosphere
-- **Creative** - Demonstrates innovation
-- **Playful** - Approachable and fun
-- **Friendly** - Welcoming and accessible
-
 ## Core Expressive Elements
 
 ### 1. Color
@@ -64,6 +5,7 @@ Expressive designs are rated higher for:
 Expressive color goes beyond functional differentiation to evoke emotions and create visual interest.
 
 **Key applications:**
+
 - Expanded tonal palettes
 - Container color tiers
 - Emotional color selection
@@ -74,6 +16,7 @@ Expressive color goes beyond functional differentiation to evoke emotions and cr
 Shape creates visual boundaries and communicates function through form.
 
 **Key applications:**
+
 - Expressive border radii
 - Component-specific shaping
 - Visual containment
@@ -84,6 +27,7 @@ Shape creates visual boundaries and communicates function through form.
 Size emphasizes importance and improves usability through larger, more noticeable elements.
 
 **Key applications:**
+
 - Larger tap targets (48dp+)
 - Emphasized primary actions
 - Visual hierarchy through scale
@@ -94,6 +38,7 @@ Size emphasizes importance and improves usability through larger, more noticeabl
 Motion brings interfaces to life with personality and purpose.
 
 **Key applications:**
+
 - Energetic transitions
 - Emotional timing
 - Expressive easing curves
@@ -104,6 +49,7 @@ Motion brings interfaces to life with personality and purpose.
 Containment groups related elements and creates visual structure.
 
 **Key applications:**
+
 - Surface elevation systems
 - Tonal separation
 - Container hierarchies
@@ -121,7 +67,7 @@ Strategic use of color, size, shape, and containment draws attention to key elem
 
 ### Principle 3: Inclusivity
 
-M3 Expressive designs are more accessible to users of all ages and abilities. The emphasis on larger touch targets, high-contrast containment, and clear visual hierarchy creates interfaces that work better for everyone.
+Expressive designs are more accessible to users of all ages and abilities. The emphasis on larger touch targets, high-contrast containment, and clear visual hierarchy creates interfaces that work better for everyone.
 
 ### Principle 4: Balance
 
@@ -134,11 +80,13 @@ Expressive design requires balancing freshness with familiarity. Too much novelt
 When users face consequential actions, communicate outcomes in neutral, direct language.
 
 **Do:**
+
 - State what will happen: "This will delete 12 items from your library"
 - Provide undo information: "You can restore items from trash within 30 days"
 - Use plain, factual descriptions
 
 **Don't:**
+
 - Use alarming warnings: "Warning: This action is irreversible!"
 - Sound condescending: "Are you sure you want to proceed?"
 - Misrepresent consequences to influence decisions
@@ -151,6 +99,7 @@ The goal is informed consent—users understand the outcome and retain control.
 Users scan UI text rather than reading it fully. Choose words and formatting that aid rapid comprehension.
 
 **Do:**
+
 - Use specific headings: "Payment methods" instead of "Settings"
 - Front-load key words: "Delete account" not "Account deletion options"
 - Choose descriptive labels: "Shipping address" not "Address details"
@@ -166,6 +115,7 @@ Users scan UI text rather than reading it fully. Choose words and formatting tha
 - Reserve periods for multiple sentences or complex text
 
 **Don't:**
+
 - Use vague headings: "General info", "Details", "Miscellaneous"
 - Bury key words mid-sentence
 - Choose generic labels that require context to understand
@@ -184,12 +134,14 @@ Specific words, contractions, and clear number formatting help users find what m
 Abbreviations create barriers for comprehension. Spell out words whenever space allows.
 
 **Do:**
+
 - Write full phrases: "for example" instead of "e.g."
 - Use "and more" or "and others" instead of "etc."
 - Spell out: "Monday" not "Mon", "January" not "Jan"
 - Reserve abbreviations for tight space constraints only
 
 **Don't:**
+
 - Use Latin abbreviations: "e.g.", "i.e.", "etc."
 - Abbreviate when space permits the full word
 - Create custom abbreviations users won't recognize
@@ -201,12 +153,14 @@ Clear, complete words improve comprehension for all users. Use "M" for millions 
 Use second-person pronouns to create personal connection and help users take action. This reinforces M3 Expressive's goal of emotional engagement.
 
 **Do:**
+
 - Write from user's perspective: "Your files" not "User files"
 - Use "you/your" consistently throughout a screen
 - Use "we" for app-level actions: "We saved your changes"
 - Or remove pronouns entirely if consistency can't be maintained
 
 **Don't:**
+
 - Mix first and second person: "Your account" ... "My settings" on same screen
 - Use "we/I" for corporate voice: "Google recommends..." instead of "We recommend..."
 - Use third person: "The user must...", "Users can..."
@@ -264,9 +218,3 @@ Use research methods to find the right balance. Test designs against established
 ### Follow Accessibility Standards
 
 Maintain compliance with color contrast, screen reader compatibility, navigation, and accessibility best practices even while applying expressive elements.
-
-## Implementation Summary
-
-M3 Expressive provides a research-backed system for creating emotionally engaging user experiences. By strategically applying color, shape, size, motion, and containment, designers can create interfaces that are both beautiful and highly usable.
-
-The key is intentional application—using expressive elements where they enhance user experience and maintaining familiar patterns where they support efficiency and clarity.

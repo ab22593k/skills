@@ -1,6 +1,6 @@
-# Material 3 Expressive Motion
+# Expressive Motion
 
-The M3 Expressive motion system uses timing, easing, and transitions to create emotionally engaging experiences. Motion brings interfaces to life with personality while maintaining usability through purposeful animation choices.
+The motion system uses timing, easing, and transitions to create emotionally engaging experiences. Motion brings interfaces to life with personality while maintaining usability through purposeful animation choices.
 
 ## Motion Philosophy
 
@@ -10,43 +10,43 @@ Expressive motion goes beyond functional state changes to create emotional reson
 
 ### Standard Durations
 
-| Motion Type | Duration | Usage |
-|-------------|----------|-------|
-| Short | 100-150ms | Toggle states, quick feedback |
-| Medium | 200-300ms | Standard transitions |
-| Long | 350-500ms | Complex changes, page transitions |
-| Expressive | 500-700ms | Major interactions, emotional emphasis |
+| Motion Type | Duration  | Usage                                  |
+| ----------- | --------- | -------------------------------------- |
+| Short       | 100-150ms | Toggle states, quick feedback          |
+| Medium      | 200-300ms | Standard transitions                   |
+| Long        | 350-500ms | Complex changes, page transitions      |
+| Expressive  | 500-700ms | Major interactions, emotional emphasis |
 
 ### Component-Specific Durations
 
-| Component | Enter Duration | Exit Duration | Token |
-|----------|---------------|----------------|-------|
-| Button press | 100ms | 100ms | `md.sys.motion.duration-short` |
-| FAB expand | 300ms | 250ms | `md.sys.motion.duration-medium` |
-| FAB collapse | 250ms | 200ms | `md.sys.motion.duration-medium` |
-| Dialog appear | 300ms | 200ms | `md.sys.motion.duration-medium` |
-| Dialog disappear | 200ms | 150ms | `md.sys.motion.duration-short` |
-| Navigation push | 300ms | 250ms | `md.sys.motion.duration-medium` |
-| Navigation pop | 250ms | 300ms | `md.sys.motion.duration-medium` |
-| Snackbar appear | 250ms | 200ms | `md.sys.motion.duration-short` |
-| Snackbar disappear | 150ms | 150ms | `md.sys.motion.duration-short` |
-| Bottom sheet appear | 350ms | 250ms | `md.sys.motion.duration-long` |
-| Bottom sheet disappear | 250ms | 200ms | `md.sys.motion.duration-medium` |
-| Card expand | 400ms | 300ms | `md.sys.motion.duration-long` |
-| Card collapse | 300ms | 200ms | `md.sys.motion.duration-medium` |
-| List item add | 250ms | 200ms | `md.sys.motion.duration-medium` |
-| List item remove | 200ms | 150ms | `md.sys.motion.duration-short` |
+| Component              | Enter Duration | Exit Duration | Token                           |
+| ---------------------- | -------------- | ------------- | ------------------------------- |
+| Button press           | 100ms          | 100ms         | `md.sys.motion.duration-short`  |
+| FAB expand             | 300ms          | 250ms         | `md.sys.motion.duration-medium` |
+| FAB collapse           | 250ms          | 200ms         | `md.sys.motion.duration-medium` |
+| Dialog appear          | 300ms          | 200ms         | `md.sys.motion.duration-medium` |
+| Dialog disappear       | 200ms          | 150ms         | `md.sys.motion.duration-short`  |
+| Navigation push        | 300ms          | 250ms         | `md.sys.motion.duration-medium` |
+| Navigation pop         | 250ms          | 300ms         | `md.sys.motion.duration-medium` |
+| Snackbar appear        | 250ms          | 200ms         | `md.sys.motion.duration-short`  |
+| Snackbar disappear     | 150ms          | 150ms         | `md.sys.motion.duration-short`  |
+| Bottom sheet appear    | 350ms          | 250ms         | `md.sys.motion.duration-long`   |
+| Bottom sheet disappear | 250ms          | 200ms         | `md.sys.motion.duration-medium` |
+| Card expand            | 400ms          | 300ms         | `md.sys.motion.duration-long`   |
+| Card collapse          | 300ms          | 200ms         | `md.sys.motion.duration-medium` |
+| List item add          | 250ms          | 200ms         | `md.sys.motion.duration-medium` |
+| List item remove       | 200ms          | 150ms         | `md.sys.motion.duration-short`  |
 
 ## Easing Specifications
 
 ### Standard Easing Curves
 
-| Easing Type | Curve | Token | Usage |
-|-------------|-------|-------|-------|
-| Standard | Custom cubic bezier | `md.sys.motion.easing-standard` | General transitions |
-| Decelerate | Custom cubic bezier | `md.sys.motion.easing-decelerate` | Entering animations |
-| Accelerate | Custom cubic bezier | `md.sys.motion.easing-accelerate` | Exiting animations |
-| Expressive | Custom cubic bezier | `md.sys.motion.easing-expressive` | Emphasized transitions |
+| Easing Type | Curve               | Token                             | Usage                  |
+| ----------- | ------------------- | --------------------------------- | ---------------------- |
+| Standard    | Custom cubic bezier | `md.sys.motion.easing-standard`   | General transitions    |
+| Decelerate  | Custom cubic bezier | `md.sys.motion.easing-decelerate` | Entering animations    |
+| Accelerate  | Custom cubic bezier | `md.sys.motion.easing-accelerate` | Exiting animations     |
+| Expressive  | Custom cubic bezier | `md.sys.motion.easing-expressive` | Emphasized transitions |
 
 ### Easing Curve Values
 
@@ -152,33 +152,33 @@ Ripple: Material ripple effect
 
 Motion should convey appropriate energy levels:
 
-| Energy Level | Characteristics | Use Cases |
-|--------------|-----------------|-----------|
-| Low | Slow, smooth, subtle | Background changes, notifications |
-| Medium | Balanced, natural | Standard interactions |
-| High | Quick, responsive | Toggles, selections |
-| Expressive | Bold, energetic | Major actions, celebrations |
+| Energy Level | Characteristics      | Use Cases                         |
+| ------------ | -------------------- | --------------------------------- |
+| Low          | Slow, smooth, subtle | Background changes, notifications |
+| Medium       | Balanced, natural    | Standard interactions             |
+| High         | Quick, responsive    | Toggles, selections               |
+| Expressive   | Bold, energetic      | Major actions, celebrations       |
 
 ### Direction
 
 Motion direction should follow platform conventions:
 
-| Direction | Meaning | Examples |
-|-----------|---------|----------|
-| Up | Expansion, creation | FAB expand, new item |
-| Down | Contraction, deletion | Collapse, remove |
-| Left | Forward navigation | Next page, detail view |
-| Right | Back navigation | Previous page, return |
+| Direction | Meaning               | Examples               |
+| --------- | --------------------- | ---------------------- |
+| Up        | Expansion, creation   | FAB expand, new item   |
+| Down      | Contraction, deletion | Collapse, remove       |
+| Left      | Forward navigation    | Next page, detail view |
+| Right     | Back navigation       | Previous page, return  |
 
 ### Hierarchy
 
 Motion emphasis should match visual hierarchy:
 
-| Hierarchy | Motion Emphasis | Duration Modifier |
-|-----------|-----------------|-------------------|
-| Primary | Strong emphasis | +50ms |
-| Secondary | Moderate emphasis | Standard |
-| Tertiary | Subtle emphasis | -50ms |
+| Hierarchy | Motion Emphasis   | Duration Modifier |
+| --------- | ----------------- | ----------------- |
+| Primary   | Strong emphasis   | +50ms             |
+| Secondary | Moderate emphasis | Standard          |
+| Tertiary  | Subtle emphasis   | -50ms             |
 
 ## Expressive Motion Guidelines
 
@@ -218,12 +218,12 @@ Motion emphasis should match visual hierarchy:
 
 ### Motion Performance
 
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| Frame rate | 60fps minimum | Frame timing |
-| Frame budget | 16.67ms per frame | Animation smoothness |
-| Layout thrashing | Avoid during animation | Frame timing |
-| Overdraw | Minimize during transitions | GPU rendering |
+| Metric           | Target                      | Measurement          |
+| ---------------- | --------------------------- | -------------------- |
+| Frame rate       | 60fps minimum               | Frame timing         |
+| Frame budget     | 16.67ms per frame           | Animation smoothness |
+| Layout thrashing | Avoid during animation      | Frame timing         |
+| Overdraw         | Minimize during transitions | GPU rendering        |
 
 ### Optimization Strategies
 
@@ -253,12 +253,12 @@ if (reduceMotion) {
 
 ### Motion Duration Ranges
 
-| Context | Standard Duration | Reduced Duration |
-|---------|-------------------|------------------|
-| Short | 100-150ms | 50-75ms |
-| Medium | 200-300ms | 100-150ms |
-| Long | 350-500ms | 175-250ms |
-| Expressive | 500-700ms | 250-350ms |
+| Context    | Standard Duration | Reduced Duration |
+| ---------- | ----------------- | ---------------- |
+| Short      | 100-150ms         | 50-75ms          |
+| Medium     | 200-300ms         | 100-150ms        |
+| Long       | 350-500ms         | 175-250ms        |
+| Expressive | 500-700ms         | 250-350ms        |
 
 ## Implementation Checklist
 

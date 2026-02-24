@@ -12,11 +12,14 @@ Apply these tactics to guide users and emphasize key actions:
 - Dark on light (or light on dark) makes content easy to scan
 
 ### Hierarchy
+- Emphasize importance using multiple cues: color, shape, text, and motion add clarity
 - Make primary goals most prominent through size, color, placement
 - Use lighter colors and subtle containers for supportive (non-required) actions
 - Guide the eye from most to least important elements
+- Place related items of a similar hierarchy next to each other
 
 ### Placement
+- Position important actions at the top or bottom of the screen (reachable with shortcuts)
 - Position primary actions at bottom for easy thumb reach
 - Make primary action the final, most prominent element in vertical flow
 - Avoid competing with other content for attention
@@ -88,6 +91,19 @@ Apply these tactics to guide users and emphasize key actions:
 - Overlap shapes or containers
 - Mix different form types in same context
 - Create visual chaos with competing animations
+
+### Simplify through Structure
+
+**Do:**
+- Use clearly visible elements and sufficient contrast/size
+- Create a clear hierarchy of importance
+- Ensure key information is discernable at a glance
+- Minimize steps in task flows
+
+**Don't:**
+- Increase UI complexity with unnecessary buttons, images, or text
+- Force users to hunt for key information
+- Overcomplicate primary task paths
 
 ## Testing & Iteration
 
