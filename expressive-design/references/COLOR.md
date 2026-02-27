@@ -164,7 +164,9 @@ The surface container system provides five levels of elevation through tonal var
 
 ## Dynamic Color Integration
 
-M3 enables brand colors and user preferences to converge in unique experiences. The color system reflects an app's design sensibility while honoring user-chosen settings.
+M3 enables brand colors and user preferences to converge in unique, one-of-a-kind experiences. The color system embraces the need for color to reflect an app’s design sensibility, while also honoring the settings that individuals choose for themselves.
+
+By enabling dynamic color, an app can retain the colors that define and differentiate a product, while also giving users more control over the styles that matter most to them.
 
 **Core principles:**
 
@@ -173,14 +175,29 @@ M3 enables brand colors and user preferences to converge in unique experiences. 
 - Apps retain brand identity while giving users control over styles
 - Product differentiation and user preference work together
 
-### Harmonization
+### Harmonization and Convergence
 
-When using dynamic color, ensure harmonization with M3 Expressive tokens:
+When using dynamic color, ensure harmonization with M3 Expressive tokens to merge brand identity with user settings:
 
-- Map dynamic primary to `md.sys.color.primary`
-- Generate container colors from dynamic palette
-- Ensure contrast requirements are met
-- Test across multiple wallpaper sources
+- **Brand Anchoring**: Identify critical brand colors (e.g., primary logo colors) that remain constant to maintain product differentiation.
+- **Dynamic Harmonization**: Map dynamic primary to `md.sys.color.primary` and generate supporting tonal palettes from the dynamic seed.
+- **Emotional Convergence**: Adjust the tonal palette of secondary and tertiary elements to match user settings while maintaining the brand's intended emotional temperature.
+
+### Systematic Application of Brand Parameters
+
+Material 3 supports systematic applications of custom parameters to help define and maintain the styles that convey your brand.
+
+- **Theme Extensions**: Use `ThemeExtension` to define brand-specific tokens that aren't in the standard M3 palette.
+- **Brand Consistency**: Maintain specific brand signatures (e.g., unique glows or specific border treatments) that adapt systematically across themes.
+
+### Automatic System Adjustments
+
+The color system automatically handles critical adjustments that provide accessible color contrast, legibility, interaction states, and component structure.
+
+- **Accessible Contrast**: Automatically ensures AA/AAA contrast ratios between text and backgrounds regardless of user-selected colors.
+- **Legibility & Tonal Shift**: Dynamically adjusts tones to maintain readability across different brightness levels and color palettes.
+- **Interaction States**: Automatically generates interaction states (hover, pressed, focused) from the base dynamic seed.
+- **Custom Components**: Dynamic color support extends to custom (non-Material) components, allowing them to integrate seamlessly with the user's environment.
 
 ## Platform-Specific Notes
 

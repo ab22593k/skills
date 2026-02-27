@@ -20,6 +20,7 @@ Material Expressive is Google's most researched design system update, based on 4
 2.  **Apply Color System**: 
     - Select tonal palettes from [COLOR.md](references/COLOR.md).
     - Apply container tiers for hierarchy.
+    - **Apply Color Convergence**: Merge brand identity with user settings using harmonization and `ThemeExtension` (see [PLATFORMS.md](references/PLATFORMS.md)).
 3.  **Apply Shape System**: 
     - Use expressive radii (e.g., Full, Extra Large) from [SHAPES.md](references/SHAPES.md).
     - Ensure consistent rounding for component families.
@@ -49,7 +50,7 @@ Material Expressive is Google's most researched design system update, based on 4
 
 ## Core Expressive Elements
 
-1. **Color** - Expanded tonal palettes, container tiers, emotional selection
+1. **Color** - Expanded tonal palettes, container tiers, emotional selection, and dynamic convergence
 2. **Shape** - Expressive radii, containment, visual boundaries
 3. **Size** - Larger touch targets, visual hierarchy
 4. **Motion** - Energetic transitions, emotional timing

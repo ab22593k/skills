@@ -25,49 +25,96 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
+  // Define brand seed
+  static const _brandSeedColor = Color(0xFF006C45);
+
   @override
   Widget build(BuildContext context) {
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-        final ColorScheme lightScheme = lightDynamic ?? _getDefaultLight();
-        final ColorScheme darkScheme = darkDynamic ?? _getDefaultDark();
+        // Converge brand sensibility with user settings
+        final ColorScheme lightScheme = _harmonize(lightDynamic, Brightness.light);
+        final ColorScheme darkScheme = _harmonize(darkDynamic, Brightness.dark);
 
         return MaterialApp(
-          theme: lightScheme.toM3EThemeData(),
-          darkTheme: darkScheme.toM3EThemeData(),
+          theme: ThemeData(
+            colorScheme: lightScheme,
+            useMaterial3: true,
+            extensions: [
+              BrandStyles.setup(lightScheme),
+            ],
+          ),
+          darkTheme: ThemeData(
+            colorScheme: darkScheme,
+            useMaterial3: true,
+            extensions: [
+              BrandStyles.setup(darkScheme),
+            ],
+          ),
           home: MyHomePage(),
         );
       },
     );
   }
 
-  ColorScheme _getDefaultLight() {
+  ColorScheme _harmonize(ColorScheme? dynamic, Brightness brightness) {
+    if (dynamic != null) {
+      // Automatic harmonization: Blends brand seed with dynamic wallpaper color
+      return dynamic.harmonized(); 
+    }
+    // Fallback to brand seed
     return ColorScheme.fromSeed(
-      seedColor: Colors.blue,
-      brightness: Brightness.light,
+      seedColor: _brandSeedColor,
+      brightness: brightness,
+    );
+  }
+}
+
+/// Custom Brand Parameters via ThemeExtension
+class BrandStyles extends ThemeExtension<BrandStyles> {
+  final Color brandGlow;
+  final double surfaceOpacity;
+
+  const BrandStyles({
+    required this.brandGlow,
+    required this.surfaceOpacity,
+  });
+
+  // Factory to adapt brand styles to the current color scheme
+  factory BrandStyles.setup(ColorScheme scheme) {
+    return BrandStyles(
+      // Harmonize custom brand glow with dynamic primary
+      brandGlow: scheme.primary.withOpacity(0.12),
+      surfaceOpacity: 0.8,
     );
   }
 
-  ColorScheme _getDefaultDark() {
-    return ColorScheme.fromSeed(
-      seedColor: Colors.blue,
-      brightness: Brightness.dark,
+  @override
+  BrandStyles copyWith({Color? brandGlow, double? surfaceOpacity}) {
+    return BrandStyles(
+      brandGlow: brandGlow ?? this.brandGlow,
+      surfaceOpacity: surfaceOpacity ?? this.surfaceOpacity,
+    );
+  }
+
+  @override
+  BrandStyles lerp(ThemeExtension<BrandStyles>? other, double t) {
+    if (other is! BrandStyles) return this;
+    return BrandStyles(
+      brandGlow: Color.lerp(brandGlow, other.brandGlow, t)!,
+      surfaceOpacity: lerpDouble(surfaceOpacity, other.surfaceOpacity, t)!,
     );
   }
 }
 ```
 
-#### Color Harmonization
+#### Color Harmonization and Automatic Adjustments
 
-When dynamic color is available, harmonize with M3 Expressive tokens:
+When dynamic color is enabled, the system automatically handles contrast and legibility. For custom brand colors that must persist, use `harmonizeWith`:
 
 ```dart
-ColorScheme _harmonizeDynamic(ColorScheme dynamic) {
-  return ColorScheme.fromSeed(
-    seedColor: dynamic.primary,
-    brightness: dynamic.brightness,
-  );
-}
+// Harmonize a specific brand accent color with the dynamic primary
+final brandAccent = Color(0xFFE91E63).harmonizeWith(dynamicScheme.primary);
 ```
 
 ### Android 16 Integration

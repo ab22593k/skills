@@ -451,6 +451,14 @@ The Expressive component specifications provide detailed guidelines for implemen
 - Hover state considerations
 - Window management integration
 
+## Custom Components and Convergence
+
+For components that do not follow standard Material 3 patterns, ensure they "automatically adapt" to the converged design system:
+
+- **Theme Data Access**: Always pull colors from `Theme.of(context).colorScheme`.
+- **Systematic Adaptation**: Use `ThemeExtension` to provide brand-specific styling that adapts to dynamic color shifts (see [COLOR.md](COLOR.md#systematic-application-of-brand-parameters)).
+- **State Handling**: Utilize `WidgetStateProperty` to ensure custom components automatically reflect the system's interaction states.
+
 ## Testing Checklist
 
 - [ ] Consistent token application
