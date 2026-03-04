@@ -2,6 +2,57 @@
 
 The M3 Expressive accessibility guidelines ensure that expressive design elements remain usable by all users, including those with visual, motor, cognitive, and auditory impairments. Expressive design should enhance accessibility, not compromise it.
 
+
+## Table of Contents
+
+- [Accessibility Philosophy](#accessibility-philosophy)
+- [Color Contrast Requirements](#color-contrast-requirements)
+  - [Minimum Contrast Ratios](#minimum-contrast-ratios)
+  - [Text Contrast Matrix](#text-contrast-matrix)
+  - [Component Contrast](#component-contrast)
+  - [Container Contrast](#container-contrast)
+- [Touch Target Requirements](#touch-target-requirements)
+  - [Minimum Sizes](#minimum-sizes)
+  - [Touch Target Placement](#touch-target-placement)
+  - [M3 Expressive Touch Targets](#m3-expressive-touch-targets)
+- [Screen Reader Compatibility](#screen-reader-compatibility)
+  - [Semantic Expectations](#semantic-expectations)
+  - [Content Description Guidelines](#content-description-guidelines)
+  - [Navigation Order](#navigation-order)
+- [Structural Landmarks](#structural-landmarks)
+  - [Landmark Roles](#landmark-roles)
+  - [Accessibility Labels for Landmarks](#accessibility-labels-for-landmarks)
+- [Heading Hierarchy](#heading-hierarchy)
+  - [Heading Identification and Order](#heading-identification-and-order)
+- [Keyboard Navigation](#keyboard-navigation)
+  - [Focus Order](#focus-order)
+  - [Focus Indicators](#focus-indicators)
+- [Motor Accessibility](#motor-accessibility)
+  - [Gesture Requirements](#gesture-requirements)
+  - [Timing Considerations](#timing-considerations)
+- [Visual Accessibility](#visual-accessibility)
+  - [Color Blindness Considerations](#color-blindness-considerations)
+  - [Patterns and Indicators](#patterns-and-indicators)
+- [Cognitive Accessibility](#cognitive-accessibility)
+  - [Clear Visual Hierarchy](#clear-visual-hierarchy)
+  - [Predictable Interactions](#predictable-interactions)
+  - [Intuitive Navigation](#intuitive-navigation)
+  - [Reduce Cognitive Load](#reduce-cognitive-load)
+- [Age-Inclusive Design](#age-inclusive-design)
+  - [M3 Expressive Research Findings](#m3-expressive-research-findings)
+  - [Design Recommendations](#design-recommendations)
+- [Platform-Specific Considerations](#platform-specific-considerations)
+  - [Android](#android)
+  - [Linux Desktop](#linux-desktop)
+- [Testing Tools](#testing-tools)
+  - [Automated Testing](#automated-testing)
+  - [Manual Testing](#manual-testing)
+  - [Testing Checklist](#testing-checklist)
+- [Accessibility Tokens](#accessibility-tokens)
+  - [Contrast Tokens](#contrast-tokens)
+  - [Accessibility Sizes](#accessibility-sizes)
+- [Implementation Checklist](#implementation-checklist)
+
 ## Accessibility Philosophy
 
 Expressive design creates interfaces that are both emotionally engaging AND accessible to everyone. M3 Expressive research found that expressive designs are more accessible to users of all ages and abilities when properly implemented.

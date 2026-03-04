@@ -2,6 +2,27 @@
 
 Usability design tactics make products intuitive and easy to understand for everyone. Research showed participants spotted key UI elements up to **four times faster** in M3 Expressive designs.
 
+
+## Table of Contents
+
+- [Design Tactics](#design-tactics)
+  - [Color & Contrast](#color-contrast)
+  - [Hierarchy](#hierarchy)
+  - [Placement](#placement)
+  - [Shape](#shape)
+  - [Size](#size)
+  - [Spacing](#spacing)
+  - [Typography](#typography)
+  - [Motion](#motion)
+  - [Grouping](#grouping)
+- [Best Practices](#best-practices)
+  - [Use Clear Scale and Placement](#use-clear-scale-and-placement)
+  - [Reinforce with Consistent Color Roles](#reinforce-with-consistent-color-roles)
+  - [Create Calm, Balanced Layouts](#create-calm-balanced-layouts)
+  - [Simplify through Structure](#simplify-through-structure)
+- [Testing & Iteration](#testing-iteration)
+- [Case Study: Aura Breathing App](#case-study-aura-breathing-app)
+
 ## Design Tactics
 
 Apply these tactics to guide users and emphasize key actions:

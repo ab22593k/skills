@@ -2,6 +2,54 @@
 
 The Expressive component specifications provide detailed guidelines for implementing expressive UI elements in Flutter applications. Components use color, shape, size, motion, and containment to create emotionally engaging experiences.
 
+
+## Table of Contents
+
+- [Button Components](#button-components)
+  - [Filled Button](#filled-button)
+  - [Elevated Button](#elevated-button)
+  - [Tonal Button](#tonal-button)
+  - [Outlined Button](#outlined-button)
+  - [Text Button](#text-button)
+  - [Floating Action Button (FAB)](#floating-action-button-fab)
+- [Navigation Components](#navigation-components)
+  - [Navigation Bar](#navigation-bar)
+  - [Navigation Rail](#navigation-rail)
+  - [Navigation Drawer](#navigation-drawer)
+- [Surface Components](#surface-components)
+  - [Card](#card)
+  - [Dialog](#dialog)
+  - [Bottom Sheet](#bottom-sheet)
+- [Input Components](#input-components)
+  - [Text Field](#text-field)
+  - [Checkbox](#checkbox)
+  - [Radio Button](#radio-button)
+  - [Switch](#switch)
+  - [Slider](#slider)
+- [Progress Indicators](#progress-indicators)
+  - [Linear Progress Indicator](#linear-progress-indicator)
+  - [Circular Progress Indicator](#circular-progress-indicator)
+  - [Loading Button](#loading-button)
+- [Selection Components](#selection-components)
+  - [Chips](#chips)
+  - [Badge](#badge)
+- [Feedback Components](#feedback-components)
+  - [Snackbars](#snackbars)
+  - [Toast](#toast)
+- [Component Motion Guidelines](#component-motion-guidelines)
+  - [State Change Durations](#state-change-durations)
+  - [Animation Patterns](#animation-patterns)
+- [Expressive Component Principles](#expressive-component-principles)
+  - [1. Size for Emphasis](#1-size-for-emphasis)
+  - [2. Color for Hierarchy](#2-color-for-hierarchy)
+  - [3. Shape for Personality](#3-shape-for-personality)
+  - [4. Motion for Delight](#4-motion-for-delight)
+- [Platform-Specific Notes](#platform-specific-notes)
+  - [Android](#android)
+  - [Linux Desktop](#linux-desktop)
+- [Custom Components and Convergence](#custom-components-and-convergence)
+- [Testing Checklist](#testing-checklist)
+
 ## Button Components
 
 ### Filled Button

@@ -2,6 +2,43 @@
 
 The motion system uses timing, easing, and transitions to create emotionally engaging experiences. Motion brings interfaces to life with personality while maintaining usability through purposeful animation choices.
 
+
+## Table of Contents
+
+- [Motion Philosophy](#motion-philosophy)
+- [Duration Specifications](#duration-specifications)
+  - [Standard Durations](#standard-durations)
+  - [Component-Specific Durations](#component-specific-durations)
+- [Easing Specifications](#easing-specifications)
+  - [Standard Easing Curves](#standard-easing-curves)
+  - [Easing Curve Values](#easing-curve-values)
+- [Transition Patterns](#transition-patterns)
+  - [Container Transform](#container-transform)
+  - [Shared Axis](#shared-axis)
+  - [Fade Through](#fade-through)
+  - [Fade](#fade)
+  - [Expansion](#expansion)
+- [Motion Attributes](#motion-attributes)
+  - [Energy](#energy)
+  - [Direction](#direction)
+  - [Hierarchy](#hierarchy)
+- [Expressive Motion Guidelines](#expressive-motion-guidelines)
+  - [When to Use Expressive Motion](#when-to-use-expressive-motion)
+  - [When to Use Subtle Motion](#when-to-use-subtle-motion)
+- [Platform-Specific Notes](#platform-specific-notes)
+  - [Android](#android)
+  - [Linux Desktop](#linux-desktop)
+- [Performance Guidelines](#performance-guidelines)
+  - [Motion Performance](#motion-performance)
+  - [Optimization Strategies](#optimization-strategies)
+- [Accessibility Considerations](#accessibility-considerations)
+  - [Reduced Motion](#reduced-motion)
+  - [Motion Duration Ranges](#motion-duration-ranges)
+- [Implementation Checklist](#implementation-checklist)
+- [Testing Guidelines](#testing-guidelines)
+  - [Visual Testing](#visual-testing)
+  - [Performance Testing](#performance-testing)
+
 ## Motion Philosophy
 
 Expressive motion goes beyond functional state changes to create emotional resonance. The motion system uses energetic transitions, purposeful timing, and carefully designed easing curves to enhance the user's emotional connection with the interface.

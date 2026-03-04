@@ -2,6 +2,43 @@
 
 The Expressive color system extends standard Material 3 with expanded tonal palettes, container color tiers, and emotional color selection guidelines.
 
+
+## Table of Contents
+
+- [Color Philosophy](#color-philosophy)
+- [Color Roles and Tokens](#color-roles-and-tokens)
+  - [Primary Color Roles](#primary-color-roles)
+  - [Secondary Color Roles](#secondary-color-roles)
+  - [Tertiary Color Roles](#tertiary-color-roles)
+  - [Error Color Roles](#error-color-roles)
+  - [Surface Color Roles](#surface-color-roles)
+  - [Surface Variant Roles](#surface-variant-roles)
+  - [Inverse Roles](#inverse-roles)
+- [Container Color Tiers](#container-color-tiers)
+  - [Primary Container](#primary-container)
+  - [Secondary Container](#secondary-container)
+  - [Tertiary Container](#tertiary-container)
+  - [Error Container](#error-container)
+- [Surface Container Hierarchy](#surface-container-hierarchy)
+  - [Level Specifications](#level-specifications)
+- [Contrast Requirements](#contrast-requirements)
+  - [Minimum Standards](#minimum-standards)
+  - [Implementation Guidelines](#implementation-guidelines)
+- [Expressive Color Selection](#expressive-color-selection)
+  - [Emotional Color Guidelines](#emotional-color-guidelines)
+  - [Color Application by Context](#color-application-by-context)
+- [Dynamic Color Integration](#dynamic-color-integration)
+  - [Harmonization and Convergence](#harmonization-and-convergence)
+  - [Systematic Application of Brand Parameters](#systematic-application-of-brand-parameters)
+  - [Automatic System Adjustments](#automatic-system-adjustments)
+- [Platform-Specific Notes](#platform-specific-notes)
+  - [Android](#android)
+  - [Linux Desktop](#linux-desktop)
+- [Color Token Values](#color-token-values)
+  - [Light Theme Values (Reference)](#light-theme-values-reference)
+  - [Dark Theme Values (Reference)](#dark-theme-values-reference)
+- [Testing Checklist](#testing-checklist)
+
 ## Color Philosophy
 
 Expressive color goes beyond functional differentiation to evoke emotions and create visually engaging experiences. The color system supports both aesthetic appeal and usability through carefully designed contrast relationships.

@@ -2,6 +2,34 @@
 
 The Expressive shape system uses border radius, form, and containment to create visual boundaries, communicate function, and express brand personality. Expressive shapes go beyond decoration to enhance usability through clear visual grouping.
 
+
+## Table of Contents
+
+- [Shape Philosophy](#shape-philosophy)
+- [Shape Tokens](#shape-tokens)
+  - [Size-Based Tokens](#size-based-tokens)
+  - [Component-Specific Defaults](#component-specific-defaults)
+- [Shape Families](#shape-families)
+  - [Round Family](#round-family)
+  - [Square Family](#square-family)
+  - [Mixed Family](#mixed-family)
+- [Expressive Containment](#expressive-containment)
+  - [Container Hierarchy](#container-hierarchy)
+  - [Shape for Function](#shape-for-function)
+- [Shape and Emotion](#shape-and-emotion)
+  - [Emotional Associations](#emotional-associations)
+  - [Shape Application Guidelines](#shape-application-guidelines)
+- [Platform-Specific Notes](#platform-specific-notes)
+  - [Android](#android)
+  - [Linux Desktop](#linux-desktop)
+- [Shape and Accessibility](#shape-and-accessibility)
+  - [Touch Target Considerations](#touch-target-considerations)
+  - [Visual Perception](#visual-perception)
+- [Implementation Guidelines](#implementation-guidelines)
+- [Shape Token Values](#shape-token-values)
+  - [Reference Values](#reference-values)
+- [Testing Checklist](#testing-checklist)
+
 ## Shape Philosophy
 
 Expressive shapes create emotional resonance through form while maintaining clear visual hierarchy. The shape system balances personality with functionality, using consistent radii across components while allowing for expressive variations.

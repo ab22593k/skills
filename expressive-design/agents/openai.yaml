@@ -1,4 +1,0 @@
-interface:
-  display_name: "Material Expressive Design"
-  short_description: "Apply Material Expressive design system to Flutter widgets."
-  default_prompt: "Apply expressive design to this widget: [widget]"

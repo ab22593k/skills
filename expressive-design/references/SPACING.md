@@ -2,6 +2,36 @@
 
 The M3 Expressive spacing system provides consistent spacing values for layouts, components, and touch targets. Expressive spacing emphasizes hierarchy through generous whitespace while maintaining usability through clear visual organization.
 
+
+## Table of Contents
+
+- [Spacing Philosophy](#spacing-philosophy)
+- [Spacing Tokens](#spacing-tokens)
+  - [Spacing Scale](#spacing-scale)
+  - [Touch Target Sizes](#touch-target-sizes)
+- [Component Spacing](#component-spacing)
+  - [Button Spacing](#button-spacing)
+  - [List and Card Spacing](#list-and-card-spacing)
+  - [Text Spacing](#text-spacing)
+  - [Icon Spacing](#icon-spacing)
+- [Layout Spacing](#layout-spacing)
+  - [Grid Spacing](#grid-spacing)
+  - [Screen Margins](#screen-margins)
+  - [Section Spacing](#section-spacing)
+- [Expressive Spacing](#expressive-spacing)
+  - [Generous Spacing for Emphasis](#generous-spacing-for-emphasis)
+  - [Spacing for Hierarchy](#spacing-for-hierarchy)
+- [Platform-Specific Notes](#platform-specific-notes)
+  - [Android](#android)
+  - [Linux Desktop](#linux-desktop)
+- [Accessibility Requirements](#accessibility-requirements)
+  - [Touch Target Spacing](#touch-target-spacing)
+  - [Readable Spacing](#readable-spacing)
+- [Implementation Guidelines](#implementation-guidelines)
+- [Spacing Token Values](#spacing-token-values)
+  - [Reference Values](#reference-values)
+- [Testing Checklist](#testing-checklist)
+
 ## Spacing Philosophy
 
 Expressive spacing uses generous whitespace to create visual breathing room, enhance readability, and communicate hierarchy. The spacing system balances aesthetic appeal with functional requirements for touch targets and component relationships.

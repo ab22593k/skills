@@ -2,6 +2,50 @@
 
 The M3 Expressive typography system provides a comprehensive set of type scales with exact specifications for font size, line height, and letter spacing. Expressive typography emphasizes hierarchy through size, weight, and treatment variations.
 
+
+## Table of Contents
+
+- [Typography Philosophy](#typography-philosophy)
+- [Type Scale Overview](#type-scale-overview)
+- [Display Styles](#display-styles)
+  - [Display Large](#display-large)
+  - [Display Medium](#display-medium)
+  - [Display Small](#display-small)
+- [Headline Styles](#headline-styles)
+  - [Headline Large](#headline-large)
+  - [Headline Medium](#headline-medium)
+  - [Headline Small](#headline-small)
+- [Title Styles](#title-styles)
+  - [Title Large](#title-large)
+  - [Title Medium](#title-medium)
+  - [Title Small](#title-small)
+- [Body Styles](#body-styles)
+  - [Body Large](#body-large)
+  - [Body Medium](#body-medium)
+  - [Body Small](#body-small)
+- [Label Styles](#label-styles)
+  - [Label Large](#label-large)
+  - [Label Medium](#label-medium)
+  - [Label Small](#label-small)
+- [Emphasized Typography](#emphasized-typography)
+  - [Weight Variations](#weight-variations)
+  - [Usage Guidelines](#usage-guidelines)
+- [Expressive Type Treatments](#expressive-type-treatments)
+  - [Editorial Treatments](#editorial-treatments)
+  - [Size Modifications](#size-modifications)
+- [Typography in Components](#typography-in-components)
+  - [Button Text](#button-text)
+  - [Navigation](#navigation)
+  - [Lists and Cards](#lists-and-cards)
+- [Platform-Specific Notes](#platform-specific-notes)
+  - [Android](#android)
+  - [Linux Desktop](#linux-desktop)
+- [Accessibility Requirements](#accessibility-requirements)
+  - [Minimum Sizes](#minimum-sizes)
+  - [Contrast Requirements](#contrast-requirements)
+- [Implementation Guidelines](#implementation-guidelines)
+- [Testing Checklist](#testing-checklist)
+
 ## Typography Philosophy
 
 Expressive typography uses scale, weight, and visual treatments to create emotional resonance while maintaining clear information hierarchy. Type choices should enhance readability and guide users through content.

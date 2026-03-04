@@ -2,6 +2,33 @@
 
 This guide provides platform-specific implementation details for Material 3 Expressive on Android and Linux Desktop platforms.
 
+
+## Table of Contents
+
+- [Android Platform Integration](#android-platform-integration)
+  - [Dynamic Color](#dynamic-color)
+  - [Android 16 Integration](#android-16-integration)
+  - [System UI Integration](#system-ui-integration)
+  - [Platform Behaviors](#platform-behaviors)
+  - [Performance Considerations](#performance-considerations)
+- [Linux Desktop Integration](#linux-desktop-integration)
+  - [Overview](#overview)
+  - [Keyboard Navigation](#keyboard-navigation)
+  - [Mouse Interactions](#mouse-interactions)
+  - [Window Management](#window-management)
+  - [Desktop Theming](#desktop-theming)
+  - [Desktop-Specific Components](#desktop-specific-components)
+  - [Platform Conventions](#platform-conventions)
+  - [Performance on Linux](#performance-on-linux)
+- [Shared Platform Considerations](#shared-platform-considerations)
+  - [Cross-Platform Design](#cross-platform-design)
+  - [Adaptive Layouts](#adaptive-layouts)
+  - [Testing Matrix](#testing-matrix)
+- [Implementation Checklist](#implementation-checklist)
+  - [Android](#android)
+  - [Linux Desktop](#linux-desktop)
+  - [Cross-Platform](#cross-platform)
+
 ## Android Platform Integration
 
 ### Dynamic Color

@@ -55,6 +55,38 @@ Containment groups related elements and creates visual structure.
 - Container hierarchies
 - Grid-based layouts
 
+
+## Table of Contents
+
+- [Core Expressive Elements](#core-expressive-elements)
+  - [1. Color](#1-color)
+  - [2. Shape](#2-shape)
+  - [3. Size](#3-size)
+  - [4. Motion](#4-motion)
+  - [5. Containment](#5-containment)
+- [Design Principles](#design-principles)
+  - [Principle 1: Emotion Through Design](#principle-1-emotion-through-design)
+  - [Principle 2: Usability Through Emphasis](#principle-2-usability-through-emphasis)
+  - [Principle 3: Inclusivity](#principle-3-inclusivity)
+  - [Principle 4: Balance](#principle-4-balance)
+- [Communication Principles](#communication-principles)
+  - [Principle 5: Explain Consequences](#principle-5-explain-consequences)
+  - [Principle 6: Use Scannable Words and Formats](#principle-6-use-scannable-words-and-formats)
+  - [Principle 7: Use Abbreviations Sparingly](#principle-7-use-abbreviations-sparingly)
+  - [Principle 8: Address the User Directly](#principle-8-address-the-user-directly)
+- [When to Apply Expressive Design](#when-to-apply-expressive-design)
+  - [Recommended Use Cases](#recommended-use-cases)
+  - [Case Study: Email Application](#case-study-email-application)
+- [When to Avoid Expressive Design](#when-to-avoid-expressive-design)
+  - [Avoid or Minimize Use](#avoid-or-minimize-use)
+  - [Case Study: Playlist Design](#case-study-playlist-design)
+  - [Case Study: Email Actions](#case-study-email-actions)
+- [Application Guidelines](#application-guidelines)
+  - [Start with User Need](#start-with-user-need)
+  - [Prioritize Functionality](#prioritize-functionality)
+  - [Iterate and Test](#iterate-and-test)
+  - [Follow Accessibility Standards](#follow-accessibility-standards)
+
 ## Design Principles
 
 ### Principle 1: Emotion Through Design
