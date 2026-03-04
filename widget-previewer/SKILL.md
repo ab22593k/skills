@@ -1,5 +1,5 @@
 ---
-name: flutter-widget-previewer
+name: widget-previewer
 description: Use the Flutter Widget Previewer to preview widgets in isolation with real-time rendering in Chrome. Use when working with Flutter widget previews, @Preview annotations, preview configurations, or widget development workflows. Triggers include setting up widget previewer, adding @Preview annotations, customizing previews, creating custom preview annotations, handling multiple preview configurations, or troubleshooting widget preview issues.
 ---
 
@@ -69,16 +69,16 @@ For global state changes, use the hot restart button at the bottom right of the 
 
 The `@Preview` annotation accepts these parameters:
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `name` | String | Descriptive name for the preview |
-| `group` | String | Group name to organize related previews |
-| `size` | Size | Artificial size constraints |
-| `textScaleFactor` | double | Custom font scale |
-| `wrapper` | Function | Widget tree wrapper (e.g., for InheritedWidget state) |
-| `theme` | Function | Material/Cupertino theming data provider |
-| `brightness` | Brightness | Initial theme brightness |
-| `localizations` | Function | Localization configuration |
+| Parameter         | Type       | Description                                           |
+| ----------------- | ---------- | ----------------------------------------------------- |
+| `name`            | String     | Descriptive name for the preview                      |
+| `group`           | String     | Group name to organize related previews               |
+| `size`            | Size       | Artificial size constraints                           |
+| `textScaleFactor` | double     | Custom font scale                                     |
+| `wrapper`         | Function   | Widget tree wrapper (e.g., for InheritedWidget state) |
+| `theme`           | Function   | Material/Cupertino theming data provider              |
+| `brightness`      | Brightness | Initial theme brightness                              |
+| `localizations`   | Function   | Localization configuration                            |
 
 Example with multiple parameters:
 
@@ -240,9 +240,11 @@ The widget previewer filters previews based on the currently selected file in yo
 ## Restrictions and Limitations
 
 ### Callback Requirements
+
 All callback arguments must be **public and constant** for code generation to work.
 
 ### Unsupported APIs
+
 - **Native plugins** - Not supported (previewer uses Flutter Web)
 - **`dart:io`** - APIs will throw exceptions when invoked
 - **`dart:ffi`** - Widgets will fail to load completely
@@ -250,6 +252,7 @@ All callback arguments must be **public and constant** for code generation to wo
 Widgets with transitive `dart:io` dependencies load but throw on API calls. Widgets with transitive `dart:ffi` dependencies fail to load entirely.
 
 **Solution:** Use conditional imports for platform-specific code:
+
 ```dart
 import 'my_api_stub.dart'
     if (dart.library.io) 'my_api_io.dart'
@@ -257,6 +260,7 @@ import 'my_api_stub.dart'
 ```
 
 ### Asset Paths
+
 Use **package-based paths** for `fromAsset` APIs:
 
 ```dart
@@ -268,21 +272,23 @@ Use **package-based paths** for `fromAsset` APIs:
 ```
 
 ### Unconstrained Widgets
+
 Automatically constrained to ~50% of previewer dimensions. Apply explicit `size` parameters for consistent behavior.
 
 ### Multi-Project Support
+
 Currently supports only single projects or Pub workspaces. Multi-project IDE sessions are not yet supported.
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| Widget not appearing | Verify @Preview annotation is on valid target (top-level function, static method, or public constructor with no required args) |
-| dart:io errors | Use conditional imports to provide web-compatible implementations |
-| dart:ffi errors | Isolate ffi-dependent code and exclude from preview targets |
-| Assets not loading | Use package-based asset paths |
-| IDE not showing previewer | Ensure Flutter 3.38+ and check IDE plugin settings |
-| Previews not updating | Try hot restart on individual preview or global hot restart |
+| Issue                     | Solution                                                                                                                       |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Widget not appearing      | Verify @Preview annotation is on valid target (top-level function, static method, or public constructor with no required args) |
+| dart:io errors            | Use conditional imports to provide web-compatible implementations                                                              |
+| dart:ffi errors           | Isolate ffi-dependent code and exclude from preview targets                                                                    |
+| Assets not loading        | Use package-based asset paths                                                                                                  |
+| IDE not showing previewer | Ensure Flutter 3.38+ and check IDE plugin settings                                                                             |
+| Previews not updating     | Try hot restart on individual preview or global hot restart                                                                    |
 
 ## References
 
