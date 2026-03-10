@@ -1,6 +1,6 @@
 ---
 name: widget-previewer
-description: Use the Flutter Widget Previewer to preview widgets in isolation with real-time rendering in Chrome. Use when working with Flutter widget previews, @Preview annotations, preview configurations, or widget development workflows. Triggers include setting up widget previewer, adding @Preview annotations, customizing previews, creating custom preview annotations, handling multiple preview configurations, or troubleshooting widget preview issues.
+description: Use the Flutter Widget Previewer to preview widgets in isolation with real-time rendering in Chrome. Use when working with Flutter widget previews, @Preview annotations, preview configurations, or widget development workflows. Triggers include setting up widget previewer, adding @Preview annotations, customizing previews, creating custom preview annotations, handling multiple preview configurations, or troubleshooting widget preview issues. IMPORTANT: Always preview the specific file the user provides - work directly with the file path they give you and ensure previews are filtered to show widgets from that exact file.
 ---
 
 # Flutter Widget Previewer
@@ -232,6 +232,16 @@ Widget buttonPreview() => const ButtonShowcase();
 ```
 
 ## IDE Integration
+
+### Previewing a Specific File
+
+When the user provides a specific Dart file, ensure the Widget Previewer targets that exact file:
+
+1. **Open the file** in the IDE first - this ensures the "Filter previews by selected file" feature works
+2. **Verify the filter is enabled** - check that "Filter previews by selected file" is toggled ON at the bottom left of the previewer
+3. **The previewer will automatically show** only widgets defined in the currently selected file
+
+If previews from other files appear, disable and re-enable the filter while the target file is open.
 
 ### Filtering by Selected File
 
