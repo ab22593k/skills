@@ -1,66 +1,68 @@
----
 name: effective-testing
-description: "A comprehensive methodology for highly effective, human-centered software testing, based on 'Taking Testing Seriously' (Bach & Bolton, 2026). Use this skill whenever testing, quality assurance, bug hunting, test strategy, automation traps, or risk analysis are mentioned. MANDATORY for: (1) Designing test strategies for complex products, (2) Performing exploratory testing using Session-Based Test Management (SBTM), (3) Identifying bugs with advanced oracle heuristics (FEW HICCUPS), (4) Reporting bugs with high business significance, (5) Prospective testing on requirements/designs, or (6) Supervizing AI and signals-based testing. If the user asks 'Is this code good?', 'How should I test this?', or 'Help me find bugs', YOU MUST use this skill to provide a professional, context-driven investigation rather than shallow checks."
----
+description: "A comprehensive methodology for highly effective, human-centered software testing, based on 'Taking Testing Seriously' (Bach & Bolton, 2026). Use this skill to escape the echo chamber of 'best practices' and learn to think critically about risk. MANDATORY for: (1) Designing context-driven test strategies, (2) Performing exploratory testing (SBTM), (3) Identifying bugs with oracle heuristics (FEW HICCUPS), (4) Reporting bugs with high business significance (PROOF), (5) Prospective testing on requirements, or (6) Supervizing AI output through transpection. If the user asks 'Is this code good?' or 'How should I test this?', YOU MUST provide a professional investigation that justifies its methods based on context, not rote standards."
 
 # Rapid Software Testing (RST)
 
-## Overview
+## Overview: Testing as the Headlights
+Testing is the "headlights" of the project—it doesn't slow the car down; it allows it to move safely at speed by revealing the road ahead. RST treats testing as an empirical investigation, a search for truth grounded in evidence rather than a ritual of "checking" against fixed scripts.
 
-Rapid Software Testing (RST) is a human-centered, context-driven methodology that treats the product as a mystery to be investigated. It focuses on people, heuristics, skills, and ethics to find the "bugs that matter" as efficiently as possible.
+## Part I: Escaping the Echo Chamber
 
-## Part I: Introduction & Core Mindset
+To think critically, a tester must recognize the **Five Schools of Testing** and identify which "echo chamber" is currently influencing the project:
+1.  **Factory School**: Focuses on artifacts and rote test cases; treats testers as replaceable robots.
+2.  **Quality School**: Claims "quality is everyone's job," often leading to social loafing and the marginalization of deep testing.
+3.  **Agile/DevOps School**: Prioritizes delivery speed and automation; often believes full-time testers shouldn't exist.
+4.  **Analytical School**: Treats testing as an algorithmic/mathematical branch of computer science.
+5.  **Context-Driven School (RST)**: Believes there are **no best practices**—only good practices in context. Testing is a social, psychological, and heuristic process.
 
+### The Core Mindset
 - **The Product is a Mystery**: Do not assume it works; probe it to discover its true nature.
-- **Testing is Learning**: Every test is an episode of learning about the product's status.
-- **Testing vs. Checking**: Testing is a human process of exploration; checking is algorithmic verification. See [RST Workflows](references/workflows.md).
-- **The Responsible Tester**: You are an independent agent accountable for the quality of your investigation.
-- **Vital Qualities**: Empirical, Skilled, Different, Motivated, Available. See [Tester Qualities](references/tester_qualities.md).
+- **Testing vs. Checking**: Testing is the human process of exploration and learning. Checking is the algorithmic verification of propositions. Tools can *check*, but only humans can *test*.
+- **The Responsible Tester**: You are an independent agent accountable for the quality of your investigation. You must justify your work based on risk, not templates.
+- **Critical Distance**: Maintain the ability to think differently from the developers. Avoid becoming a "cheerleader" for the product.
 
 ## Part II: Methodology & Process
 
-1. **Model the Product**: Use the [HTSM](references/htsm.md) to brainstorm coverage.
-2. **Define Strategy**: Use the [Test Strategy Guide](references/strategy.md) to prioritize risks.
-3. **Execute Sessions**: Use Session-Based Test Management (SBTM). Use the [Session Template](assets/sbtm_session_template.txt).
-4. **Apply Oracles**: Use [Oracle Heuristics](references/oracles.md) (FEW HICCUPS) to recognize problematic behavior.
-5. **Apply Tools**: Use tools for _checking_, but avoid the [13 Automation Traps](references/automation_traps.md).
-6. **Report & Storytell**: Use the [Reporting Guide](references/reporting.md) and [Bug Template](assets/bug_report_template.txt) (PROOF heuristic).
+1.  **Model the Product**: Use the [HTSM](references/htsm.md) to brainstorm coverage.
+2.  **Define Strategy**: Use [Test Strategy](references/strategy.md) to prioritize risks. Move between **Deep vs. Shallow** and **Narrow vs. Broad** testing based on "Enoughness."
+3.  **Progressive Formalization**: Do not formalize procedures before you understand the product. "Don't follow a procedure that didn't follow you first."
+4.  **Execute Sessions**: Use Session-Based Test Management (SBTM) to manage agency.
+5.  **Apply Oracles**: Use [Oracle Heuristics](references/oracles.md) (FEW HICCUPS) to recognize "bugs that matter."
+6.  **Report & Storytell**: Use the [Reporting Guide](references/reporting.md). A test report is a story of the product's status and the testing's quality.
 
-## Part III: Application & Special Topics
+## Part III: Critical Application & AI
 
-- **[Prospective Testing](references/prospective_testing.md)**: Testing ideas and requirements _before_ code exists. Use the [Prospective Checklist](assets/prospective_testing_checklist.txt).
-- **[Signals-Based Testing](references/signals_based_testing.md)**: Leveraging AI and system signals for deep coverage.
-- **[AI and Testing](references/ai_testing.md)**: Supervizing AI output, transpection, and the productivity paradox.
-- **[Usability Testing](references/usability.md)**: Rapidly assessing user experience and accessibility.
-- **[Adventures in Testability](references/testability.md)**: Advocating for systems that are easier to test.
+- **[Prospective Testing](references/prospective_testing.md)**: Testing ideas *before* code exists. Use the [Prospective Checklist](assets/prospective_testing_checklist.txt).
+- **[AI and Testing](references/ai_testing.md)**: Perform **Transpection**—the process of explaining and justifying the "magic box" output of AI. Beware of **Automation Bias** and the productivity paradox.
+- **[Signals-Based Testing](references/signals_based_testing.md)**: Leveraging system signals while maintaining a critical human eye on failure patterns.
 
-## Part IV: Context & Culture
+## Part IV: Context, Culture & "Parnism"
 
-- **[Context & Culture](references/context_and_culture.md)**: Understanding management, sociology, and how testing looks from the business side.
-- **[The Horizon Scandal](references/horizon_scandal.md)**: Lessons from a massive systemic failure.
+- **[Context & Culture](references/context_and_culture.md)**: Understanding why management might prefer "fake testing" (ceremony over result).
+- **Beware of Parnism**: The trap of "faking" a rational process retrospectively to satisfy auditors while ignoring real risks.
+- **[The Horizon Scandal](references/horizon_scandal.md)**: Learning from systemic failures where management discouraged critical thinking.
 
 ## Resources (Assets)
 
-### Templates
+### Templates & Checklists
 - **[SBTM Session Template](assets/sbtm_session_template.txt)**: For focused exploratory sessions.
-- **[Bug Report Template](assets/bug_report_template.txt)**: For professional and actionable bug reporting.
-- **[Prospective Checklist](assets/prospective_testing_checklist.txt)**: For meetings and requirements analysis.
+- **[Bug Report Template](assets/bug_report_template.txt)**: Focuses on the PROOF heuristic.
+- **[Prospective Checklist](assets/prospective_testing_checklist.txt)**: For requirements/design analysis.
 
 ### Examples
-- **[Coverage Outline Example](assets/coverage_outline_example.md)**: Sample product coverage model using HTSM.
-- **[Session Report Example](assets/session_report_example.md)**: Complete SBTM session report with bugs and notes.
-- **[Risk Analysis Example](assets/risk_analysis_example.md)**: Four-part risk stories with prioritization matrix.
+- **[Risk Analysis Example](assets/risk_analysis_example.md)**: Four-part risk stories.
+- **[Coverage Outline Example](assets/coverage_outline_example.md)**: Mapping the product mystery.
 
-## Key Examples
+## Critical Thinking Examples
 
-### Prospective Testing in a Meeting
-_User: "We're planning a new feature for multi-currency support. Any thoughts?"_
-1. Refer to [Prospective Testing](references/prospective_testing.md).
-2. Use the **Cheat Sheet**: Ask _"What other features will be affected?"_ or _"How will it recover from currency API failures?"_
-3. Use the [Checklist](assets/prospective_testing_checklist.txt) to capture risks.
+### Challenging a "Best Practice"
+_User: "We must have 100% test case documentation before we start. How do I do that?"_
+1.  Identify this as a **Factory School** requirement.
+2.  Advise on **Progressive Formalization**: Explain that documentation without exploration is hollow and likely to miss elusive bugs.
+3.  Suggest a **Coverage Outline** or **Mind Map** as a leaner, more critical alternative.
 
-### Supervizing AI Output
-_User: "The AI generated these 50 test cases for me. Are they good?"_
-1. Refer to [AI and Testing](references/ai_testing.md).
-2. Perform **Transpection**: Ask _"How do I know these are valid?"_ and _"Are they shallow?"_
-3. Identify where the AI might be "hallucinating" or providing tautological checks.
+### Identifying "Fake Testing"
+_User: "The automation is green, so we're good to go, right?"_
+1.  Refer to **Automation Bias**.
+2.  Ask: "What *didn't* the automation check?" and "How do we know the checks are powerful enough to find bugs that matter?"
+3.  Suggest a brief **Exploratory Session** to probe for side effects the automation can't see.
