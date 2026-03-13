@@ -1,6 +1,6 @@
 ---
 name: expressive-design
-description: Material Expressive. Comprehensive guidance on expressive design system for Flutter with platform support for Android and Linux desktop. Covers layout patterns (e.g., Bento Grid, Masonry), color tokens, typography scales, motion specifications, shape tokens, spacing ramps, and component enhancements for creating emotionally engaging UIs. Includes migration guidance from standard M3 and platform-specific integration notes. Use when Claude needs to apply expressive design to a specific Flutter widget (passed as a parameter) or UI component, or when answering questions about Material 3 Expressive guidelines. Use for media, communication, and consumer apps; avoid for banking, healthcare, and safety-critical apps.
+description: Material 3 Expressive design system for Flutter (Android & Linux). You MUST use this skill whenever the user asks to improve, modernize, or transform a Flutter UI, especially for consumer, media, or communication apps. It provides exact specs for Bento Grids, Masonry, color convergence, variable fonts, and expressive motion. Trigger this for any request involving 'modern' or 'emotionally engaging' Flutter widgets, even if they don't explicitly mention 'Expressive' design. Do NOT use for banking or safety-critical apps where standard M3 is required.
 ---
 
 # Material Expressive Design System

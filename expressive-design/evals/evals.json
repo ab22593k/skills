@@ -14,6 +14,20 @@
       "prompt": "Design a Flutter dashboard layout using the Bento Grid pattern. It should include a 'Header' section, a 'Main Chart' card, and two small 'Action' cards. Apply Material Expressive spacing, shape tokens (Extra Large for the chart), and color tiers for hierarchy.",
       "expected_output": "The response should describe or implement a Bento Grid structure, use expressive spacing (e.g., 24dp for sections), apply Extra Large radii (24dp) for the main container, and use Primary/Secondary container tiers.",
       "files": []
+    },
+    {
+      "id": 2,
+      "name": "android-16-dynamic-color",
+      "prompt": "I have a brand color #E91E63. How do I correctly harmonize this with Android 16's dynamic primary color in an expressive Flutter app while maintaining brand identity? Provide the ThemeExtension and harmonizeWith implementation based on PLATFORMS.MD.",
+      "expected_output": "Should correctly use harmonizeWith and the BrandStyles ThemeExtension pattern from the reference files, specifically citing the approach for Android 16 and color convergence.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "communication-scannability",
+      "prompt": "Rewrite this settings screen text for an expressive media app: 'User Account Details: You can manage all of your account deletion options here if you really need to. It is important to note that etc. can't be undone.' Apply Communication Principles 5, 6, 7, and 8 from FOUNDATIONS.md.",
+      "expected_output": "Should use direct address ('Your account'), scannable words ('Delete account'), avoid Latin abbreviations ('etc.'), and clearly explain consequences (Principle 5).",
+      "files": []
     }
   ]
 }
