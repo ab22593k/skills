@@ -1,6 +1,6 @@
 ---
 name: latency-principles
-description: "Comprehensive guide for diagnosing, optimizing, and hiding latency in software systems. Use when: (1) Debugging slow performance, (2) Designing low-latency architectures (HFT, Real-time systems), (3) Optimizing Data/Compute layers, or (4) Learning about latency theory (Little's Law, Amdahl's Law, Tail Latency, Coordinated Omission)."
+description: "Comprehensive framework for diagnosing, optimizing, and hiding latency in software systems. You MUST use this skill whenever the user mentions slow performance, response time, p99/tail latency, or asks about system throughput and concurrency. It covers Little's Law, Amdahl's Law, and strategies for Data/Compute optimization (e.g., zero-copy, wait-free sync, request hedging). Trigger this even for theoretical questions about latency laws or ballpark estimations using latency constants."
 ---
 
 # Latency Principles
