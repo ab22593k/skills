@@ -1,0 +1,19 @@
+{
+  "skill_name": "expressive-design",
+  "evals": [
+    {
+      "id": 0,
+      "name": "button-transformation",
+      "prompt": "Update this standard Flutter ElevatedButton(onPressed: () {}, child: Text('Submit')) to follow Material Expressive guidelines. Provide the ButtonStyle and ThemeData snippets for the typography (Label Large), expressive shape (radii), and increased size (56dp target).",
+      "expected_output": "The response should use Label Large typography, apply a large border radius (e.g., 20dp+ or 'full'), and increase the touch target to 56dp. It should reference M3 Expressive tokens.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "bento-grid-dashboard",
+      "prompt": "Design a Flutter dashboard layout using the Bento Grid pattern. It should include a 'Header' section, a 'Main Chart' card, and two small 'Action' cards. Apply Material Expressive spacing, shape tokens (Extra Large for the chart), and color tiers for hierarchy.",
+      "expected_output": "The response should describe or implement a Bento Grid structure, use expressive spacing (e.g., 24dp for sections), apply Extra Large radii (24dp) for the main container, and use Primary/Secondary container tiers.",
+      "files": []
+    }
+  ]
+}
