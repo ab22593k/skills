@@ -18,6 +18,36 @@
       "prompt": "Here's a snippet of our authentication logic. What are the potential bugs here?\n\n```python\ndef login(username, password):\n    user = db.query('SELECT * FROM users WHERE username = ?', (username,))\n    if user and user.password == hash(password):\n        session['user_id'] = user.id\n        return True\n    return False\n```",
       "expected_output": "The response should apply Oracle heuristics (FEW HICCUPS) and mention specific risks like security (SQL injection is handled, but what about the hash function?), purpose (session management), and potential failures (DB errors, missing fields). It should also distinguish between testing and shallow checking.",
       "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "My manager wants 100% automated test coverage before release. They're asking me to automate all our exploratory testing sessions. What should I tell them?",
+      "expected_output": "The response should explain the Testing vs. Checking distinction, reference the 13 Automation Traps (especially Scripting Trap, Shallowness Trap, and Atrophy Trap), and explain why exploratory testing cannot be automated. Should suggest a balanced approach using automation for checking while preserving human exploration.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "I found a bug where the app crashes when uploading a file with a null byte in the filename. The developer says 'users will never do that' and won't fix it. How should I report this bug to make the significance clear?",
+      "expected_output": "The response should use the Bug Report Template structure, emphasize Significance (security implications, potential for malicious exploitation), apply Oracle heuristics (World - systems should handle invalid input gracefully), and explain risk in business terms (data loss, brand damage, potential for attack).",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "We have a 2-hour testing session tomorrow for a payment processing feature. How should I plan and structure this session?",
+      "expected_output": "The response should use the SBTM Session Template structure: define a clear Charter (one-sentence mission), identify Areas to explore (payment flow, error handling, edge cases), explain the need for chronological Test Notes, and mention preparing to document Bugs, New Ideas, and Outlook.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "The AI generated 200 test cases for our login feature. Should I run all of them?",
+      "expected_output": "The response should reference AI and Testing principles, explain Transpection (how do I know these are valid?), warn about the Shallowness Trap, suggest reviewing for duplicate/trivial tests, and recommend focusing on high-risk areas rather than running all tests blindly. Should distinguish between checking (which AI can help with) and testing (which requires human judgment).",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "We're designing a multi-tenant SaaS architecture. What testability features should we build in from the start?",
+      "expected_output": "The response should reference Testability principles, suggest specific hooks like: data isolation verification, tenant-specific logging, API endpoints for state reset, ability to simulate load per tenant, observability features, and automated cleanup tools. Should explain how these enable both manual testing and automation.",
+      "files": []
     }
   ]
 }

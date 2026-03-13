@@ -41,9 +41,15 @@ Rapid Software Testing (RST) is a human-centered, context-driven methodology tha
 
 ## Resources (Assets)
 
+### Templates
 - **[SBTM Session Template](assets/sbtm_session_template.txt)**: For focused exploratory sessions.
 - **[Bug Report Template](assets/bug_report_template.txt)**: For professional and actionable bug reporting.
 - **[Prospective Checklist](assets/prospective_testing_checklist.txt)**: For meetings and requirements analysis.
+
+### Examples
+- **[Coverage Outline Example](assets/coverage_outline_example.md)**: Sample product coverage model using HTSM.
+- **[Session Report Example](assets/session_report_example.md)**: Complete SBTM session report with bugs and notes.
+- **[Risk Analysis Example](assets/risk_analysis_example.md)**: Four-part risk stories with prioritization matrix.
 
 ## Key Examples
 
