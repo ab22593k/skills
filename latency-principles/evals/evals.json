@@ -1,0 +1,26 @@
+{
+  "skill_name": "latency-principles",
+  "evals": [
+    {
+      "id": 0,
+      "name": "tail-latency-diagnosis",
+      "prompt": "I'm seeing high p99 latency in my user profile service. p50 is 20ms, but p99 is 800ms. What should I look for and how can I fix it?",
+      "expected_output": "The response should identify potential causes for tail latency (GC, locks, network noise) and suggest strategies like request hedging or wait-free sync.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "littles-law-calculation",
+      "prompt": "I have a service with 100ms average latency. I need to handle 500 requests per second. How many concurrent execution units do I need?",
+      "expected_output": "Should correctly apply Little's Law (Concurrency = Throughput * Latency) and calculate 50 concurrent units.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "serialization-optimization",
+      "prompt": "We're currently using JSON for our internal microservice communication. It's becoming a bottleneck. What are our options for reducing this latency, and what are the trade-offs?",
+      "expected_output": "Should suggest binary formats like Protobuf or FlatBuffers, explaining the performance gains and the need for schemas.",
+      "files": []
+    }
+  ]
+}
