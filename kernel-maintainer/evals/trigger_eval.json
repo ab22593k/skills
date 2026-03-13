@@ -1,0 +1,22 @@
+[
+  {"query": "I need to write a Rust kernel module for a character device that reads from /dev/mydevice. How do I register the file operations?", "should_trigger": true},
+  {"query": "Can you help me review this Rust kernel patch? I want to make sure it follows kernel coding standards.", "should_trigger": true},
+  {"query": "What's the difference between Mutex and SpinLock in the kernel? When should I use each?", "should_trigger": true},
+  {"query": "I'm getting a compilation error 'cannot find crate kernel' when building my Rust module. How do I fix this?", "should_trigger": true},
+  {"query": "How do I handle errors properly in Rust For Linux? Should I use Result or something else?", "should_trigger": true},
+  {"query": "I need to pass data between kernel and userspace. What's the safest way to do this in Rust?", "should_trigger": true},
+  {"query": "My kernel module is causing a panic when I load it. How do I debug this?", "should_trigger": true},
+  {"query": "What's the proper way to define IOCTL commands in a Rust kernel module?", "should_trigger": true},
+  {"query": "How do I add module parameters to my Rust kernel module like the existing kernel modules do?", "should_trigger": true},
+  {"query": "I'm writing a network driver in Rust. What APIs should I use for packet handling?", "should_trigger": true},
+  {"query": "Write me a hello world program in Rust", "should_trigger": false},
+  {"query": "How do I use tokio for async programming in my Rust application?", "should_trigger": false},
+  {"query": "What's the best way to parse JSON in Rust for my web app?", "should_trigger": false},
+  {"query": "Can you help me set up a Rust project with cargo?", "should_trigger": false},
+  {"query": "I need to optimize my Rust code for performance. What profiling tools should I use?", "should_trigger": false},
+  {"query": "How do I write tests for my Rust library using the standard testing framework?", "should_trigger": false},
+  {"query": "What's the best error handling pattern in Rust for a CLI application?", "should_trigger": false},
+  {"query": "Can you explain the borrow checker to me?", "should_trigger": false},
+  {"query": "How do I create a REST API with Rust using actix-web?", "should_trigger": false},
+  {"query": "I need to use FFI to call C functions from my Rust code. How do I do that safely?", "should_trigger": false}
+]
