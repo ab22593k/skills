@@ -38,8 +38,10 @@ Updating the UI immediately while the server processes the request in the backgr
 Executing a task that *might* be needed.
 - **Branch Prediction**: CPU does this automatically.
 - **Application Level**: Start calculating search results while user is still typing. If they finish typing the predicted query, results are instant. If not, discard work.
+- **Parallel Speculation**: Run multiple versions of a computation or search in parallel when the input is ambiguous, using the first valid result.
 
-### Resource Pre-allocation
+### Predictive Resource Allocation
+- **Overprovisioning**: Allocating more resources than currently needed to handle unexpected bursts without scaling delay.
+- **Prewarming**: Spinning up resources (cold-start Lambdas, DB connections, or cache entries) based on time-of-day patterns or upstream events (e.g., user logging in prewarms their user-data cache).
 - **Connection Pooling**: Keep DB connections open to avoid handshake latency.
 - **Object Pooling**: Keep memory allocated to avoid `malloc` latency.
-- **Prewarming**: Spin up lambdas/VMs before traffic spikes (based on historical patterns).

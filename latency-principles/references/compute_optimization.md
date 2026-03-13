@@ -23,6 +23,7 @@ The fastest code is code that doesn't run.
 - **OS Overhead**:
   - **System Calls**: Expensive (context switch). Batch operations (e.g., `sendmmsg` vs `sendmsg`).
   - **Thread-per-Core**: Pin threads to cores to avoid scheduler latency and preserve CPU cache locality.
+  - **Precomputation**: Shift runtime work to build-time or application startup (e.g., pre-calculating lookup tables or static routing paths).
 
 ## 2. Wait-Free Synchronization
 Traditional locking (Mutex/Semaphores) puts threads to sleep, causing expensive OS context switches (~µs latency).
@@ -52,6 +53,7 @@ Structuring execution to handle multiple tasks efficiently.
 ### Parallelism Types
 - **Data Parallelism**: Same operation on different data (SIMD, GPU).
 - **Task Parallelism**: Different operations running concurrently.
+- **Hardware Parallelism (SIMD)**: Use "Single Instruction, Multiple Data" instructions (AVX, NEON) to perform the same operation on multiple data points in a single clock cycle.
 
 ### Database Concurrency
 - **MVCC (Multiversion Concurrency Control)**: Readers don't block writers. Snapshots allow consistent reads without locking the table.

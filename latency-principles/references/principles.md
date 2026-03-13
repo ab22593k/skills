@@ -3,12 +3,29 @@
 Based on "Latency: Reduce delay in software systems" by Pekka Enberg.
 
 ## 1. Definition
-Latency is the time delay between a cause and its observed effect.
-- **Service Time**: Time to process a request.
-- **Wait Time**: Time a request waits in queues.
-- **Response Time**: Service Time + Wait Time.
+Latency is the time delay between a **cause** and its **observed effect**.
+- **Service Time**: Time spent actively processing a request.
+- **Wait Time**: Time a request spends in a queue or network.
+- **Response Time**: The sum of service time and wait time.
 
-## 2. Laws of Latency
+### Latency vs. Bandwidth vs. Throughput
+- **Latency**: Time for a single request to travel and receive a response. You are "stuck" with bad latency.
+- **Bandwidth**: The maximum possible data transmission rate (the "width" of the pipe).
+- **Throughput**: The actual amount of data successfully delivered over a given time.
+- **Relationship**: You can increase throughput by adding more pipes (bandwidth) or by pipelining tasks, but this can actually *increase* the latency of an individual task (the "laundry" pipelining example).
+
+## 2. Impact on User Experience (UX)
+
+User experience is the primary motivator for low-latency systems. 
+- **Immediate (no delay perceived)**: < 100 ms.
+- **Instant (feels fast)**: < 1 s.
+- **Slow (delay perceived as slow)**: > 10 s. (Need feedback mechanisms like progress bars).
+- **Economic Impact**: Google reports 1s delay reduces engagement by 20%. Akamai reports 100ms increase drops conversion by 7%.
+- **Real-time Systems**:
+    - **Hard Real-time**: Missing a deadline is a failure (e.g., heart pacemaker, car sensors).
+    - **Soft Real-time**: Missing a deadline is a quality issue but not catastrophic (e.g., video streaming).
+
+## 3. Laws of Latency
 
 ### Little's Law
 Connects latency, throughput, and concurrency.
@@ -52,5 +69,27 @@ Average latency hides the truth.
 - **Parallel Compounding**: Latency is determined by the slowest path (`L_total = max(L1, L2, ...)`). High fanout increases tail latency risk.
 
 ## 6. Trade-offs
-- **Latency vs Throughput**: Batching improves throughput but increases per-item latency.
-- **Latency vs Energy**: Polling lowers latency but wastes energy. Sleeping saves energy but adds wakeup latency.
+- **Latency vs Throughput**: Batching/Pipelining improves throughput but increases per-item latency.
+- **Latency vs Energy**: Polling/Busy-waiting lowers latency but wastes energy. Sleeping saves energy but adds wakeup latency.
+
+## 7. Measurement & Visualization
+
+Average latency is a lie. To understand your system, you must visualize the distribution.
+
+### Histograms
+- **What**: Bins of latency values showing frequency.
+- **Benefit**: Reveals the "mode" (most common experience) and the spread of outliers.
+- **Limitation**: Hard to read specific high-percentile values (p99.9).
+
+### HDR (High Dynamic Range) Histograms
+- **What**: Plots latency against percentiles on a logarithmic scale.
+- **Benefit**: Compresses the p50-p90 range to focus on the "tail" (p99, p99.9, p99.99).
+- **Tool**: `scripts/visualize_latency.py` uses the `HdrHistogram` library for this.
+
+### eCDF (Empirical Cumulative Distribution Function)
+- **What**: A curve where the Y-axis is the probability (0 to 1) and X-axis is latency.
+- **Benefit**: Directly answers "What is the probability that a request finishes in < X ms?". It is the most robust way to check SLA compliance.
+
+### Coordinated Omission
+- **The Trap**: Benchmark tools often wait for one request to finish before sending the next. If the system stalls, the tool stalls too, omitting the samples that would have occurred during the stall.
+- **The Fix**: Use **Fixed-Interval Benchmarking** (e.g., `scripts/ping_collector.py`). Send requests at a steady rate regardless of when previous ones finish.

@@ -6,28 +6,31 @@ Optimizing data storage and access is often the highest-leverage activity for re
 Bringing data closer to computation to minimize signal propagation delay.
 
 ### Internode (Distributed Systems)
-- **Geographical**: Host data in the same region as the user (e.g., AWS us-east-1 for East Coast users).
-- **Edge Computing**: Move compute to the edge (CDNs, Cloudflare Workers) to process data near the user.
-- **CDNs**: Cache static assets and dynamic content geographically close to users.
+- **Geographical**: Host data in the same region as the user.
+- **Edge Computing**:
+    - **Near Edge**: Points of Presence (PoPs) in major metro areas (e.g., Cloudflare PoPs).
+    - **Far Edge**: Moving compute to user devices, home Wi-Fi, or IoT gateways to eliminate last-mile latency.
+- **CDNs**: Use programmable CDNs (e.g., Cloudflare Workers) to serve dynamic content from the edge.
 
 ### Intranode (Single Machine)
 - **Network Stack**:
-  - **Kernel-bypass**: Use DPDK or XDP/eBPF to process packets in userspace or hardware, bypassing OS kernel overhead.
-  - **Interrupt Affinity**: Pin NIC interrupts to specific CPU cores to avoid context switching costs.
-- **Memory Topology (NUMA)**: Ensure threads access memory attached to their local CPU socket. Remote memory access is significantly slower.
+  - **TCP_NODELAY**: Disable **Nagle's Algorithm** to stop the OS from batching small packets, which introduces queuing delay.
+  - **Kernel-bypass**: Use DPDK or XDP to process packets in userspace, bypassing kernel interrupts.
+  - **Interrupt Affinity**: Pin NIC interrupts to the same CPU core as the application thread to preserve cache locality.
+- **Memory Topology (NUMA)**: Ensure threads access local DRAM. Remote NUMA node access is 2x+ slower.
 
 ## 2. Replication
 Maintaining multiple copies of data for availability and lower read latency.
 
 ### Replication Strategies
-- **Single-Leader**: One node accepts writes; others replicate. Simple but write-limited.
-- **Multi-Leader**: Multiple nodes accept writes. Lower write latency (local writes) but requires conflict resolution.
-- **Leaderless**: Any node accepts writes (e.g., Dynamo-style). Lowest latency but requires quorum consistency adjustments.
+- **Single-Leader**: Simple, but all writes must go to one node (potentially far away).
+- **Multi-Leader**: Writes go to the nearest leader (low write latency), but requires resolution of concurrent updates.
+- **Leaderless**: Uses quorums (W + R > N). Fastest writes as no single node is a bottleneck.
 
 ### Consistency Models
-- **Strong Consistency (Linearizability)**: Illusion of one data copy. High latency due to coordination (waiting for acks).
-- **Eventual Consistency**: Replicas converge over time. Lowest latency but allows stale reads.
-- **Causal Consistency**: Guarantees order of causally related events. Middle ground.
+- **Strong Consistency**: High latency due to cross-region acks.
+- **Eventual Consistency**: Lowest latency; replicas converge asynchronously.
+- **Read-your-writes**: Guarantees a user sees their own updates immediately, even with eventual consistency elsewhere.
 
 ### State Machine Replication
 - Uses consensus algorithms (Raft, Paxos, VSR) to keep replicas in sync.
