@@ -1,52 +1,76 @@
----
 name: expressive-design
-description: Material 3 Expressive design system for Flutter (Android & Linux). You MUST use this skill whenever the user asks to improve, modernize, or transform a Flutter UI, especially for consumer, media, or communication apps. It provides exact specs for Bento Grids, Masonry, color convergence, variable fonts, and expressive motion. Trigger this for any request involving 'modern' or 'emotionally engaging' Flutter widgets, even if they don't explicitly mention 'Expressive' design. Do NOT use for banking or safety-critical apps where standard M3 is required.
----
+description: Material 3 Expressive (M3E) design system for Flutter. You MUST use this skill whenever the user asks to "modernize," "polish," "elevate," or create an "emotionally engaging" UI. It transforms standard Material 3 into a premium, editorial-style experience using Bento Grids, Masonry layouts, Variable Fonts (Roboto Flex), and Spring Physics motion. Trigger this for any consumer-facing, media, or communication app request, even if they don't explicitly mention "Expressive" design. Do NOT use for high-density enterprise data tables or safety-critical apps where standard utilitarian M3 is required.
 
-# Material Expressive Design System
+# Material 3 Expressive (M3E)
 
-Material Expressive is Google's most researched design system update, based on 46 studies with 18,000+ participants. It creates emotionally engaging user experiences through strategic use of layout patterns, color, shape, size, motion, and containment.
+Material 3 Expressive is the high-impact evolution of Google's design system. It moves beyond utility to create emotional resonance through **Bento Grids**, **Variable Typography**, **Color Convergence**, and **Spring Physics**.
 
-## Core Expressive Elements
+## Core Workflows
 
-1. **Layout Patterns** - Modular grids (Bento), masonry, card-based, split-screen, and specialized page structures.
-2. **Color & Typography** - Expanded tonal palettes, container tiers, emotional selection, and dynamic convergence. Utilizing variable fonts (like Roboto Flex) for flexible text weight and width.
-3. **Shape** - Expanded library of 35 shapes, expressive radii, containment, visual boundaries, and built-in shape morph motion for decorative visual elements.
-4. **Size** - Larger touch targets, visual hierarchy. Reintroduces clear functional signifiers to reduce user uncertainty and improve scanning speed.
-5. **Motion** - New physics-based motion system including spatial springs for realistic object movement and effects springs for seamless color/opacity transitions.
-6. **Containment** - Surface elevation, tonal separation.
-7. **New & Updated Components** - Flexible Toolbars, Split Buttons, Progress Indicators (with customizable waveforms and thickness), Button Groups (shape-shifting interactions), and FAB Menus (overflow into mini-menus).
+### 1. Construct Bento Hierarchy
+*Use this when the UI needs to showcase multiple features or data points with clear priority.*
 
-## Workflows
+1.  **Define Visual Loudness**: Assign a "loudness" level to each content block (Loud, Medium, Quiet).
+2.  **Size Mapping**: 
+    - **Loud**: 2x2 or full-width cells. High-contrast containers.
+    - **Medium**: 1x2 or 2x1 cells. Tonal containers.
+    - **Quiet**: 1x1 cells. Surface containers.
+3.  **Implementation**: Use `flutter_staggered_grid_view` or `CustomMultiChildLayout`. Apply 16dp-24dp gaps and 28dp-32dp corner radii to cells.
 
-### Apply Expressive Design
+### 2. Implement Variable Typography
+*Use this for "Editorial Moments" (Hero sections, onboarding, headlines).*
 
-**Arguments:**
-- `widget`: The Flutter widget code or description to be transformed.
+1.  **Select Font**: Use `Roboto Flex` (variable font).
+2.  **Define Axis values**: 
+    - **Weight (`wght`)**: 100-1000 for precise emphasis.
+    - **Width (`wdth`)**: 25-150% to fit headlines perfectly.
+    - **Optical Size (`opsz`)**: 8-144 for readability at any scale.
+3.  **Flutter Code**:
+    ```dart
+    Text('Editorial Headline', style: TextStyle(
+      fontFamily: 'RobotoFlex',
+      fontVariations: [FontVariation('wght', 850), FontVariation('wdth', 115)],
+    ))
+    ```
 
-**Steps:**
+### 3. Apply Color Convergence
+*Use this to blend Brand Identity with User Dynamic Color.*
 
-1.  **Select Layout Pattern**: 
-    - Read [PATTERNS.md](references/PATTERNS.md) to choose a pattern based on the UI's purpose (e.g., Bento Grid for dashboards, Masonry for portfolios). Apply the grid/structure to the `widget`.
-2.  **Identify Component Category**: Match the `widget` to a category in [COMPONENTS.md](references/COMPONENTS.md) (e.g., Button, Navigation, Surface, Input).
-3.  **Apply Color System**: 
-    - Read [COLOR.md](references/COLOR.md) to select tonal palettes and apply container tiers for hierarchy.
-    - **Apply Color Convergence**: Merge brand identity with user settings using harmonization and `ThemeExtension` (see [PLATFORMS.md](references/PLATFORMS.md)).
-4.  **Apply Shape System**: 
-    - Read [SHAPES.md](references/SHAPES.md) to use expressive radii (e.g., Full, Extra Large). Ensure consistent rounding for component families.
-5.  **Optimize Size and Spacing**:
-    - Read [SPACING.md](references/SPACING.md) to increase touch targets to 48dp-56dp and apply generous internal padding.
-6.  **Inject Motion**:
-    - Read [MOTION.md](references/MOTION.md) to add energetic state transitions and use expressive easing and durations.
-7.  **Verify**: Cross-reference with [CHECKLIST.md](references/CHECKLIST.md).
+1.  **Identify Brand Anchors**: Keep primary brand colors as "Anchors" (don't harmonize).
+2.  **Apply Surface Bleed**: Tint background surfaces with a 5-8% opacity of the Dynamic Primary color.
+3.  **Vibrant Schemes**: Use the `Vibrant` tonal palette for accents to create a "glowing" effect against dark/neutral surfaces.
 
-## Topic References
+### 4. Inject Spring Motion
+*Use this for all primary transitions to replace robotic cubic-bezier curves.*
 
-Load these references only when working on a specific aspect of the design system:
+1.  **Choose Scheme**:
+    - **Expressive**: High stiffness, low damping (overshoot/bounce). For FABs, Dialogs.
+    - **Standard**: High damping, no overshoot. For list updates, subtle toggles.
+2.  **Apply Spring Simulation**:
+    ```dart
+    // stiffness: 300, damping: 20
+    final simulation = SpringSimulation(SpringDescription(mass: 1, stiffness: 300, damping: 20), 0, 1, 0);
+    ```
 
-- **Foundations & Principles**: Core principles, communication, and when to use. See [FOUNDATIONS.md](references/FOUNDATIONS.md).
-- **Usability**: Design tactics, best practices, and testing. See [USABILITY.md](references/USABILITY.md).
-- **Typography**: Scales, values, and type treatments. See [TYPOGRAPHY.md](references/TYPOGRAPHY.md).
-- **Accessibility**: Compliance, screen reader compatibility, and testing. See [ACCESSIBILITY.md](references/ACCESSIBILITY.md).
-- **Layout Patterns**: Bento grid, masonry, cards, hero sections, and page structures. See [PATTERNS.md](references/PATTERNS.md).
-- **Platform Specifics**: Android (Dynamic Color, Android 16) and Linux Desktop integration. See [PLATFORMS.md](references/PLATFORMS.md).
+## Layout Patterns
+
+### Bento Grid (Modular)
+- **Best For**: Dashboards, feature showcases, Apple-style "Pro" summaries.
+- **Key Spec**: Unified external margin (24dp), internal gaps (16dp), varied cell aspect ratios.
+
+### Masonry (Rhythmic)
+- **Best For**: Image feeds, note-taking apps, mood boards.
+- **Key Spec**: Fixed column count (2 or 3), variable height, staggered start.
+
+### Editorial Hero
+- **Best For**: Landing pages, article headers.
+- **Key Spec**: Large Variable Headline (`wght`: 900), full-bleed background, "Surface Bleed" color convergence.
+
+## Resource References
+
+- **Patterns & Grids**: [PATTERNS.md](references/PATTERNS.md) (Updated M3E Specs)
+- **Variable Type**: [TYPOGRAPHY.md](references/TYPOGRAPHY.md) (Roboto Flex Axis Guide)
+- **Spring Motion**: [MOTION.md](references/MOTION.md) (Physics Tokens)
+- **Convergence**: [COLOR.md](references/COLOR.md) (Surface Bleed Logic)
+- **Component Specs**: [COMPONENTS.md](references/COMPONENTS.md)
+- **Quality Audit**: [CHECKLIST.md](references/CHECKLIST.md)

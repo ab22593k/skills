@@ -1,12 +1,26 @@
-# Expressive Color System
+# Material 3 Expressive Color System (M3E)
 
-The Expressive color system extends standard Material 3 with expanded tonal palettes, container color tiers, and emotional color selection guidelines.
+M3E color is about **Convergence**: blending dynamic user choices with brand identity and high-contrast "Vibrant" accents.
 
+## 1. Color Convergence & Surface Bleed
 
-## Table of Contents
+In M3E, the UI feels "alive" by allowing the background color to bleed into surface containers and component states.
 
-- [Color Philosophy](#color-philosophy)
-- [Color Roles and Tokens](#color-roles-and-tokens)
+### Core M3E Concepts:
+- **Surface Bleed**: Instead of static neutrals, tinted surface colors use **5-10%** of the Dynamic Primary or Seed color for the background, creating a unified tonal environment.
+- **Harmonized Brand Anchors**: Identify primary brand colors (e.g., logo colors) and mark them as "Anchors." These do not harmonize with the user's dynamic theme, ensuring brand recognition.
+- **Vibrant Schemes**: Uses the **Vibrant** tonal palette for high-emphasis accents. Vibrant colors are more saturated and have a higher perceived brightness than standard M3 tokens.
+
+### Flutter Code (Surface Bleed Implementation):
+```dart
+// Blending Seed with Surface
+final Color surfaceBleed = Color.alphaBlend(
+  Theme.of(context).colorScheme.primary.withOpacity(0.08), // Bleed
+  Theme.of(context).colorScheme.surface, // Base Surface
+);
+```
+
+## Color Philosophy
   - [Primary Color Roles](#primary-color-roles)
   - [Secondary Color Roles](#secondary-color-roles)
   - [Tertiary Color Roles](#tertiary-color-roles)

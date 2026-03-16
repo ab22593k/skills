@@ -1,13 +1,44 @@
-# Expressive Motion
+# Material 3 Expressive Motion (M3E)
 
-The motion system uses timing, easing, and transitions to create emotionally engaging experiences. Motion brings interfaces to life with personality while maintaining usability through purposeful animation choices.
+M3E replaces traditional cubic-bezier curves with **Spring Physics**. This ensures motion feels organic, energetic, and reactive to user input.
 
+## 1. Spring Physics System (Default M3E Spec)
 
-## Table of Contents
+Instead of a fixed duration, M3E motion is defined by **Stiffness**, **Damping**, and **Mass**.
 
-- [Motion Philosophy](#motion-philosophy)
-- [Duration Specifications](#duration-specifications)
-  - [Standard Durations](#standard-durations)
+### M3E Spring Schemes:
+
+- **Expressive Scheme**: High energy, spirited overshoot.
+    - **Stiffness**: 350
+    - **Damping Ratio**: 0.5 (Significant bounce)
+    - **Usage**: FAB expansion, Dialog entry, Success states.
+- **Standard Scheme**: Smooth, utilitarian, no overshoot.
+    - **Stiffness**: 300
+    - **Damping Ratio**: 1.0 (Critical damping - no bounce)
+    - **Usage**: Toggles, list updates, navigation rails.
+- **Effects Scheme**: Used for color and opacity "convergence."
+    - **Stiffness**: 200
+    - **Damping Ratio**: 0.8
+    - **Usage**: Pressed states, hover highlights.
+
+### Flutter Implementation:
+```dart
+AnimationController(
+  vsync: this,
+  duration: const Duration(milliseconds: 400),
+).animate(
+  CurvedAnimation(
+    parent: controller,
+    curve: SpringCurve.expressive(), // Custom M3E Spring curve
+  ),
+);
+
+// Spring parameters for Simulation
+final spring = SpringDescription(mass: 1.0, stiffness: 350.0, damping: 20.0);
+```
+
+## Duration Specifications (M3E Guidelines)
+
   - [Component-Specific Durations](#component-specific-durations)
 - [Easing Specifications](#easing-specifications)
   - [Standard Easing Curves](#standard-easing-curves)

@@ -1,13 +1,40 @@
-# Material 3 Expressive Typography
+# Material 3 Expressive Typography (M3E)
 
-The M3 Expressive typography system provides a comprehensive set of type scales with exact specifications for font size, line height, and letter spacing. Expressive typography emphasizes hierarchy through size, weight, and treatment variations.
+M3E focuses on **Editorial-style typography** using **Variable Fonts** (Roboto Flex). This allows for dynamic hierarchy control through font axes rather than static weights.
 
+## 1. Variable Typography (Roboto Flex)
 
-## Table of Contents
+Variable fonts provide a multi-axis control system. Use these axes to create "editorial moments" like hero headlines and emphasized navigation.
 
-- [Typography Philosophy](#typography-philosophy)
-- [Type Scale Overview](#type-scale-overview)
-- [Display Styles](#display-styles)
+### Core Axes for M3E:
+- **Weight (`wght`)**: 100 (Thin) to 1000 (Black). Standard M3E Headline uses **850-900**.
+- **Width (`wdth`)**: 25% (Ultra-Condensed) to 150% (Ultra-Expanded). Use **110-120%** for expressive headlines.
+- **Optical Size (`opsz`)**: 8 to 144. Automatically adjusts letterforms for readability. Set to **144** for display text.
+
+### Flutter Implementation:
+```dart
+Text(
+  'Expressive Headline',
+  style: TextStyle(
+    fontFamily: 'RobotoFlex',
+    fontVariations: const [
+      FontVariation('wght', 850.0), // Extreme weight for loudness
+      FontVariation('wdth', 115.0), // Slight width increase for impact
+      FontVariation('opsz', 144.0), // Display-tuned letterforms
+    ],
+  ),
+)
+```
+
+## 2. Emphasized Typography (M3E Spec)
+
+M3E introduces **Emphasized** variants for the standard type scale:
+
+- **Display Emphasized**: `wght: 900`, `wdth: 120`
+- **Headline Emphasized**: `wght: 850`, `wdth: 110`
+- **Title Emphasized**: `wght: 700`
+
+## Type Scale Overview
   - [Display Large](#display-large)
   - [Display Medium](#display-medium)
   - [Display Small](#display-small)

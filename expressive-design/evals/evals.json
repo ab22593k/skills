@@ -3,30 +3,30 @@
   "evals": [
     {
       "id": 0,
-      "name": "button-transformation",
-      "prompt": "Update this standard Flutter ElevatedButton(onPressed: () {}, child: Text('Submit')) to follow Material Expressive guidelines. Provide the ButtonStyle and ThemeData snippets for the typography (Label Large), expressive shape (radii), and increased size (56dp target).",
-      "expected_output": "The response should use Label Large typography, apply a large border radius (e.g., 20dp+ or 'full'), and increase the touch target to 56dp. It should reference M3 Expressive tokens.",
+      "name": "bento-loudness-hierarchy",
+      "prompt": "Transform this standard Flutter dashboard into a modern M3E Bento Grid. Explicitly define the 'Visual Loudness' hierarchy for: 1) A large Weather card (Loud), 2) A medium Activity card (Medium), and 3) Two small Control cards (Quiet). Use M3E 2025 corner radii (32dp) and unified internal gaps (16dp).",
+      "expected_output": "The response must define 'Loud' (2x2 or 4x2), 'Medium' (1x2 or 2x1), and 'Quiet' (1x1) cells. It must specify 32dp corner radii and 16dp gaps. It should mention high-contrast containers for 'Loud' and surface containers for 'Quiet'.",
       "files": []
     },
     {
       "id": 1,
-      "name": "bento-grid-dashboard",
-      "prompt": "Design a Flutter dashboard layout using the Bento Grid pattern. It should include a 'Header' section, a 'Main Chart' card, and two small 'Action' cards. Apply Material Expressive spacing, shape tokens (Extra Large for the chart), and color tiers for hierarchy.",
-      "expected_output": "The response should describe or implement a Bento Grid structure, use expressive spacing (e.g., 24dp for sections), apply Extra Large radii (24dp) for the main container, and use Primary/Secondary container tiers.",
+      "name": "variable-font-editorial",
+      "prompt": "Implement an 'Editorial Hero' section headline in Flutter using Roboto Flex. The headline should be extremely bold (wght: 850) and slightly wider (wdth: 115) for maximum impact. Provide the specific FontVariation code snippet and explain the 'opsz' axis for display text.",
+      "expected_output": "The response must include a code snippet using `FontVariation('wght', 850.0)` and `FontVariation('wdth', 115.0)`. It should explain that `opsz` (optical size) should be set to 144 for display/hero text to ensure correct letterforms.",
       "files": []
     },
     {
       "id": 2,
-      "name": "android-16-dynamic-color",
-      "prompt": "I have a brand color #E91E63. How do I correctly harmonize this with Android 16's dynamic primary color in an expressive Flutter app while maintaining brand identity? Provide the ThemeExtension and harmonizeWith implementation based on PLATFORMS.MD.",
-      "expected_output": "Should correctly use harmonizeWith and the BrandStyles ThemeExtension pattern from the reference files, specifically citing the approach for Android 16 and color convergence.",
+      "name": "expressive-spring-motion",
+      "prompt": "I need to animate a Floating Action Button (FAB) expansion using the M3E 2025 'Expressive' spring physics scheme. What are the stiffness and damping ratio values I should use? Provide a Flutter AnimationController/SpringSimulation example.",
+      "expected_output": "The response must specify Stiffness: 350 and Damping Ratio: 0.5 for the 'Expressive' scheme. It should provide a `SpringSimulation` or `SpringDescription` example using these values to create 'spirited overshoot' or bounce.",
       "files": []
     },
     {
       "id": 3,
-      "name": "communication-scannability",
-      "prompt": "Rewrite this settings screen text for an expressive media app: 'User Account Details: You can manage all of your account deletion options here if you really need to. It is important to note that etc. can't be undone.' Apply Communication Principles 5, 6, 7, and 8 from FOUNDATIONS.md.",
-      "expected_output": "Should use direct address ('Your account'), scannable words ('Delete account'), avoid Latin abbreviations ('etc.'), and clearly explain consequences (Principle 5).",
+      "name": "surface-bleed-convergence",
+      "prompt": "Implement 'Surface Bleed' for a custom card component to achieve color convergence with the user's dynamic theme. Show the Flutter code to tint the background surface with 8% of the dynamic primary color using alpha blending.",
+      "expected_output": "The response must show `Color.alphaBlend(Theme.of(context).colorScheme.primary.withOpacity(0.08), Theme.of(context).colorScheme.surface)`. It should explain that this creates a 'unified tonal environment' where the background feels 'alive'.",
       "files": []
     }
   ]

@@ -1,12 +1,27 @@
-# Layout Patterns
+# Expressive Layout Patterns (M3E)
 
-Expressive design leverages these popular layout trends to create structured, engaging, and functional user interfaces.
+Expressive design leverages these high-impact layout trends to create structured, emotionally engaging, and functional user interfaces.
 
-## 1. Bento Grid
-A modular, box-based grid (often with rounded corners) that displays various pieces of content—like widgets, cards, or features—in a structured, "lunchbox" style. Very popular for feature showcases and dashboards.
+## 1. Bento Grid (Modular Hierarchy)
+The Bento Grid is the hallmark of modern expressive design. It uses modular "cells" to organize complex information into a unified, high-contrast dashboard.
 
-## 2. Masonry Layout
-A grid layout where elements (cards or images) are stacked vertically based on available vertical space, resulting in an uneven bottom edge. Ideal for portfolios and content feeds (e.g., Pinterest).
+### M3E Specifications:
+- **Visual Loudness Control**: 
+    - **Loud (Hero)**: Occupies 2x2 or 4x2 grid space. Features large variable typography and vibrant container colors.
+    - **Medium (Secondary)**: Occupies 1x2 or 2x1 grid space. Uses tonal container colors.
+    - **Quiet (Data)**: Occupies 1x1 space. Uses surface colors or outlines.
+- **Corner Radii**: Standard 28dp to 32dp for all cells.
+- **Spacing**: Unified external margins (24dp) and internal cell gaps (16dp).
+- **Interactive States**: Cells should "lift" or "glow" (convergence) on hover/tap.
+
+## 2. Masonry Layout (Rhythmic Feeds)
+A staggered grid pattern that accommodates content of varying heights, creating a rhythmic, Pinterest-like browsing experience.
+
+### M3E Specifications:
+- **Column Count**: 2 columns (mobile), 3-4 columns (desktop).
+- **Rhythmic Gaps**: Consistent 12dp-16dp horizontal/vertical gaps.
+- **Dynamic Containment**: Each masonry item must be a "Surface Container Low" or "Medium" to create depth.
+- **Motion**: Items should slide in with a "Staggered Spring" effect (Expressive scheme).
 
 ## 3. Card-Based Layout
 An interface design that organizes information into distinct, rectangular containers called "cards." Each card typically acts as a single, cohesive unit of information or an entry point for a specific action.
