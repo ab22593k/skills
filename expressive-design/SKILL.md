@@ -1,9 +1,9 @@
 name: expressive-design
-description: Material 3 Expressive (M3E) design system for Flutter. You MUST use this skill whenever the user asks to "modernize," "polish," "elevate," or create an "emotionally engaging" UI. It transforms standard Material 3 into a premium, editorial-style experience using Bento Grids, Masonry layouts, Variable Fonts (Roboto Flex), and Spring Physics motion. Trigger this for any consumer-facing, media, or communication app request, even if they don't explicitly mention "Expressive" design. Do NOT use for high-density enterprise data tables or safety-critical apps where standard utilitarian M3 is required.
+description: Material 3 Expressive (M3E) design system for Flutter. You MUST use this skill whenever the user asks to "modernize," "polish," "elevate," or create an "emotionally engaging" or "inclusive" UI. It transforms standard Material 3 into a premium, editorial-style experience using Bento Grids, Variable Fonts, and Spring Physics, while ensuring design accounts for diverse "Dimensions of Experience" (Age, Culture, Disability, etc.). Trigger this for any consumer-facing request, especially those mentioning accessibility, global relevance, or diverse user groups.
 
 # Material 3 Expressive (M3E)
 
-Material 3 Expressive is the high-impact evolution of Google's design system. It moves beyond utility to create emotional resonance through **Bento Grids**, **Variable Typography**, **Color Convergence**, and **Spring Physics**.
+Material 3 Expressive is the high-impact evolution of Google's design system. It moves beyond utility to create emotional resonance through **Bento Grids**, **Variable Typography**, **Color Convergence**, **Spring Physics**, and **Inclusive Experience Design**.
 
 ## Core Workflows
 
@@ -51,6 +51,26 @@ Material 3 Expressive is the high-impact evolution of Google's design system. It
     // stiffness: 300, damping: 20
     final simulation = SpringSimulation(SpringDescription(mass: 1, stiffness: 300, damping: 20), 0, 1, 0);
     ```
+
+### 5. Conduct Inclusive Dimension Audit
+*Use this to ensure the design accounts for the full spectrum of human diversity (Lived Experiences).*
+
+1.  **Evaluate Dimensions**: Audit the UI against the following attributes:
+    - **Age & Disability**: Contrast, touch targets (48dp+), and legibility.
+    - **Culture & Geography**: Iconography relevance and localized color meanings.
+    - **Technology Proficiency**: Clear functional signifiers and reduced "hidden" interactions.
+    - **Socioeconomic Status**: Efficient data usage and low-latency performance.
+2.  **Collaborate & Research**: Identify gaps where diverse perspectives (e.g., non-tech-native users, different cultural backgrounds) are missing from the design.
+3.  **Implement Inclusive Defaults**: Prefer accessible defaults (e.g., `ColorScheme.fromSeed` with high contrast) over "average" user assumptions.
+
+### 6. Engage in Co-design
+*Use this to involve people who use the product directly in the creation process, prioritizing overlooked communities.*
+
+1.  **Prioritize Overlooked Communities**: Identify and actively engage with communities often excluded from standard research.
+2.  **Facilitate Early & Often**: Engage community members and experts throughout the entire development process (ideation to testing).
+3.  **Apply Insights to Decisions**: Use community feedback to shape feature priorities, functionality, and messaging. Validate assumptions with a broad range of people.
+4.  **Mitigate Risks**: Identify and address potential harms or risks of exclusion.
+5.  **Reference Methodology**: Consult [CODESIGN.md](references/CODESIGN.md) for critical questions and co-creation strategies.
 
 ## Layout Patterns
 

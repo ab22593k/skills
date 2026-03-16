@@ -28,6 +28,20 @@
       "prompt": "Implement 'Surface Bleed' for a custom card component to achieve color convergence with the user's dynamic theme. Show the Flutter code to tint the background surface with 8% of the dynamic primary color using alpha blending.",
       "expected_output": "The response must show `Color.alphaBlend(Theme.of(context).colorScheme.primary.withOpacity(0.08), Theme.of(context).colorScheme.surface)`. It should explain that this creates a 'unified tonal environment' where the background feels 'alive'.",
       "files": []
+    },
+    {
+      "id": 4,
+      "name": "inclusive-dimension-audit",
+      "prompt": "I am designing a global messaging app. Conduct an 'Inclusive Dimension Audit' for the contact list and chat view. Specifically address Age, Culture, and Technology Proficiency using M3E principles. What specific attributes should I adjust?",
+      "expected_output": "The response must mention at least three dimensions (Age, Culture, Technology Proficiency) and suggest M3E adjustments like: 48dp+ touch targets for Age, localized/neutral icons for Culture, and explicit functional signifiers (labels over icons) for Technology Proficiency.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "codesign-strategy",
+      "prompt": "I am developing a community health app for underserved rural areas. Outline a 'Co-design' strategy to ensure the app is beneficial for everyone. Specifically address: 1) How to engage community members early, 2) Key questions to validate assumptions, and 3) The risks of excluding overlooked communities.",
+      "expected_output": "The response must define Co-design as building *with* people, suggest engaging experts early in ideation, list specific validation questions (e.g., 'Who else can benefit?', 'What are the risks of exclusion?'), and explain the harms of excluding overlooked communities (e.g., bias, loss of access).",
+      "files": []
     }
   ]
 }

@@ -1,4 +1,15 @@
-## Core Expressive Elements
+# Expressive Design Foundations
+
+Expressive design creates emotionally engaging experiences through strategic use of layout, color, shape, size, and motion. It is built on the core principle of **Designing for All** through inclusive and collaborative practices.
+
+## 1. Core Principles
+
+- **Emotionally Resonant**: Interfaces should feel alive and responsive to the user's emotional state.
+- **Hierarchical Clarity**: Use "Visual Loudness" to guide the user's eye to what matters most.
+- **Inclusive & Equitable**: Account for the full spectrum of human diversity (Dimensions of Experience).
+- **Co-designed**: Build **with** people, not just **for** them. Involving users, especially from overlooked communities, in the creation process leads to better innovation.
+
+## 2. Core Expressive Elements
 
 ### 1. Color
 

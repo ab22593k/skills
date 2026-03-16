@@ -1,11 +1,20 @@
-# Material 3 Expressive Usability
+# Material 3 Expressive Usability (Inclusive Design)
 
-Usability design tactics make products intuitive and easy to understand for everyone. Research showed participants spotted key UI elements up to **four times faster** in M3 Expressive designs.
+M3E defines usability as the measure of how easily and efficiently **all people** can complete their tasks. This includes auditing for diverse **Lived Experiences** to ensure the design is truly inclusive.
 
+## 1. Inclusive Dimension Audit
 
-## Table of Contents
+Audit your design against these dimensions to ensure global relevance and accessibility:
 
-- [Design Tactics](#design-tactics)
+| Audit Item | Requirement | Goal |
+| :--- | :--- | :--- |
+| **Cognitive Load** | Minimize complex gestures; provide clear labels. | Support varying **Age** and **Technology Proficiency**. |
+| **Visual Scannability** | High contrast; 16sp+ typography. | Support **Disability** and **Age**. |
+| **Cultural Relevance** | Localized colors and neutral icons. | Support diverse **Culture** and **Religion**. |
+| **Global Performance** | Low asset size; low-latency transitions. | Support varying **Geography** and **Socioeconomic Status**. |
+| **Community Engagement** | Ongoing testing with overlooked communities. | Validate assumptions and address **Risks of Exclusion**. |
+
+## 2. Design Tactics
   - [Color & Contrast](#color-contrast)
   - [Hierarchy](#hierarchy)
   - [Placement](#placement)

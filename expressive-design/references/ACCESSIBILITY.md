@@ -1,11 +1,23 @@
-# Material 3 Expressive Accessibility
+# Material 3 Expressive Accessibility (Inclusive Design)
 
-The M3 Expressive accessibility guidelines ensure that expressive design elements remain usable by all users, including those with visual, motor, cognitive, and auditory impairments. Expressive design should enhance accessibility, not compromise it.
+In M3E, accessibility is the floor, and **Inclusive Design** is the ceiling. We design for the full spectrum of human diversity by considering the **Dimensions of Experience**.
 
+## 1. Dimensions of Experience (Lived Experiences)
 
-## Table of Contents
+Design decisions must account for the following attributes and environments:
 
-- [Accessibility Philosophy](#accessibility-philosophy)
+| Dimension | Key Consideration | M3E Application |
+| :--- | :--- | :--- |
+| **Age** | Visual acuity, motor control, cognitive load. | Larger touch targets (48dp+), increased default font size (16sp+). |
+| **Culture & Religion** | Symbolic meanings of colors, icons, and imagery. | Avoid culturally specific metaphors; use localized icons. |
+| **Disability** | Visual, auditory, motor, and cognitive impairments. | Support screen readers, dynamic contrast, and reduced motion. |
+| **Education & Literacy** | Readability and clear functional signifiers. | Use simple, direct language; avoid jargon; provide clear visual cues. |
+| **Ethnicity & Race** | Representation in imagery and diverse skin tone rendering. | Use diverse placeholders and inclusive photography. |
+| **Geography** | Global relevance, RTL (Right-to-Left) support. | Design for localization and varying connectivity speeds. |
+| **Socioeconomic Status** | Device performance, data constraints. | Optimize app size and ensure low-latency performance. |
+| **Technology Proficiency** | Familiarity with UI patterns and "hidden" gestures. | Use explicit signifiers over complex gestures; minimize discovery barriers. |
+
+## 2. Accessibility Philosophy
 - [Color Contrast Requirements](#color-contrast-requirements)
   - [Minimum Contrast Ratios](#minimum-contrast-ratios)
   - [Text Contrast Matrix](#text-contrast-matrix)
