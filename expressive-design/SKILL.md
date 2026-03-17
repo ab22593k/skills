@@ -1,96 +1,139 @@
+---
 name: expressive-design
-description: Material 3 Expressive (M3E) design system for Flutter. You MUST use this skill whenever the user asks to "modernize," "polish," "elevate," or create an "emotionally engaging" or "inclusive" UI. It transforms standard Material 3 into a premium, editorial-style experience using Bento Grids, Variable Fonts, and Spring Physics, while ensuring design accounts for diverse "Dimensions of Experience" (Age, Culture, Disability, etc.). Trigger this for any consumer-facing request, especially those mentioning accessibility, global relevance, or diverse user groups.
+description: Use when the user is designing or refining any UI, product, content, experience, interface, branding, story, or creative output and mentions emotion, feeling, expressiveness, emotional impact, resonance, “make it feel”, “evoke”, “heart”, or wants the design to move people. Always accept &ARG1; as the base input. Now **heavily emphasizes** Material Design 3 Styles (Elevation + Typography) alongside Building for All, Canonical Layouts, Adaptive Design, and Customization to create emotionally powerful, personally resonant designs with perfect depth, hierarchy, tone, and readability everywhere.
+---
 
-# Material 3 Expressive (M3E)
+# Expressive: Design with Emotion + Material 3 Foundations
 
-Material 3 Expressive is the high-impact evolution of Google's design system. It moves beyond utility to create emotional resonance through **Bento Grids**, **Variable Typography**, **Color Convergence**, **Spring Physics**, and **Inclusive Experience Design**.
+**(Building for All + Canonical Layouts + Adaptive Design + Customization + Styles: Elevation & Typography)**
 
-## Core Workflows
+## Overview
 
-### 1. Construct Bento Hierarchy
-*Use this when the UI needs to showcase multiple features or data points with clear priority.*
+**Turn any functional base (&ARG1;) into an emotionally powerful, personally resonant design that feels perfect on every screen and for every user.**  
+This skill now **centers** MD3 Styles — Elevation (tonal depth, dynamic hierarchy) and Typography (roles, emphasized styles, variable fonts) — as the final expressive polish on top of Canonical Layouts, Adaptive strategies, and Custom themes/tokens. Emotion becomes tangible through depth and voice while staying accessible and consistent.
 
-1.  **Define Visual Loudness**: Assign a "loudness" level to each content block (Loud, Medium, Quiet).
-2.  **Size Mapping**: 
-    - **Loud**: 2x2 or full-width cells. High-contrast containers.
-    - **Medium**: 1x2 or 2x1 cells. Tonal containers.
-    - **Quiet**: 1x1 cells. Surface containers.
-3.  **Implementation**: Use `flutter_staggered_grid_view` or `CustomMultiChildLayout`. Apply 16dp-24dp gaps and 28dp-32dp corner radii to cells.
+**Core principle**  
+Great design doesn’t just work — it _moves_ people and feels like _theirs_.  
+Elevation gives emotional weight and focus; Typography gives emotional tone and rhythm.
 
-### 2. Implement Variable Typography
-*Use this for "Editorial Moments" (Hero sections, onboarding, headlines).*
+**Official MD3 alignment**
 
-1.  **Select Font**: Use `Roboto Flex` (variable font).
-2.  **Define Axis values**: 
-    - **Weight (`wght`)**: 100-1000 for precise emphasis.
-    - **Width (`wdth`)**: 25-150% to fit headlines perfectly.
-    - **Optical Size (`opsz`)**: 8-144 for readability at any scale.
-3.  **Flutter Code**:
-    ```dart
-    Text('Editorial Headline', style: TextStyle(
-      fontFamily: 'RobotoFlex',
-      fontVariations: [FontVariation('wght', 850), FontVariation('wdth', 115)],
-    ))
-    ```
+- https://m3.material.io/styles/elevation
+- https://m3.material.io/styles/typography
+- https://m3.material.io/foundations/customization
+- https://m3.material.io/foundations/layout/canonical-layouts/overview
+- https://m3.material.io/foundations/adaptive-design
+- https://m3.material.io/foundations/building-for-all/user-needs
 
-### 3. Apply Color Convergence
-*Use this to blend Brand Identity with User Dynamic Color.*
+## When to Use (trigger conditions)
 
-1.  **Identify Brand Anchors**: Keep primary brand colors as "Anchors" (don't harmonize).
-2.  **Apply Surface Bleed**: Tint background surfaces with a 5-8% opacity of the Dynamic Primary color.
-3.  **Vibrant Schemes**: Use the `Vibrant` tonal palette for accents to create a "glowing" effect against dark/neutral surfaces.
+Same as before + any mention of shadows, depth, hierarchy, text style, font, readability, tone of voice, or expressive typography.
 
-### 4. Inject Spring Motion
-*Use this for all primary transitions to replace robotic cubic-bezier curves.*
+## Structured Workflow (MUST follow every step for &ARG1;)
 
-1.  **Choose Scheme**:
-    - **Expressive**: High stiffness, low damping (overshoot/bounce). For FABs, Dialogs.
-    - **Standard**: High damping, no overshoot. For list updates, subtle toggles.
-2.  **Apply Spring Simulation**:
-    ```dart
-    // stiffness: 300, damping: 20
-    final simulation = SpringSimulation(SpringDescription(mass: 1, stiffness: 300, damping: 20), 0, 1, 0);
-    ```
+**You MUST announce at the start:**  
+“I’m using the Expressive: Design with Emotion skill (MD3 Building for All + Canonical Layouts + Adaptive Design + Customization + Styles: Elevation & Typography) on &ARG1;.”
 
-### 5. Conduct Inclusive Dimension Audit
-*Use this to ensure the design accounts for the full spectrum of human diversity (Lived Experiences).*
+**Step 0 – User Needs Alignment (Material 3 Building for All)**
 
-1.  **Evaluate Dimensions**: Audit the UI against the following attributes:
-    - **Age & Disability**: Contrast, touch targets (48dp+), and legibility.
-    - **Culture & Geography**: Iconography relevance and localized color meanings.
-    - **Technology Proficiency**: Clear functional signifiers and reduced "hidden" interactions.
-    - **Socioeconomic Status**: Efficient data usage and low-latency performance.
-2.  **Collaborate & Research**: Identify gaps where diverse perspectives (e.g., non-tech-native users, different cultural backgrounds) are missing from the design.
-3.  **Implement Inclusive Defaults**: Prefer accessible defaults (e.g., `ColorScheme.fromSeed` with high contrast) over "average" user assumptions.
+- Reference: https://m3.material.io/foundations/building-for-all/user-needs
+- Ask: “Who are the primary and secondary users? Any specific needs around ability, culture, language, age, context, or personalization?”
+- Identify 3–5 key dimensions and flag constraints.
 
-### 6. Engage in Co-design
-*Use this to involve people who use the product directly in the creation process, prioritizing overlooked communities.*
+**Step 1 – Canonical Layout & Adaptive Foundation (EMPHASIZED)**
 
-1.  **Prioritize Overlooked Communities**: Identify and actively engage with communities often excluded from standard research.
-2.  **Facilitate Early & Often**: Engage community members and experts throughout the entire development process (ideation to testing).
-3.  **Apply Insights to Decisions**: Use community feedback to shape feature priorities, functionality, and messaging. Validate assumptions with a broad range of people.
-4.  **Mitigate Risks**: Identify and address potential harms or risks of exclusion.
-5.  **Reference Methodology**: Consult [CODESIGN.md](references/CODESIGN.md) for critical questions and co-creation strategies.
+- Choose exactly one canonical layout + adaptive strategy.
+- Get user approval.
 
-## Layout Patterns
+**Step 2 – Customization & Dynamic Theming (EMPHASIZED)**
 
-### Bento Grid (Modular)
-- **Best For**: Dashboards, feature showcases, Apple-style "Pro" summaries.
-- **Key Spec**: Unified external margin (24dp), internal gaps (16dp), varied cell aspect ratios.
+- Generate custom color scheme + dynamic color + tokens.
+- Get user approval.
 
-### Masonry (Rhythmic)
-- **Best For**: Image feeds, note-taking apps, mood boards.
-- **Key Spec**: Fixed column count (2 or 3), variable height, staggered start.
+**Step 3 – Styles: Elevation & Typography (EMPHASIZED — NEW)**
 
-### Editorial Hero
-- **Best For**: Landing pages, article headers.
-- **Key Spec**: Large Variable Headline (`wght`: 900), full-bleed background, "Surface Bleed" color convergence.
+- Reference:  
+  • https://m3.material.io/styles/elevation  
+  • https://m3.material.io/styles/typography
+- **Elevation**: Choose limited levels (0 = flat calm/trust, 1–3 = subtle depth/delights, 4–5+ = focus/wonder/urgency). Use tonal surface colors primarily; enable dynamic elevation on interaction (hover/press +1 level).
+- **Typography**: Choose roles from the MD3 type scale (Display / Headline / Title / Body / Label — small/medium/large + baseline + emphasized styles). Apply variable fonts, weights, tracking, and line-height tokens for rhythm and tone.
+- Present the proposed elevation levels + typography scale:  
+  • How they tie to the target emotion  
+  • How they respect user needs (readability, contrast, accessibility)  
+  • How they adapt across devices (tokens + dynamic behavior)  
+  • Compatibility with custom theme
+- Get explicit approval before continuing.
 
-## Resource References
+**Step 4 – Emotion Mapping (now fully styled)**
 
-- **Patterns & Grids**: [PATTERNS.md](references/PATTERNS.md) (Updated M3E Specs)
-- **Variable Type**: [TYPOGRAPHY.md](references/TYPOGRAPHY.md) (Roboto Flex Axis Guide)
-- **Spring Motion**: [MOTION.md](references/MOTION.md) (Physics Tokens)
-- **Convergence**: [COLOR.md](references/COLOR.md) (Surface Bleed Logic)
-- **Component Specs**: [COMPONENTS.md](references/COMPONENTS.md)
-- **Quality Audit**: [CHECKLIST.md](references/CHECKLIST.md)
+- List 3–5 target emotions.
+- Create **Emotion → Design Lever** table using **all prior foundations + approved styles**:
+  - Canonical layout + adaptive strategy
+  - Custom theme + dynamic color
+  - Elevation levels (tonal/dynamic)
+  - Typography roles + emphasized styles + tokens
+  - Copy tone, micro-interactions, personalization
+  - Building for All compliance
+- Every lever now has depth and voice.
+
+**Step 5 – Expressive Variations (2–3 options, style-driven)**
+
+- Variation A: Subtle & refined
+- Variation B: Bold & immersive
+- Variation C: Narrative-driven
+- For each:  
+  • Exact changes to &ARG1; using full stack  
+  • Dynamic elevation + typography behavior  
+  • Expected emotional impact + personal resonance  
+  • User Needs + accessibility compliance  
+  • Trade-offs (YAGNI)
+
+**Step 6 – Present & Iterate (section by section)**
+
+- Show one section at a time (Canonical Layout → Adaptive → Custom Theme → Elevation + Typography → Color application → Copy → Motion → Personalization).
+- After each: “Does this deliver the emotion **and** feel right with the depth and voice? Keep / tweak / discard?”
+- Revise immediately.
+
+**Step 7 – Validation Loop (emotional + styled gut-check)**
+
+- Ask: “If a user from each group saw this on phone / tablet / desktop with dynamic elevation + their typography for 3 seconds, what emotion would they feel?”
+- Simulate adaptive transitions, dynamic elevation changes, and typography scaling.
+- Run accessibility + token consistency scan.
+- If mismatch → loop back to Step 5 (max 3 iterations).
+
+**Step 8 – Output Final Deliverable**
+
+- Complete expressive version of &ARG1; using approved full stack.
+- Include:  
+  • Before/After comparison  
+  • Emotion rationale (tied to tokens)  
+  • Canonical Layout + Adaptive rationale  
+  • Customization rationale  
+  • **Elevation rationale** (levels used + dynamic behavior)  
+  • **Typography rationale** (roles, emphasized styles, tokens)  
+  • User Needs compliance  
+  • MD3 Expressive elements used  
+  • Implementation notes (tokens, dynamic color/elevation code, breakpoints)  
+  • Suggested test across devices
+- Save to `docs/expressive-designs/YYYY-MM-DD-&ARG1;-emotional-fully-styled.md` and commit.
+
+## Anti-Patterns (never do these)
+
+- Using heavy shadows instead of tonal elevation
+- Ignoring dynamic elevation on interaction
+- Defaulting to one typography role or skipping emphasized styles
+- Inconsistent type scale that breaks readability or emotion
+- Skipping Step 3 (Elevation & Typography)
+- Adding depth/typography that conflicts with custom theme or adaptive behavior
+
+## Key Principles (Superpowers + Anthropic + MD3 — EMPHASIS ON STYLES)
+
+- Build in this exact order: Needs → Structure → Theme → **Styles (Elevation + Typography)** → Emotion
+- Elevation and Typography turn abstract emotion into tangible depth and voice
+- Every decision tied to emotion **+** canonical structure **+** adaptive behavior **+** custom tokens **+** elevation **+** typography **+** user needs
+- One question or section at a time
+- Ruthless simplicity + personalization as the ultimate expressive tool
+
+## Ready?
+
+Paste **&ARG1;** and I will immediately begin with Step 0 (User Needs) → Step 1 (Canonical + Adaptive) → Step 2 (Customization) → **Step 3** (Styles: Elevation & Typography) using the official MDE.
