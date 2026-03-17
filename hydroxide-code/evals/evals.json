@@ -1,0 +1,30 @@
+{
+  "skill_name": "modern-rust-features",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I have a tokio service that uses a lot of manual Future implementations and async blocks like `let fut = async move { ... }`. We're on Rust 1.85 now and I want to modernize to use async closures. Show me how to refactor this pattern: `let handler = |req: Request| async move { process(req).await }` into the new syntax.",
+      "expected_output": "Should show `async |req: Request| process(req).await` syntax, explain when to use AsyncFnMut vs AsyncFnOnce, and mention the Pin/Box situation for dyn AsyncFn."
+    },
+    {
+      "id": 2,
+      "prompt": "I'm writing a kernel module and need a naked function for my FFI entry point. I need to set up stack alignment and then jump to Rust code. How do I write a proper naked function in Rust 1.88?",
+      "expected_output": "Should show #[naked] attribute, unsafe extern \"C\", core::arch::asm! with options(noreturn) or explicit ret, and mention stack alignment requirements."
+    },
+    {
+      "id": 3,
+      "prompt": "My crate is still on Rust 1.80 and I need to upgrade to support Rust 1.90. We use a lot of const generics like `fn process<T, const N: usize>(arr: [T; N])`. After upgrading, how do I take advantage of const generic inference with the _ syntax?",
+      "expected_output": "Should show `process(arr)` instead of `process::<T, 4>(arr)`, explain when inference works vs when turbofish is still needed, and mention potential compilation errors if inference is ambiguous."
+    },
+    {
+      "id": 4,
+      "prompt": "I have a trait hierarchy where I implement `trait Sub: Super`. I need to pass a `&dyn Sub` to a function that expects `&dyn Super`. Before 1.86 I had to use transmute. How do I upcast trait objects now?",
+      "expected_output": "Should show simple `x as &dyn Super` syntax, mention it's now stable, and maybe show a HashMap::get_many_mut example too."
+    },
+    {
+      "id": 5,
+      "prompt": "We're migrating to 2024 edition and I want to use let_chains. I have code like `if let Some(x) = opt { if x > 0 { if let Ok(y) = parse(x) { ... } } }`. How do I flatten this with let_chains?",
+      "expected_output": "Should show `if let Some(x) = opt && x > 0 && let Ok(y) = parse(x) { ... }`, mention it's 2024 edition only, and explain the short-circuit behavior."
+    }
+  ]
+}
