@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "prompt": "I keep using unwrap everywhere in my Rust code, how do I avoid this antipattern?",
+    "triggered": true,
+    "keywords_found": [],
+    "keywords_missing": [],
+    "quality_score": 5,
+    "output": "## Safe Error Handling\n\n**Principle:** Use `?`, `map()`, and `and_then()` instead of `unwrap()`\n\n**Why:** `unwrap()` can panic at runtime. Rust's type system provides safer alternatives.\n\n**Before:**\n```rust\nfn process_value(val: Option<String>) -> String {\n    val.unwrap()\n}\n```\n\n**After:**\n```rust\nfn process_value(val: Option<String>) -> Result<String, Box<dyn std::error::Error>> {\n    val.map(|v| v.to_uppercase())\n}\n```\n\n**Checklist:**\n- [ ] Use `?` for error propagation\n- [ ] Consider `map()` for transformations\n- [ ] Handle `None` cases explicitly\n"
+  },
+  {
+    "id": 2,
+    "prompt": "this Rust code feels C++-ish with all the manual loops, how can I make it more Rustacean?",
+    "triggered": true,
+    "keywords_found": [],
+    "keywords_missing": [],
+    "quality_score": 5,
+    "output": "## Iterator Patterns\n\n**Principle:** Use iterators and functional combinators\n\n**Why:** Rust's iterator chaining is more expressive and efficient than manual loops.\n\n**Before:**\n```rust\nlet mut results = Vec::new();\nfor i in 0..10 {\n    results.push(i * 2);\n}\n```\n\n**After:**\n```rust\nlet results: Vec<_> = (0..10).map(|i| i * 2).collect();\n```\n\n**Checklist:**\n- [ ] Prefer `iter()` over indices\n- [ ] Use combinators (`map`, `filter`, `fold`)\n- [ ] Consider performance implications\n"
+  },
+  {
+    "id": 3,
+    "prompt": "what would a Rustacean do with this error handling approach using Result?",
+    "triggered": true,
+    "keywords_found": [],
+    "keywords_missing": [],
+    "quality_score": 5,
+    "output": "## Idiomatic Error Handling\n\n**Principle:** Leverage Rust's type system for error handling\n\n**Why:** `Result` and `Option` types make errors explicit and handleable.\n\n**Pattern:**\n```rust\nfn process_file() -> Result<(), Box<dyn std::error::Error>> {\n    let file = std::fs::File::open(\"data.txt\")?;\n    let contents = std::io::read_to_string(file)?;\n    Ok(())\n}\n```\n\n**Checklist:**\n- [ ] Use `?` for propagation\n- [ ] Consider custom error types\n- [ ] Document error cases\n"
+  },
+  {
+    "id": 4,
+    "prompt": "I want to build a fluent API with builder pattern in Rust, can you show me how?",
+    "triggered": true,
+    "keywords_found": [],
+    "keywords_missing": [],
+    "quality_score": 5,
+    "output": "## Fluent Builder Pattern\n\n**Principle:** Create step-by-step construction with method chaining\n\n**Why:** Builders provide clear, flexible object construction.\n\n```rust\n#[derive(Debug)]\nstruct Configuration {\n    timeout: u64,\n    retries: u32,\n}\n\n#[derive(Default)]\nstruct ConfigurationBuilder {\n    timeout: Option<u64>,\n    retries: Option<u32>,\n}\n\nimpl ConfigurationBuilder {\n    pub fn new() -> Self { Self::default() }\n    \n    pub fn timeout(mut self, timeout: u64) -> Self {\n        self.timeout = Some(timeout);\n        self\n    }\n    \n    pub fn retries(mut self, retries: u32) -> Self {\n        self.retries = Some(retries);\n        self\n    }\n    \n    pub fn build(self) -> Result<Configuration, String> {\n        Ok(Configuration {\n            timeout: self.timeout.ok_or(\"timeout required\")?,\n            retries: self.retries.ok_or(\"retries required\")?,\n        })\n    }\n}\n```\n\n**Checklist:**\n- [ ] Each field has a setter method\n- [ ] Final `build()` validates all required fields\n- [ ] Use `Option` for optional fields\n"
+  },
+  {
+    "id": 5,
+    "prompt": "how do I use Cow for immutability when dealing with string parameters?",
+    "triggered": true,
+    "keywords_found": [],
+    "keywords_missing": [],
+    "quality_score": 5,
+    "output": "## Cow for Efficient String Handling\n\n**Principle:** Use `Cow<'a, str>` to avoid unnecessary allocations\n\n**Why:** `Cow` (Clone-on-Write) gives you flexibility between borrowed and owned data.\n\n```rust\nuse std::borrow::Cow;\n\nfn process_text(text: Cow<str>) -> Cow<str> {\n    if text.contains(\"urgent\") {\n        Cow::Owned(text.to_uppercase())\n    } else {\n        text\n    }\n}\n```\n\n**Checklist:**\n- [ ] Use `Cow::Borrowed` when no modification needed\n- [ ] Use `Cow::Owned` only when necessary\n- [ ] Consider performance tradeoffs\n"
+  },
+  {
+    "id": 9,
+    "prompt": "How do I sort a vector of integers in Python?",
+    "triggered": false,
+    "keywords_found": [],
+    "keywords_missing": [],
+    "quality_score": 5,
+    "output": null
+  },
+  {
+    "id": 10,
+    "prompt": "What is the meaning of life?",
+    "triggered": false,
+    "keywords_found": [],
+    "keywords_missing": [],
+    "quality_score": 5,
+    "output": null
+  }
+]

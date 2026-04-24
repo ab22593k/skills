@@ -1,0 +1,53 @@
+{
+  "skill_name": "Idiomatic Rust Code",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I keep using unwrap everywhere in my Rust code, how do I avoid this antipattern?",
+      "expected_output": "Should provide safe error handling alternatives like using ?, map, and_then, or proper error propagation instead of unwrap",
+      "files": ["test_unwrap.rs"]
+    },
+    {
+      "id": 2,
+      "prompt": "this Rust code feels C++-ish with all the manual loops, how can I make it more Rustacean?",
+      "expected_output": "Should suggest using iterators, functional patterns, and Rust idioms instead of C++-style loops",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "what would a Rustacean do with this error handling approach using Result?",
+      "expected_output": "Should provide idiomatic error handling patterns and best practices from the Rust book",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "I want to build a fluent API with builder pattern in Rust, can you show me how?",
+      "expected_output": "Should provide a complete Builder pattern implementation with fluent interface",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "how do I use Cow for immutability when dealing with string parameters?",
+      "expected_output": "Should demonstrate Cow usage for efficient string handling with immutability",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "I'm designing a library API in Rust, what are the 11 library design principles?",
+      "expected_output": "Should reference and apply the 11 library design principles from the Idiomatic Rust book",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "this feels unidiomatic to me, can you refactor it?",
+      "expected_output": "Should identify the antipattern and provide a more idiomatic Rust alternative",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "how do I avoid Deref for polymorphism anti-pattern in Rust?",
+      "expected_output": "Should explain the anti-pattern and suggest better design alternatives",
+      "files": []
+    }
+  ]
+}
