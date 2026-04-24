@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "query": "I have a Python data processing pipeline that's taking 30 minutes to process 1GB of CSV files. The code uses pandas but it's slow. Should I refactor to Rust using PyO3 bindings for the hot paths? My deployment is on AWS Lambda with 10GB memory limit.",
+    "expected_output": "Should trigger: Yes - mentions performance bottleneck, specific technology (Python/pandas), deployment constraints (AWS Lambda), and asks about Rust/PyO3 approach",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 2,
+    "query": "Need to add type annotations to my JavaScript functions for better IDE support in an existing Node.js API. Should I convert the entire project to TypeScript or just add types?",
+    "expected_output": "Should NOT trigger - this is about adding types to JavaScript, not about performance/memory safety/refactoring to Rust",
+    "should_trigger": false,
+    "files": []
+  },
+  {
+    "id": 3,
+    "query": "Working with a legacy C++ image processing library that has memory safety issues. Want to create Rust bindings using FFI to replace the unsafe C code. Need to handle 4K video frames efficiently.",
+    "expected_output": "Should trigger: Yes - mentions C++ legacy code, memory safety issues, FFI bindings, and performance requirements (4K video)",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 4,
+    "query": "My Node.js API is getting slow when processing JSON. Should I use Rust to optimize the critical paths? Need to integrate with existing Express routes.",
+    "expected_output": "Should trigger: Yes - mentions performance issues in Node.js, asks about Rust integration with existing API",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 5,
+    "query": "Just started learning Rust and want to practice. Can you help me write a simple program?",
+    "expected_output": "Should NOT trigger - this is a learning request, not a production refactoring need",
+    "should_trigger": false,
+    "files": []
+  },
+  {
+    "id": 6,
+    "query": "Python web scraper is hitting CPU limits. Want to refactor the parsing logic to Rust using PyO3. Currently processes 100 pages/minute, need 1000 pages/minute. Running on Ubuntu server with 8GB RAM.",
+    "expected_output": "Should trigger: Yes - clear performance requirements, specific technology (PyO3), current metrics, deployment environment",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 7,
+    "query": "Should I migrate my entire Django monolith to Rust microservices?",
+    "expected_output": "Should NOT trigger - too broad, not a specific incremental refactoring scenario",
+    "should_trigger": false,
+    "files": []
+  },
+  {
+    "id": 8,
+    "query": "Rust library for parsing and validating JSON schemas. Need zero-copy parsing for performance. How should I structure the library with proper error handling for Python integration?",
+    "expected_output": "Should trigger: Yes - asks about Rust library structure, performance requirements (zero-copy), and mentions Python integration",
+    "should_trigger": true,
+    "files": []
+  }
+]

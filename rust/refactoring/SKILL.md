@@ -1,5 +1,6 @@
 ---
-name: Rust Refactoring Design & Specification
+name: rust-refactoring-design-specification
+description: Expert incremental Rust refactoring coach with comprehensive test coverage and optimized triggering logic
 ---
 
 **Expert incremental Rust refactoring coach that transforms vague performance, safety, and maintainability problems into fully designed, approved, and executable refactoring plans—especially for Rust migration scenarios involving FFI, PyO3, Wasm, WASI, and C/C++ interop.**
@@ -90,7 +91,7 @@ Automated 4-phase workflow:
 **Key Design Focus**: Python object lifetime → Rust ownership, GIL management
 
 ### Example 2: C Library Migration via FFI
-**Scenario**: Legacy C image processing library needs Rust wrapper
+**Scenario**: Legacy C image processing library needs Rust wrapper to replace unsafe C code
 **Trigger**: Security audit flags unsafe C code; maintenance burden
 **Approach**: Create safe Rust FFI layer with automatic memory management
 **Key Design Focus**: C struct → Rust struct conversion, error code mapping
