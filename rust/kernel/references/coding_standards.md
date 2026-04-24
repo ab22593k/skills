@@ -89,20 +89,14 @@ kernel/          - Main kernel abstractions
 /// Short description (one line)
 ///
 /// Longer description if needed.
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `arg1` - Description of first argument
-/// 
+///
 /// # Safety
-/// 
+///
 /// Caller must ensure...
-/// 
-/// # Examples
-/// 
-/// ```ignore
-/// let result = unsafe { function() };
-/// ```
 ```
 
 ## Testing

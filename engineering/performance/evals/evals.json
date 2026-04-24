@@ -1,0 +1,23 @@
+{
+  "skill_name": "linux-performance-troubleshoot",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "hey our java API server latency spiked to 500ms under load - took us from 50ms p99 to 500ms in an hour. CPU looks normal at 40% in top, load average is 2 on a 4-core box. What's going on? Need to find the bottleneck fast before the midnight launch.",
+      "expected_output": "Should identify this as likely I/O wait or memory issue disguised as CPU. Apply USE method - check I/O wait, context switches, memory. Look for GC pauses if Java, or I/O if synchronous. Suggest tools: iostat, vmstat, jstat for Java GC",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "our postgres container keeps getting OOM killed every few hours. We've set memory_limit to 4GB and the app should use about 2GB. Not seeing a memory leak in the app logs. Using k8s with cgroup v2. How do we figure out what's actually using memory?",
+      "expected_output": "Should recognize container memory accounting (cgroup vs actual). Check page cache, shared memory not counted against limit, huge pages. Suggest: memory.usage_in_bytes vs limit, check /proc/$PID/status for real RSS, numactl for NUMA, dmesg for OOM",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "weird network issue - seeing 40% drop in throughput during peak hours despite the NIC showing only 30% utilization in iftop. Getting tons of TCP retransmits in netstat. It's a 10Gbps NIC on an Ubuntu 22.04 VM. The app is a Go gRPC service.",
+      "expected_output": "Should identify TCP retransmit issue - could be congestion, buffer exhaustion, or NICoffload issues. Apply USE method on network - check socket buffers, conntrack table, TCP windows. Suggest tools: netstat -s, ss -mem, ethtool -g, check for conntrack overflow",
+      "files": []
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 ---
-name: widget-previewer
+name: Widget Previewer
 description: Use the Flutter Widget Previewer to preview widgets in isolation with real-time rendering in Chrome. Use when working with Flutter widget previews, @Preview annotations, preview configurations, or widget development workflows. Triggers include setting up widget previewer, adding @Preview annotations, customizing previews, creating custom preview annotations, handling multiple preview configurations, or troubleshooting widget preview issues. IMPORTANT: Always preview the specific file the user provides - work directly with the file path they give you and ensure previews are filtered to show widgets from that exact file.
 ---
 

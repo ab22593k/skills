@@ -1,5 +1,5 @@
 ---
-name: kernel-maintainer
+name: Rust Kernel
 description: "YOU MUST use this skill for ANY Rust Linux kernel work. This includes: writing kernel modules in Rust, reviewing Rust kernel patches, debugging kernel panics/crashes, working with kernel APIs (Mutex, SpinLock, UserPtr, IOCTL), adding module parameters, creating device drivers (character/block/network), handling kernel errors, memory allocation in kernel, and following kernel Rust coding standards. If the user mentions 'kernel' and 'Rust' together, USE THIS SKILL. Essential for kernel maintainers, patch contributors, and developers working with Rust For Linux (RFL)."
 ---
 
@@ -10,6 +10,7 @@ A comprehensive skill for working with Rust code in the Linux kernel. This skill
 ## When to Use This Skill
 
 Use this skill when:
+
 - Writing or maintaining Rust kernel modules
 - Reviewing Rust patches for the kernel
 - Learning Rust For Linux development
@@ -22,6 +23,7 @@ Use this skill when:
 Rust For Linux (RFL) brings Rust as a second language to the Linux kernel, enabling memory-safe kernel module development. This skill helps you navigate the unique constraints and patterns of kernel development with Rust.
 
 Key differences from userspace Rust:
+
 - **No standard library** - Use `core` and `alloc`
 - **Custom allocators** - Use kernel allocation functions
 - **Different error handling** - Kernel-style error codes
@@ -55,6 +57,7 @@ The kernel has specific conventions for Rust code. Always follow these when writ
 - [Coding Standards Guide](references/coding_standards.md)
 
 Key topics:
+
 - Formatting and style (4 spaces, line length limits)
 - Naming conventions (PascalCase, snake_case, SCREAMING_SNAKE_CASE)
 - Kernel-specific guidelines (error handling, memory management, safety)
@@ -68,6 +71,7 @@ Understanding kernel Rust APIs is essential for effective kernel development:
 - [API Reference Guide](references/api_reference.md)
 
 Core modules covered:
+
 - `kernel::alloc` - Memory allocation with kernel flags
 - `kernel::error` - Error handling with kernel error codes
 - `kernel::sync` - Mutex, SpinLock, RwLock
@@ -194,7 +198,7 @@ impl FileOperations for MyFileOps {
     fn open(_data: &(), _f: &File) -> Result<()> {
         Ok(())
     }
-    
+
     fn read(
         _f: &File,
         _data: &Self::OpenData,
@@ -208,15 +212,15 @@ impl FileOperations for MyFileOps {
 
 ### Reference Quick Links
 
-| Topic | File |
-|-------|------|
+| Topic              | File                                                  |
+| ------------------ | ----------------------------------------------------- |
 | Coding conventions | [coding_standards.md](references/coding_standards.md) |
-| API usage | [api_reference.md](references/api_reference.md) |
-| Patch review | [patch_review.md](references/patch_review.md) |
-| Debugging | [debugging_guide.md](references/debugging_guide.md) |
-| Module structure | [module_structure.md](references/module_structure.md) |
-| Testing | [testing_guide.md](references/testing_guide.md) |
-| Common patterns | [common_patterns.md](references/common_patterns.md) |
+| API usage          | [api_reference.md](references/api_reference.md)       |
+| Patch review       | [patch_review.md](references/patch_review.md)         |
+| Debugging          | [debugging_guide.md](references/debugging_guide.md)   |
+| Module structure   | [module_structure.md](references/module_structure.md) |
+| Testing            | [testing_guide.md](references/testing_guide.md)       |
+| Common patterns    | [common_patterns.md](references/common_patterns.md)   |
 
 ### External Resources
 
@@ -234,6 +238,7 @@ When creating new kernel modules, follow established patterns:
 ### Module Structure
 
 See [Module Structure Guide](references/module_structure.md) for:
+
 - Directory organization
 - Character, block, and network device templates
 - Module parameters
@@ -242,6 +247,7 @@ See [Module Structure Guide](references/module_structure.md) for:
 ### Common Patterns
 
 See [Common Patterns](references/common_patterns.md) for:
+
 - Initialization patterns
 - Error handling idioms
 - Synchronization primitives
@@ -257,6 +263,7 @@ Comprehensive testing is essential for kernel modules:
 ### Testing Guide
 
 See [Testing Guide](references/testing_guide.md) for:
+
 - Unit tests
 - KUnit integration
 - Error path testing
@@ -273,4 +280,3 @@ See [Testing Guide](references/testing_guide.md) for:
 4. **Follow kernel patterns** - Kernel idioms, not generic Rust
 5. **Test thoroughly** - Error paths, edge cases
 6. **Keep modules focused** - One logical change per module
-7. **Write good commit messages** - Explain what and why, not how

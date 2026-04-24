@@ -1,5 +1,5 @@
 ---
-name: hydroxide-code
+name: Modern Features
 description: Guidelines for adopting modern Rust features. Use this skill whenever working with async code (async closures, AsyncFn traits), upgrading crates past Rust 1.85, modernizing async services, writing FFI or embedded code (naked functions), or migrating to the 2024 edition. Essential for anyone maintaining performance-critical libraries, tokio/async-std services, embedded systems code, or crates that need to stay current with stable Rust. Also use when replacing manual Future implementations, implementing trait upcasting, working with const generics, or needing safe raw pointer operations.
 ---
 
@@ -18,8 +18,6 @@ It begins with the flagship feature — **async closures** — and proceeds chro
 - You need cleaner trait-object upcasting, naked functions for FFI/embedded, const-generic inference, or safe raw-pointer unions.
 - You want to future-proof code against the stabilization of the never type (`!`).
 - You are writing async-heavy code, low-level systems code, or performance-critical libraries.
-
-**Do NOT use** if your MSRV is below 1.85 or if you must stay on an older edition for downstream compatibility.
 
 ### Core Principles (apply to every feature below)
 

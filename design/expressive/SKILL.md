@@ -1,5 +1,5 @@
 ---
-name: expressive-design
+name: Expressive Design
 description: Use when the user is designing or refining any UI, product, content, experience, interface, branding, story, or creative output and mentions emotion, feeling, expressiveness, emotional impact, resonance, “make it feel”, “evoke”, “heart”, or wants the design to move people. Always accept &ARG1; as the base input. Now **heavily emphasizes** Material Design 3 Styles (Elevation + Typography) alongside Building for All, Canonical Layouts, Adaptive Design, and Customization to create emotionally powerful, personally resonant designs with perfect depth, hierarchy, tone, and readability everywhere.
 ---
 
