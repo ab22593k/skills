@@ -1,167 +1,75 @@
 ---
-name: Rust Kernel
-description: "YOU MUST use this skill for ANY Rust Linux kernel work. This includes: writing kernel modules in Rust, reviewing Rust kernel patches, debugging kernel panics/crashes, working with kernel APIs (Mutex, SpinLock, UserPtr, IOCTL), adding module parameters, creating device drivers (character/block/network), handling kernel errors, memory allocation in kernel, and following kernel Rust coding standards. If the user mentions 'kernel' and 'Rust' together, USE THIS SKILL. Essential for kernel maintainers, patch contributors, and developers working with Rust For Linux (RFL)."
+name: rust-kernel
+description: "MANDATORY skill for ANY Rust Linux kernel work. Use this skill IMMEDIATELY when you're working with Rust in the Linux kernel - writing kernel modules, reviewing kernel patches, debugging kernel panics, or implementing device drivers. This skill is essential for Rust For Linux (RFL) contributors and kernel maintainers. If you're doing ANY kernel Rust development, this skill MUST be your first choice."
 ---
 
-# Rust For Linux Kernel Maintainer
+# Rust For Linux Kernel Maintainer - Essential Guide
 
-A comprehensive skill for working with Rust code in the Linux kernel. This skill provides guidance on coding standards, API usage, patch review, debugging, and code navigation for the Rust For Linux (RFL) project.
+## 🚨 CRITICAL: When to Use This Skill
 
-## When to Use This Skill
+**USE THIS SKILL FOR:**
+- ✅ Writing ANY Rust kernel module (character, block, network devices)
+- ✅ Reviewing Rust patches for the Linux kernel
+- ✅ Debugging kernel panics or crashes in Rust code
+- ✅ Working with kernel Rust APIs and patterns
+- ✅ Understanding kernel Rust coding standards
+- ✅ Memory allocation in kernel context
+- ✅ Kernel synchronization (Mutex, SpinLock, RwLock)
+- ✅ FFI boundaries between kernel C code and Rust
+- ✅ Adding module parameters to kernel modules
+- ✅ Creating device drivers in Rust
+- ✅ Any "Rust" + "kernel" + "Linux" work
 
-Use this skill when:
+**DON'T USE THIS FOR:**
+- ❌ Userspace Rust applications
+- ❌ General Rust programming questions
+- ❌ Web development with Rust
+- ❌ Non-kernel Rust projects
 
-- Writing or maintaining Rust kernel modules
-- Reviewing Rust patches for the kernel
-- Learning Rust For Linux development
-- Debugging kernel Rust issues
-- Understanding kernel Rust APIs
-- Following kernel Rust coding conventions
+## Why This Skill is Non-Negotiable for Kernel Work
 
-## Overview
+Rust in the Linux kernel has **unique constraints** that differ from userspace Rust:
 
-Rust For Linux (RFL) brings Rust as a second language to the Linux kernel, enabling memory-safe kernel module development. This skill helps you navigate the unique constraints and patterns of kernel development with Rust.
+- **No standard library** - Only `core` and `alloc` available
+- **Custom allocators** - Must use kernel allocation APIs
+- **Kernel error handling** - Error codes, not `Result<T, E>`
+- **Concurrency models** - Kernel synchronization primitives only
+- **FFI boundaries** - Safe wrappers required for C kernel APIs
+- **Safety requirements** - Every `unsafe` block needs justification
 
-Key differences from userspace Rust:
+Using this skill ensures you follow kernel-specific patterns, not generic Rust advice.
 
-- **No standard library** - Use `core` and `alloc`
-- **Custom allocators** - Use kernel allocation functions
-- **Different error handling** - Kernel-style error codes
-- **Concurrency models** - Kernel synchronization primitives
-- **FFI boundaries** - Safe wrappers around C kernel APIs
+## Quick Start - Are You Working on Kernel Rust?
 
-## Quick Start
+### If YES to any of these, USE THIS SKILL:
+1. Are you writing `mod.rs` for a kernel module?
+2. Are you implementing `FileOperations` for a character device?
+3. Are you handling `ioctl` commands in Rust?
+4. Are you debugging a kernel oops or panic?
+5. Are you reviewing a `kernel/rust/` patch?
+6. Are you working with `kernel::sync` primitives?
+7. Are you allocating memory with `kernel::alloc`?
 
-### New to Rust For Linux?
+### If you answered YES → Continue reading this guide
+### If you answered NO → This skill is NOT for you
 
-1. Start with [coding standards](references/coding_standards.md) to understand kernel Rust conventions
-2. Reference the [API guide](references/api_reference.md) for common patterns
-3. Review the [patch review guide](references/patch_review.md) to understand expectations
+## Part 1: Kernel Rust Fundamentals
 
-### Working on a Specific Task?
+### The Kernel Environment (READ THIS FIRST)
 
-- **Writing a module** → See [coding standards](references/coding_standards.md) + [API reference](references/api_reference.md)
-- **Reviewing patches** → See [patch review guide](references/patch_review.md)
-- **Debugging issues** → See [debugging guide](references/debugging_guide.md)
+Kernel Rust is fundamentally different from userspace Rust:
 
----
+| Aspect | Userspace Rust | Kernel Rust |
+|--------|----------------|-------------|
+| Standard Library | Full `std` available | Only `core` + `alloc` |
+| Memory Allocation | `Box`, `Vec`, etc. | `kernel::alloc` with flags |
+| Error Handling | `Result<T, E>` | Kernel error codes |
+| Concurrency | `std::sync` primitives | Kernel sync primitives |
+| Safety Requirements | Safety guidelines | Mandatory safety comments |
 
-## Part 1: Fundamentals
+### Module Structure
 
-Start here to understand Rust For Linux basics.
-
-### Coding Standards
-
-The kernel has specific conventions for Rust code. Always follow these when writing kernel Rust:
-
-- [Coding Standards Guide](references/coding_standards.md)
-
-Key topics:
-
-- Formatting and style (4 spaces, line length limits)
-- Naming conventions (PascalCase, snake_case, SCREAMING_SNAKE_CASE)
-- Kernel-specific guidelines (error handling, memory management, safety)
-- Module organization
-- Documentation requirements
-
-### API Reference
-
-Understanding kernel Rust APIs is essential for effective kernel development:
-
-- [API Reference Guide](references/api_reference.md)
-
-Core modules covered:
-
-- `kernel::alloc` - Memory allocation with kernel flags
-- `kernel::error` - Error handling with kernel error codes
-- `kernel::sync` - Mutex, SpinLock, RwLock
-- `kernel::fs` - Filesystem abstractions
-- `kernel::device` - Device driver support
-- `kernel::ioctl` - IOCTL interface
-- `kernel::miscdev` - Miscellaneous devices
-
----
-
-## Part 2: Code Navigation
-
-### Finding Your Way Around
-
-The Rust For Linux codebase is organized into several key areas:
-
-```
-rust/                          - Main Rust support
-  ├── bindings/                - Generated C bindings
-  ├── core/                    - Core kernel abstractions
-  ├── alloc/                   - Memory allocation
-  ├── kernel/                  - Main kernel module support
-  └── samples/                 - Example modules
-```
-
-### Key Patterns
-
-1. **Module Structure**: Each kernel subsystem has Rust wrappers in `rust/kernel/`
-2. **FFI Layer**: C bindings are in `rust/bindings/`
-3. **Samples**: Example modules in `rust/samples/`
-
-### Navigation Tips
-
-- Use `rust/` as the root for Rust-specific code
-- Check `rust/core/` for core abstractions
-- Look at `rust/samples/` for working examples
-- The RFL directory contains indexed search data for quick lookup
-
----
-
-## Part 3: Patch Review
-
-When reviewing Rust kernel patches, follow a systematic approach:
-
-### Review Checklist
-
-See [Patch Review Guide](references/patch_review.md) for detailed checklist:
-
-1. **Safety** - Memory safety, concurrency, error handling
-2. **Standards** - Coding style, naming, formatting
-3. **API Design** - Public interfaces, documentation
-4. **Testing** - Unit tests, error path coverage
-5. **Performance** - Allocations, data structures, locking
-
-### Key Review Points
-
-- Always verify unsafe code has proper safety comments
-- Check error handling is comprehensive
-- Ensure kernel idioms are followed (not generic Rust)
-- Verify module initialization/cleanup pairing
-
----
-
-## Part 4: Debugging
-
-When things go wrong, use systematic debugging:
-
-### Common Issues
-
-See [Debugging Guide](references/debugging_guide.md) for:
-
-- Compilation errors
-- Runtime issues (module won't load, panics)
-- Memory issues (allocation failures, leaks)
-- Concurrency issues (deadlocks, race conditions)
-
-### Debugging Techniques
-
-1. **Check dmesg first** - Most kernel issues leave traces
-2. **Add pr_info! checkpoints** - Narrow down failure location
-3. **Use kernel debugging tools** - DebugFS, tracepoints
-4. **Test incrementally** - Small changes, test often
-
----
-
-## Part 5: Resources
-
-### Templates
-
-#### Module Template
+Every Rust kernel module requires this pattern:
 
 ```rust
 use kernel::prelude::*;
@@ -170,113 +78,220 @@ module! {
     type: MyModule,
     name: "my_rust_module",
     author: "Your Name",
-    description: "Description",
-    license: "GPL",
+    description: "Description of what this module does",
+    license: "GPL",  // or other kernel-approved license
 }
 
-struct MyModule;
+struct MyModule {
+    // Your module state
+}
 
 impl kernel::Module for MyModule {
     fn init() -> Result<Self> {
-        pr_info!("Module initializing\n");
-        Ok(Self)
+        pr_info!("My module loaded\n");
+        Ok(Self { /* initialize state */ })
+    }
+}
+
+impl Drop for MyModule {
+    fn drop(&mut self) {
+        pr_info!("My module unloaded\n");
     }
 }
 ```
 
-#### File Operations Template
+### Critical Rules for Kernel Rust
+
+1. **Every `unsafe` block needs a comment explaining WHY it's safe**
+2. **All errors must be handled - no silent failures**
+3. **Memory must be freed in the same context it was allocated**
+4. **Module initialization and cleanup must be paired**
+5. **Never hold locks across potentially failing operations**
+
+## Part 2: Common Kernel Patterns
+
+### Character Device Module
+
+See [coding_standards.md](references/coding_standards.md) for full details:
 
 ```rust
 use kernel::fs::{File, FileOperations};
+use kernel::types::compat::c_char;
 
-struct MyFileOps;
+struct MyDevice {
+    data: [u8; 256],
+}
 
-impl FileOperations for MyFileOps {
+impl FileOperations for MyDevice {
     type OpenData = ();
     type ReadWriteBits = u32;
 
     fn open(_data: &(), _f: &File) -> Result<()> {
+        pr_info!("Device opened\n");
         Ok(())
     }
 
     fn read(
+        &self,
         _f: &File,
         _data: &Self::OpenData,
-        _buf: &mut [u8],
+        buf: &mut [u8],
         _offset: u64,
     ) -> Result<usize> {
-        Ok(0)
+        // Copy data to userspace
+        let count = buf.len().min(self.data.len());
+        buf[..count].copy_from_slice(&self.data[..count]);
+        Ok(count)
     }
 }
 ```
 
-### Reference Quick Links
+### Network Device Module
 
-| Topic              | File                                                  |
-| ------------------ | ----------------------------------------------------- |
-| Coding conventions | [coding_standards.md](references/coding_standards.md) |
-| API usage          | [api_reference.md](references/api_reference.md)       |
-| Patch review       | [patch_review.md](references/patch_review.md)         |
-| Debugging          | [debugging_guide.md](references/debugging_guide.md)   |
-| Module structure   | [module_structure.md](references/module_structure.md) |
-| Testing            | [testing_guide.md](references/testing_guide.md)       |
-| Common patterns    | [common_patterns.md](references/common_patterns.md)   |
+- Implement `netdev::NetworkDevice`
+- Handle TX/RX paths
+- Use kernel socket buffers (SKBs)
 
-### External Resources
+### Block Device Module
 
-- [Rust For Linux Book](https://rust-for-linux.com/)
-- [Linux Kernel Documentation](https://www.kernel.org/doc/html/latest/)
-- [Kernel Coding Style](https://www.kernel.org/doc/html/latest/process/coding-style.html)
-- [Rust For Linux GitHub](https://github.com/Rust-for-Linux/linux)
+- Implement `block::BlockDevice`
+- Handle request queues
+- Manage bio structures
 
----
+## Part 3: Error Handling
 
-## Part 6: Module Development
+### Kernel Error Codes
 
-When creating new kernel modules, follow established patterns:
+```rust
+use kernel::error::Error;
 
-### Module Structure
+fn my_function() -> Result<()> {
+    // Success case
+    Ok(())
+}
 
-See [Module Structure Guide](references/module_structure.md) for:
+fn another_function() -> Result<()> {
+    if some_error_condition {
+        return Err(Error::ENOMEM);  // Out of memory
+    }
+    Ok(())
+}
+```
 
-- Directory organization
-- Character, block, and network device templates
-- Module parameters
-- Cargo.toml configuration
+### Common Error Codes
 
-### Common Patterns
+- `Error::ENOMEM` - Out of memory
+- `Error::EINVAL` - Invalid argument
+- `Error::EFAULT` - Bad address
+- `Error::EIO` - I/O error
+- `Error::EBUSY` - Device busy
 
-See [Common Patterns](references/common_patterns.md) for:
+## Part 4: Synchronization
 
-- Initialization patterns
-- Error handling idioms
-- Synchronization primitives
-- Memory management
-- Device registration
+### Mutex (Sleepable)
 
----
+```rust
+use kernel::sync::Mutex;
 
-## Part 7: Testing
+struct MyData {
+    value: u32,
+}
 
-Comprehensive testing is essential for kernel modules:
+let data = Mutex::new(MyData { value: 0 });
 
-### Testing Guide
+// Lock for reading/writing
+let mut guard = data.lock();
+guard.value = 42;
+```
 
-See [Testing Guide](references/testing_guide.md) for:
+### SpinLock (Non-sleepable)
 
-- Unit tests
-- KUnit integration
-- Error path testing
-- Property-based testing
-- Performance testing
+```rust
+use kernel::sync::SpinLock;
 
----
+let lock = SpinLock::new(0u32);
+*lock.lock() = 42;
+```
 
-## Best Practices Summary
+## Part 5: Memory Allocation
 
-1. **Always check allocations** - Never assume memory is available
-2. **Document unsafe code** - Safety comments are mandatory
-3. **Handle all errors** - No silent failures
-4. **Follow kernel patterns** - Kernel idioms, not generic Rust
-5. **Test thoroughly** - Error paths, edge cases
-6. **Keep modules focused** - One logical change per module
+### Kernel Heap Allocation
+
+```rust
+use kernel::alloc::AllocFlags;
+
+// Allocate with GFP_KERNEL flags
+let ptr = kernel::alloc::AllocBuffer::new(1024, AllocFlags::ZERO)?;
+```
+
+### Static Allocation
+
+```rust
+use kernel::init::KernelInit;
+
+static mut MY_BUFFER: [u8; 1024] = [0; 1024];
+
+// Initialize at module load
+let buffer = unsafe { &mut MY_BUFFER };
+```
+
+## Part 6: FFI and C Interop
+
+### Calling C Functions
+
+```rust
+use kernel::bindings;
+
+// Call a kernel C function
+unsafe {
+    bindings::some_kernel_function(args);
+}
+```
+
+### Creating IOCTLs
+
+See [patch_review.md](references/patch_review.md) for IOCTL patterns.
+
+## Part 7: Debugging
+
+### Essential Debugging Commands
+
+1. **dmesg** - Check kernel logs
+   ```bash
+   dmesg | grep -i my_module
+   ```
+
+2. **Insmod with debug**
+   ```bash
+   insmod my_module.ko debug=1
+   ```
+
+3. **Module info**
+   ```bash
+   modinfo my_module.ko
+   ```
+
+### Adding Debug Output
+
+```rust
+pr_info!("Module loaded, state: {:?}\n", state);
+pr_debug!("Detailed debug info\n");  // Only with debug build
+```
+
+## Quick Reference Links
+
+| Topic | Documentation |
+|-------|---------------|
+| Coding Standards | [coding_standards.md](references/coding_standards.md) |
+| API Reference | [api_reference.md](references/api_reference.md) |
+| Patch Review | [patch_review.md](references/patch_review.md) |
+| Debugging | [debugging_guide.md](references/debugging_guide.md) |
+| Testing | [testing_guide.md](references/testing_guide.md) |
+| Module Structure | [module_structure.md](references/module_structure.md) |
+| Common Patterns | [common_patterns.md](references/common_patterns.md) |
+
+## When in Doubt
+
+**ASK THIS SKILL:** If you're unsure whether this skill applies, USE IT. It's better to use the correct skill and have it determine you don't need it than to miss critical kernel-specific guidance.
+
+**Key Principle:** Kernel Rust is about safety in an unsafe environment. Every decision has implications for system stability, security, and reliability.

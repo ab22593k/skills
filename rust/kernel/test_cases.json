@@ -1,0 +1,135 @@
+[
+  {
+    "id": 1,
+    "query": "I need to write a Rust kernel module for a USB character device that reads from /dev/myusb. How do I register the file operations and handle the read syscall?",
+    "expected_output": "Should trigger: Yes - asks about Rust kernel module, character device, file operations, and read syscall",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 2,
+    "query": "Can you help me review this Rust patch for the Linux kernel? I'm adding a new driver and want to make sure it follows kernel coding standards.",
+    "expected_output": "Should trigger: Yes - asks about kernel patch review and coding standards",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 3,
+    "query": "I'm getting a kernel panic when my Rust module loads. The oops message says 'general protection fault'. How do I debug this?",
+    "expected_output": "Should trigger: Yes - asks about kernel panic debugging",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 4,
+    "query": "What's the proper way to implement a network device driver in Rust for the Linux kernel? I need to handle TX and RX paths.",
+    "expected_output": "Should trigger: Yes - asks about network device driver in kernel",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 5,
+    "query": "I'm writing a block device driver in Rust. How do I handle bio structures and request queues?",
+    "expected_output": "Should trigger: Yes - asks about block device driver with bio structures",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 6,
+    "query": "How do I use kernel::sync::Mutex in a Rust module? Can you show me a pattern for protecting shared data?",
+    "expected_output": "Should trigger: Yes - asks about kernel synchronization primitives",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 7,
+    "query": "I need to allocate memory in my Rust kernel module. What's the correct way to use kernel::alloc with GFP flags?",
+    "expected_output": "Should trigger: Yes - asks about kernel memory allocation",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 8,
+    "query": "How do I handle errors properly in a Rust kernel module? Should I use Result or the kernel error codes?",
+    "expected_output": "Should trigger: Yes - asks about kernel error handling",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 9,
+    "query": "I'm implementing an ioctl command in my Rust driver. What's the proper pattern for this?",
+    "expected_output": "Should trigger: Yes - asks about ioctl implementation",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 10,
+    "query": "My Rust kernel module won't compile - getting 'cannot find crate kernel' error. How do I fix the build?",
+    "expected_output": "Should trigger: Yes - asks about kernel compilation errors",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 11,
+    "query": "Write me a simple hello world Rust program for Linux",
+    "expected_output": "Should NOT trigger: This is a basic Rust program, not kernel-specific",
+    "should_trigger": false,
+    "files": []
+  },
+  {
+    "id": 12,
+    "query": "How do I use async/await in Rust for my application?",
+    "expected_output": "Should NOT trigger: This is about async programming, not kernel Rust",
+    "should_trigger": false,
+    "files": []
+  },
+  {
+    "id": 13,
+    "query": "What's the best web framework for Rust web applications?",
+    "expected_output": "Should NOT trigger: This is about web frameworks, not kernel development",
+    "should_trigger": false,
+    "files": []
+  },
+  {
+    "id": 14,
+    "query": "How can I parse JSON in Rust for my CLI tool?",
+    "expected_output": "Should NOT trigger: This is about JSON parsing in userspace Rust",
+    "should_trigger": false,
+    "files": []
+  },
+  {
+    "id": 15,
+    "query": "I'm working on a Rust FFI project to interface with a C library. What are the best practices?",
+    "expected_output": "Should NOT trigger: This is about FFI in userspace, not kernel FFI",
+    "should_trigger": false,
+    "files": []
+  },
+  {
+    "id": 16,
+    "query": "How do I add a new Rust module to the Linux kernel? What's the build process?",
+    "expected_output": "Should trigger: Yes - asks about adding modules to Linux kernel",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 17,
+    "query": "I need to create a character device driver in Rust for a custom hardware interface. How do I structure the module?",
+    "expected_output": "Should trigger: Yes - asks about character device driver structure",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 18,
+    "query": "What's the difference between kernel::Mutex and std::sync::Mutex?",
+    "expected_output": "Should trigger: Yes - asks about kernel vs standard library mutex",
+    "should_trigger": true,
+    "files": []
+  },
+  {
+    "id": 19,
+    "query": "How do I handle interrupts in a Rust kernel module?",
+    "expected_output": "Should trigger: Yes - asks about interrupt handling in kernel",
+    "should_trigger": true,
+    "files": []
+  }
+]
