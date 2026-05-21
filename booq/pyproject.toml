@@ -1,0 +1,20 @@
+[project]
+name = "book-to-skill"
+version = "0.1.0"
+description = "the transfer of knowledge from a text into practical skill ability"
+requires-python = ">=3.10"
+dependencies = [
+    "PyMuPDF>=1.23.0",
+    "PyPDF2>=3.0.0",
+    "pdfminer.six>=20221105",
+    "docling>=2.0.0",
+    "ebooklib>=0.18",
+    "beautifulsoup4>=4.12.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=7.0.0"]
+
+[tool.uv.sources]
+# System dependency (not pip): poppler-utils for pdftotext
+# Install with: sudo apt install poppler-utils

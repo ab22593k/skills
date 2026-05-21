@@ -1,5 +1,5 @@
 ---
-name: Performance Troubleshoot
+name: Performance-Troubleshoot
 description: Diagnose and resolve Linux performance bottlenecks in production. Use when the user mentions high CPU usage, memory issues (leaks, OOM, swapping), slow I/O, network latency, container performance, or needs to identify system resource bottlenecks using modern tools like perf, eBPF, and bpftrace. Applies USE method, Little's Law, and structured latency analysis to trace problems across CPU scheduling, memory management, I/O, and networking layers. Includes tuning prescriptions for sysctl, schedulers, NUMA, and storage.
 ---
 

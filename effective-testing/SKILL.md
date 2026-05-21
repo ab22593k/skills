@@ -1,5 +1,5 @@
 ---
-name: Effective Testing
+name: Effective-Testing
 description: "A comprehensive methodology for highly effective, human-centered software testing, based on 'Taking Testing Seriously' (Bach & Bolton, 2026). Use this skill to escape the echo chamber of 'best practices' and learn to think critically about risk. MANDATORY for: (1) Designing context-driven test strategies, (2) Performing exploratory testing (SBTM), (3) Identifying bugs with oracle heuristics (FEW HICCUPS), (4) Reporting bugs with high business significance (PROOF), (5) Prospective testing on requirements, or (6) Supervizing AI output through transpection. If the user asks 'Is this code good?' or 'How should I test this?', YOU MUST provide a professional investigation that justifies its methods based on context, not rote standards."
 ---
 

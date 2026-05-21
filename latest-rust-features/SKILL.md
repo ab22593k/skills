@@ -1,5 +1,5 @@
 ---
-name: Modern Features
+name: Modern-Rust-Features
 description: Guidelines for adopting modern Rust features. Use this skill whenever working with async code (async closures, AsyncFn traits), upgrading crates past Rust 1.85, modernizing async services, writing FFI or embedded code (naked functions), or migrating to the 2024 edition. Essential for anyone maintaining performance-critical libraries, tokio/async-std services, embedded systems code, or crates that need to stay current with stable Rust. Also use when replacing manual Future implementations, implementing trait upcasting, working with const generics, or needing safe raw pointer operations.
 ---
 

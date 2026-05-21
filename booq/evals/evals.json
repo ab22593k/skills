@@ -1,0 +1,58 @@
+{
+  "skill_name": "book-to-skill",
+  "evals": [
+    {
+      "id": 0,
+      "name": "out-of-scope",
+      "prompt": "turn this into a skill: not-a-file.txt",
+      "expected_output": "The skill should identify that the file is not a PDF or EPUB and provide usage instructions.",
+      "files": [],
+      "expectations": [
+        "The agent identifies that .txt is not a supported format",
+        "The agent lists supported formats (PDF, EPUB, or similar)",
+        "No skill files are created in ~/.claude/skills/",
+        "The agent does not attempt to run extract.py"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "invalid-file",
+      "prompt": "turn this book into a skill: non_existent.pdf",
+      "expected_output": "The skill should identify that the file was not found.",
+      "files": [],
+      "expectations": [
+        "The agent reports that the file does not exist",
+        "The agent does not attempt to run extract.py on a missing file",
+        "The agent suggests providing a valid file path"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "analyze-only",
+      "prompt": "analyze this book and show me the frameworks: evals/sample_book.md",
+      "expected_output": "The skill should extract metadata and provide a structured analysis of frameworks, principles, and mental models found in the sample book, without generating full skill files.",
+      "files": ["evals/sample_book.md"],
+      "expectations": [
+        "The agent reads and analyzes the provided file",
+        "The agent identifies at least 2 frameworks or mental models from the content",
+        "The agent provides a structured analysis (frameworks, principles, techniques)",
+        "No skill files are created in ~/.claude/skills/"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "technical-book-conversion",
+      "prompt": "create a skill from this PDF: evals/sample_technical.md --mode technical --skill-name test-technical-skill",
+      "expected_output": "The skill should recognize the markdown file format, extract content, and generate a complete skill structure with chapters, glossary, patterns, and cheatsheet.",
+      "files": ["evals/sample_technical.md"],
+      "expectations": [
+        "The agent reads and extracts content from the input file",
+        "The agent generates a SKILL.md with core mental models",
+        "The agent generates at least one chapter file with chapter content",
+        "The agent generates a glossary.md with key terms",
+        "The generated SKILL.md has a chapter index table",
+        "The generated content is a synthesis, not raw text dump"
+      ]
+    }
+  ]
+}
