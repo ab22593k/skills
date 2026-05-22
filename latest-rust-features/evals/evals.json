@@ -25,6 +25,11 @@
       "id": 5,
       "prompt": "We're migrating to 2024 edition and I want to use let_chains. I have code like `if let Some(x) = opt { if x > 0 { if let Ok(y) = parse(x) { ... } } }`. How do I flatten this with let_chains?",
       "expected_output": "Should show `if let Some(x) = opt && x > 0 && let Ok(y) = parse(x) { ... }`, mention it's 2024 edition only, and explain the short-circuit behavior."
+    },
+    {
+      "id": 6,
+      "prompt": "We just upgraded to Rust 1.95 and I want to clean up our codebase. We use the `cfg-if` crate extensively for compile-time platform checks, have manual CAS loops everywhere in our concurrent code, and we have match statements where we'd like to combine pattern matching with conditionals. Can you show me how to use the new 1.95 stable features (`cfg_select!`, `if let` guards in match, `Atomic*::update`) to modernize these patterns? Also show me how `Vec::push_mut` simplifies the push+last_mut pattern and where `core::hint::cold_path` helps.",
+      "expected_output": "Should show cfg_select! replacing cfg-if, if let guards in match arms, Atomic*::update/try_update replacing manual CAS loops, Vec::push_mut, and cold_path hint usage."
     }
   ]
 }

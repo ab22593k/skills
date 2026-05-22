@@ -158,24 +158,92 @@ if let Ok(arr) = slice.as_array::<32>() {  // const-generic
 
 **Best practice**: Replace manual `chunks_exact().next().unwrap().try_into().unwrap()` patterns.
 
-#### 1.94.0 (latest) – RISC-V target features + dead_code inheritance
+#### 1.94.0 – RISC-V target features + dead_code inheritance
 
 - 29 new RISC-V features (including RVA22/RVA23 profiles).
 - `impl` blocks now inherit `#[allow(dead_code)]` from the trait definition.
 
 **Guideline**: If you maintain RISC-V crates, enable the new target features via `#[target_feature]`. For library authors, you can now clean up dead_code annotations on trait impls.
 
+#### 1.95.0 (latest) – `cfg_select!` macro + `if let` guards in matches
+
+**Key stabilizations**:
+
+- `cfg_select!` — a built-in compile-time `match` on `cfg` predicates, replacing the `cfg-if` crate without external dependencies.
+- `if let` guards in `match` arms — let chains extended to `match` expressions.
+- `AtomicPtr/Bool/Int::update` / `try_update` — built-in CAS-loop helpers.
+- `Vec::push_mut` / `insert_mut`, `VecDeque`/`LinkedList` mutation methods — mut access during insertion.
+- `core::hint::cold_path` — branch-prediction hint for cold/error paths.
+- `core::range` module with `RangeInclusive` / `RangeInclusiveIter`.
+- `*const T::as_ref_unchecked`, `*mut T::as_ref_unchecked`, `*mut T::as_mut_unchecked` — safe-pointer-to-reference.
+- `Layout::dangling_ptr`, `Layout::repeat`, `Layout::repeat_packed`, `Layout::extend_packed`.
+- `MaybeUninit<[T; N]>` and `Cell<[T; N]>` conversion traits.
+- `bool: TryFrom<{integer}>`.
+- PowerPC / PowerPC64 inline assembly stabilized.
+- Path-segment keyword importing with renaming (`use foo::crate as my_crate`).
+- `--remap-path-scope` compiler flag for granular path remapping.
+- `irrefutable_let_patterns` lint no longer fires on `let` chains.
+- **Breaking**: Custom JSON target specs removed from stable.
+
+**Usage guidelines**:
+
+```rust
+// cfg_select! — replace cfg-if crate dependency
+cfg_select! {
+    unix => { println!("unix specific"); }
+    target_pointer_width = "32" => { println!("32-bit non-unix"); }
+    _ => { println!("fallback"); }
+}
+
+// if-let guards in match arms
+match value {
+    Some(x) if let Ok(y) = compute(x) => {
+        // Both x and y are available here
+        println!("{x}, {y}");
+    }
+    _ => {}
+}
+
+// Atomic CAS helpers — no more manual loops
+let old = atomic_ptr.update(|ptr| ptr.wrapping_add(1));
+
+// Cold path hint — guides LLVM block layout
+if rare_condition {
+    core::hint::cold_path();
+    return Err(/* ... */);
+}
+
+// Vec insertion with direct mut access
+let mut v = vec![1, 2, 3];
+let slot = v.push_mut();  // pushes a default, returns &mut T
+*slot = 42;
+
+// Pointer deref without unsafe transmute
+let p: *const T = /* ... */;
+// SAFETY: p is aligned, non-null, and points to a valid T
+let val: &T = unsafe { p.as_ref_unchecked() };
+```
+
+**Best practices**:
+
+- Replace the `cfg-if` crate with `cfg_select!` in MSRV 1.95+ crates. `cfg_select!` evaluates at compile time and produces zero runtime overhead.
+- Use `if let` guards in `match` for expressive pattern+condition combinations; note the compiler does **not** consider them in exhaustiveness checking (same as regular `if` guards).
+- Switch manual CAS loops (`loop { let old = ptr.load(); ... compare_exchange(...) }`) to `Atomic*::update` / `try_update` — clearer intent and fewer opportunities for logic errors.
+- Replace `vec.push(x); vec.last_mut().unwrap()` with `vec.push_mut()` followed by direct assignment.
+- Use `core::hint::cold_path()` on unlikely branches (error returns, edge cases) to help LLVM optimize the hot path.
+- For custom JSON target specs: migrate to nightly or upstream your target to rustc — stable no longer accepts `--target /path/to/custom.json`.
+
 ### Recommended Migration Checklist
 
 3. Replace all manual async blocks with `async |...|`.
 4. Enable new deny-by-default lints (`clippy::all` + the never-type lints).
 5. Add `#![warn(mismatched_lifetime_syntaxes, unused_visibilities)]`.
-6. Test with `cargo +1.94 check --all-features`.
+6. Test with `cargo +1.95 check --all-features`.
 7. Update documentation with the new MSRV.
 
 ### Quickly Locate Old-Style Code
 
-These one-liners (using **ripgrep** `rg` — install with `cargo install ripgrep` or `apt install ripgrep`) let agents, CI scripts, or humans instantly find legacy patterns that can be upgraded to 1.85–1.94 features.  
+These one-liners (using **ripgrep** `rg` — install with `cargo install ripgrep` or `apt install ripgrep`) let agents, CI scripts, or humans instantly find legacy patterns that can be upgraded to 1.85–1.95 features.  
 Run from repo root. Use `--files-with-matches` to get only filenames for bulk edits.
 
 #### 1. Pre-1.85 manual async closures / blocks (replace with `async |...|`)
@@ -238,7 +306,25 @@ rg --type rust '(async\s*(move)?\s*\{|\|\s*[^|]+\s*\|\s*async|transmute|&mut\s+\
 - Use `fd -e rs` instead of `--type rust` if you prefer `fd-find`.
 - Combine with `git grep` for git-only repos: `git grep -E 'async move|transmute' -- '*.rs'`
 
-### Example: Full Modern Async Service (1.85–1.94)
+#### 9. `cfg-if` crate usage (replace with `cfg_select!` in MSRV 1.95+)
+
+```bash
+rg --type rust '(cfg_if::|cfg_if!\s*\{|use\s+cfg_if)' --context 2
+```
+
+#### 10. Manual CAS loops (replace with `Atomic*::update` / `try_update`)
+
+```bash
+rg --type rust '(compare_exchange|compare_exchange_weak)' --context 3
+```
+
+#### 11. `Vec::push` + `last_mut` pattern (replace with `push_mut`)
+
+```bash
+rg --type rust '\.push\([^)]*\)[\s\S]*?\.last_mut\(\)' --type rust --multiline
+```
+
+### Example: Full Modern Async Service (1.85–1.95)
 
 ```rust
 #![edition = "2024"]
