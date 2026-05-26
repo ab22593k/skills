@@ -11,7 +11,7 @@ arguments: [book_path, skill_name]
 effort: high
 ---
 
-# book-to-skill
+# Booqs
 
 Converts a technical book (PDF or EPUB) into a structured Agent Code skill. The output is a browsable knowledge base of the author's frameworks, mental models, principles, techniques, and anti-patterns — organized so Agent can load only what it needs.
 
@@ -48,8 +48,8 @@ python3 <skill-dir>/scripts/extract.py "<path-to-book>" --mode <technical|text>
 
 The script writes:
 
-- `/tmp/book_skill_work/full_text.txt` — extracted text
-- `/tmp/book_skill_work/metadata.json` — stats (method, pages, tokens, chapters detected, TOC presence)
+- `/tmp/booqs/full_text.txt` — extracted text
+- `/tmp/booqs/metadata.json` — stats (method, pages, tokens, chapters detected, TOC presence)
 
 Read the metadata first. Key fields: `extraction_method`, `estimated_tokens`, `chapters_detected`, `has_toc`.
 
@@ -57,7 +57,7 @@ If extraction fails, show the error and suggest running `uv sync` from the skill
 
 ## Step 4 — Analyze the text
 
-Read `/tmp/book_skill_work/full_text.txt`. If it's very large (>50K tokens), read just the first ~15K tokens plus chapter markers, then sample strategically.
+Read `/tmp/booqs/full_text.txt`. If it's very large (>50K tokens), read just the first ~15K tokens plus chapter markers, then sample strategically.
 
 Identify:
 
@@ -72,7 +72,7 @@ For each chapter, produce a summary of 800–1,200 tokens: the core idea, framew
 
 ## Step 5 — Generate skill files
 
-Create files in `/tmp/book_skill_work/<slug>/`.
+Create files in `/tmp/booqs/<slug>/`.
 
 ### File structure
 
@@ -186,7 +186,7 @@ Decision tables for skimming:
 
 ```bash
 mkdir -p ~/.agents/skills/<slug>
-cp -r /tmp/book_skill_work/<slug>/* ~/.agents/skills/<slug>/
+cp -r /tmp/booqs/<slug>/* ~/.agents/skills/<slug>/
 ```
 
 Tell the user the slug, number of chapters, estimated total tokens, and a usage example.
@@ -217,4 +217,4 @@ Tell the user the slug, number of chapters, estimated total tokens, and a usage 
 - Don't guess chapter content you can't identify — mark as "needs review."
 - Don't skip the glossary. It's the most useful file for precise lookups.
 - Don't mix content across files (cheatsheet into SKILL.md, patterns into glossary). Each file has a purpose.
-- Don't leave orphaned `/tmp/book_skill_work/` directories. Clean up always.
+- Don't leave orphaned `/tmp/booqs/` directories. Clean up always.
