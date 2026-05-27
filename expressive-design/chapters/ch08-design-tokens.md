@@ -1,3 +1,10 @@
+---
+chapter: 8
+topic: Design Tokens
+when: User needs token architecture, custom token class, ThemeData extension, or the 3-layer reference/system/component token model
+queries: ["design token", "token architecture", "custom token class", "ThemeData extension", "reference token", "system token", "component token", "token layers"]
+---
+
 # Design Tokens
 
 ## Core concepts
@@ -74,4 +81,4 @@ ThemeData darkTheme(Color seed) => ThemeData(
 | Component | `XxxTheme` / `XxxThemeData` | `CardTheme.shape` |
 
 ## Connection to other chapters
-Color tokens (ch02), type tokens (ch03), shape tokens (ch04), motion tokens (ch05). Token customization via `ThemeData` (ch10).
+Color tokens (→ ch02), type tokens (→ ch03), shape tokens (→ ch04), motion tokens (→ ch05). Token customization via `ThemeData` (→ ch10).

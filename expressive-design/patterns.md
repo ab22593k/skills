@@ -16,7 +16,7 @@ ThemeData(
 ```
 Map additional brand colors via `secondary:` / `tertiary:` parameters. Set both `theme` and `darkTheme` on `MaterialApp`. Use `ThemeMode.system` to follow device preference.
 **Consequences:** Automatic accessible palette. Light/dark generated from same seed. Tertiary auto-generated unless overridden.
-**Related:** Dynamic Color System (SKILL.md), Theming (ch10)
+**Related:** Dynamic Color System (SKILL.md), Theming (→ ch10)
 
 ## State Layer Overlay Pattern
 **Type:** technique
@@ -32,7 +32,7 @@ style: ButtonStyle(
 );
 ```
 **Consequences:** Consistent state behavior across all widgets. Contrast ratios stay predictable.
-**Related:** Interaction States (ch01), Component States (ch06)
+**Related:** Interaction States (→ ch01), Component States (→ ch06)
 
 ## Responsive Navigation Switch
 **Type:** technique
@@ -48,7 +48,7 @@ LayoutBuilder(builder: (context, constraints) {
 ```
 Compact → `NavigationBar` (bottom), Medium → `NavigationRail` (side), Expanded → `NavigationDrawer`. Wire destinations once, shell switches per class.
 **Consequences:** Single destination definition, three visual presentations. Works on foldables and desktop.
-**Related:** Window Size Classes (ch07), Navigation Widgets (ch06)
+**Related:** Window Size Classes (→ ch07), Navigation Widgets (→ ch06)
 
 ## Surface Container Elevation
 **Type:** principle
@@ -62,7 +62,7 @@ Container(
 ```
 **Consequences:** Cleaner visual hierarchy. Works in light and dark modes. No shadow rendering overhead.
 **Pitfalls:** Mixing tonal elevation + shadows creates conflicting depth cues. Pick one system per surface.
-**Related:** Tonal Elevation (ch04), Color Roles (ch02)
+**Related:** Tonal Elevation (→ ch04), Color Roles (→ ch02)
 
 ## Brand Theme Customization
 **Type:** technique
@@ -79,7 +79,7 @@ ThemeData(
 );
 ```
 **Consequences:** Brand identity expressed through M3. Light/dark modes, dynamic color, and accessibility preserved.
-**Related:** Theming (ch10), Design Tokens (ch08)
+**Related:** Theming (→ ch10), Design Tokens (→ ch08)
 
 ## Content-Based Dynamic Color
 **Type:** technique
@@ -95,14 +95,14 @@ setState(() => _seedColor = dominant ?? fallbackColor);
 ```
 Apply scheme only to content-adjacent area, not navigation chrome. Fall back to baseline when no content.
 **Consequences:** Visually coherent content presentation. More effort than user-generated color.
-**Related:** Dynamic Color (ch02), Color Roles (ch02)
+**Related:** Dynamic Color (→ ch02), Color Roles (→ ch02)
 
 ## Anti-pattern: Hardcoded Color Values
 **Type:** anti-pattern
 **Context:** Using `Color(0xFF...)` literals in widget build methods instead of semantic color roles.
 **Solution:** Never write `color: Color(0xFF1A73E8)` — use `Theme.of(context).colorScheme.primary`. If needing a non-standard color, add a custom `ColorScheme` override or an extension getter.
 **Consequences:** Theme changes propagate automatically. Consistent color intent across the app.
-**Related:** Design Tokens (ch08), Color System (ch02)
+**Related:** Design Tokens (→ ch08), Color System (→ ch02)
 
 ## Anti-pattern: Device-Based Layout
 **Type:** anti-pattern
@@ -116,18 +116,18 @@ if (Platform.isAndroid) _compactLayout();
 LayoutBuilder(builder: (_, c) => c.maxWidth < 600 ? _compactLayout() : ...);
 ```
 **Consequences:** Layout correctly adapts to resize, multi-window, foldable hinge. Future-proof for new form factors.
-**Related:** Adaptive Layout (ch07), Layout Patterns (ch07)
+**Related:** Adaptive Layout (→ ch07), Layout Patterns (→ ch07)
 
 ## Choosing Widget Shape
 **Type:** decision tree
 **Context:** Determining what `ShapeBorder` to use for a custom widget.
 **Solution:** Identify containment level: container (card) → `RoundedRectangleBorder(12)`, overlay (dialog) → `RoundedRectangleBorder(32)`, input (field) → `RoundedRectangleBorder(top: 4)`, floating action (FAB) → `RoundedRectangleBorder(20)`, single action (button) → `StadiumBorder()`.
 **Consequences:** Consistent shape language. Users intuitively understand containment relationships.
-**Related:** Shape Scale (ch04), Component Shape Mapping (ch04)
+**Related:** Shape Scale (→ ch04), Component Shape Mapping (→ ch04)
 
 ## Spring vs Eased Motion in Flutter
 **Type:** decision tree
 **Context:** Choosing between spring physics and easing curves for an animation.
 **Solution:** If the element tracks a gesture (drag, fling) → `SpringDescription.withDampingRatio(0.68)` via `SpringSimulation`. If the element transitions between fixed states (enter, exit, move) → `Curves.emphasized` with `AnimatedContainer` or `TweenAnimationBuilder`. If the widget has an implicit animation variant (`AnimatedOpacity`, `AnimatedScale`) → prefer that with `curve: Curves.emphasized`.
 **Consequences:** Springs = interactive input-driven feel. Eased = predictable transitions.
-**Related:** Motion (ch05), Implicit Animations (ch05)
+**Related:** Motion (→ ch05), Implicit Animations (→ ch05)

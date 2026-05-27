@@ -1,3 +1,10 @@
+---
+chapter: 10
+topic: Theming & Customization
+when: User needs full app theme setup, seed-to-ThemeData pipeline, dark mode, brand customization beyond seed, Material Theme Builder export, or Expressive theming guidance
+queries: ["ThemeData", "full theme setup", "seed to theme", "dark mode", "brand customization", "Material Theme Builder", "Material3Theme package", "Expressive theming"]
+---
+
 # Theming & Customization
 
 ## Core concepts
@@ -85,4 +92,4 @@ M3 Expressive (May 2025 / Google I/O 2026) adds for Flutter:
 - Expressive components (flexible nav bar, Xl buttons, FAB menus) — check latest SDK
 
 ## Connection to other chapters
-Consumes `ColorScheme` (ch02), `TextTheme` (ch03), shape (ch04), motion (ch05), tokens (ch08). Platform affects component availability (ch06) and dynamic color support (ch02).
+Consumes `ColorScheme` (→ ch02), `TextTheme` (→ ch03), shape (→ ch04), motion (→ ch05), tokens (→ ch08). Platform affects component availability (→ ch06) and dynamic color support (→ ch02).

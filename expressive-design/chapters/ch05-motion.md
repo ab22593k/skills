@@ -1,3 +1,10 @@
+---
+chapter: 5
+topic: Motion
+when: User needs spring physics, Curves.emphasized, AnimationController with SpringDescription, implicit animations, or enter/exit transition decisions
+queries: ["spring animation", "Curves.emphasized", "AnimationController", "SpringDescription", "implicit animation", "enter exit transition", "AnimatedContainer", "motion duration"]
+---
+
 # Motion
 
 ## Core concepts
@@ -61,4 +68,4 @@ controller.drive(CurveTween(curve: Curves.emphasizedDecelerate));
 | Exit temporarily | `Curves.emphasized` | 300ms |
 
 ## Connection to other chapters
-Shape morphing (ch04) uses `AnimatedContainer` + `Curves.emphasized`. Dialog/sheet enter/exit (ch06) use specific motion pairings. Dark mode toggle can animate via `AnimatedTheme`.
+Shape morphing (→ ch04) uses `AnimatedContainer` + `Curves.emphasized`. Dialog/sheet enter/exit (→ ch06) use specific motion pairings. Dark mode toggle can animate via `AnimatedTheme`.

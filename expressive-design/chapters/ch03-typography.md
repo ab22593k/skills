@@ -1,3 +1,10 @@
+---
+chapter: 3
+topic: Typography
+when: User needs custom type scales, Google Fonts setup, emphasized type styles, brand vs plain typefaces, or component type mapping
+queries: ["TextTheme", "Google Fonts", "type scale", "emphasized type", "brand font", "component text style", "font family"]
+---
+
 # Typography
 
 ## Core concepts
@@ -58,4 +65,4 @@ ThemeData(
 | `SnackBar` | `bodyMedium` |
 
 ## Connection to other chapters
-`TextTheme` is set in `ThemeData` (ch10). Readability affects accessibility (ch09). Component-specific usage links to each widget (ch06).
+`TextTheme` is set in `ThemeData` (→ ch10). Readability affects accessibility (→ ch09). Component-specific usage links to each widget (→ ch06).

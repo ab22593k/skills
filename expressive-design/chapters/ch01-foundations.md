@@ -1,3 +1,10 @@
+---
+chapter: 1
+topic: Foundations
+when: User needs an MD3 overview, state layer patterns, widget selection guidance, or understanding of Material as a design system in Flutter
+queries: ["MD3 overview", "state layers", "InkWell", "MaterialApp setup", "M3 vs M2", "widget naming migration"]
+---
+
 # Foundations
 
 ## Core concepts
@@ -22,4 +29,4 @@
 **Customizing Material:** Override `ThemeData` properties. Flutter's theme system merges component themes (`FilledButtonTheme`, `CardTheme`) with the global `colorScheme`. Override at the component theme level for targeted changes.
 
 ## Connection to other chapters
-Accessibility connects to color contrast (ch02) and `Semantics` (ch09). States connect to `MaterialStateProperty` (ch06). Layout foundations connect to `LayoutBuilder` (ch07). Branding connects to theme generation (ch10).
+Accessibility connects to color contrast (→ ch02) and `Semantics` (→ ch09). States connect to `MaterialStateProperty` (→ ch06). Layout foundations connect to `LayoutBuilder` (→ ch07). Branding connects to theme generation (→ ch10).

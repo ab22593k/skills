@@ -1,3 +1,10 @@
+---
+chapter: 2
+topic: Color System
+when: User needs accessible color palettes, dynamic color, ColorScheme.fromSeed, tonal palettes, or brand-to-seed mapping
+queries: ["generate a color scheme", "dynamic color", "ColorScheme.fromSeed", "seed color", "tonal palette", "color roles", "brand color to seed"]
+---
+
 # Color System
 
 ## Core concepts
@@ -55,4 +62,4 @@ if (useDynamic && Theme.of(context).platform == TargetPlatform.android) {
 | `error` | Error | 40 |
 
 ## Connection to other chapters
-`ColorScheme` consumed by every widget (ch06). Tonal elevation via surface containers (ch04). Contrast to accessibility (ch09). Theme generation (ch10).
+`ColorScheme` consumed by every widget (→ ch06). Tonal elevation via surface containers (→ ch04). Contrast to accessibility (→ ch09). Theme generation (→ ch10).

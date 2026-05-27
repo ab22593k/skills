@@ -1,3 +1,10 @@
+---
+chapter: 9
+topic: Accessibility
+when: User needs contrast auditing, Semantics setup, SemanticsDebugger, focus navigation, touch targets, or the accessibility checklist
+queries: ["accessibility", "Semantics", "SemanticsDebugger", "contrast ratio", "focus navigation", "touch target", "MergeSemantics", "ExcludeSemantics", "a11y checklist"]
+---
+
 # Accessibility
 
 ## Core concepts
@@ -55,4 +62,4 @@ GestureDetector(
 - Test with `AccessibilityNodeInfo` on Android, `UIAccessibility` on iOS
 
 ## Connection to other chapters
-Color contrast depends on `ColorScheme.fromSeed` (ch02). Type size respects `MediaQuery.textScaler` (ch03). Focus indicators use shape tokens (ch04). Component states (ch01) require accessible contrast.
+Color contrast depends on `ColorScheme.fromSeed` (→ ch02). Type size respects `MediaQuery.textScaler` (→ ch03). Focus indicators use shape tokens (→ ch04). Component states (→ ch01) require accessible contrast.

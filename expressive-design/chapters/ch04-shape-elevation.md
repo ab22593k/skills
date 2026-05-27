@@ -1,3 +1,10 @@
+---
+chapter: 4
+topic: Shape & Elevation
+when: User needs shape radius decisions, tonal elevation via surfaceContainer*, ShapeBorder subclasses, shape morphing, or the Expressive 35-shape library
+queries: ["shape radius", "border radius", "tonal elevation", "surfaceContainer", "ShapeBorder", "shape morphing", "card shape", "35-shape library"]
+---
+
 # Shape & Elevation
 
 ## Core concepts
@@ -68,4 +75,4 @@ Container(
 | `TextField` | 4dp top rounded |
 
 ## Connection to other chapters
-`ShapeBorder` values are design tokens (ch08). Tonal elevation depends on `ColorScheme` surface container roles (ch02). Shape morphing uses `Curves.emphasized` (ch05).
+`ShapeBorder` values are design tokens (→ ch08). Tonal elevation depends on `ColorScheme` surface container roles (→ ch02). Shape morphing uses `Curves.emphasized` (→ ch05).

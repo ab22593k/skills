@@ -1,3 +1,10 @@
+---
+chapter: 7
+topic: Layout & Navigation
+when: User needs responsive layout, LayoutBuilder breakpoints, window size classes, canonical layouts, edge-to-edge, or foldable support
+queries: ["responsive layout", "LayoutBuilder", "window size class", "compact medium expanded", "canonical layout", "edge-to-edge", "foldable", "8dp spacing", "navigation switch"]
+---
+
 # Layout & Navigation
 
 ## Core concepts
@@ -73,4 +80,4 @@ Widget _mediumScaffold() => Scaffold(
 | Expanded | ≥840dp | `NavigationDrawer` | 24dp+ |
 
 ## Connection to other chapters
-Navigation widgets (ch06) vary by size class. Spacing is a design token (ch08). Responsive shape radius (ch04) can vary per breakpoint.
+Navigation widgets (→ ch06) vary by size class. Spacing is a design token (→ ch08). Responsive shape radius (→ ch04) can vary per breakpoint.

@@ -1,3 +1,10 @@
+---
+chapter: 6
+topic: Components
+when: User needs Flutter M3 widget selection, button hierarchy, FAB sizes, navigation switching, card variants, or MaterialStateProperty usage
+queries: ["FilledButton", "NavigationBar", "NavigationRail", "NavigationDrawer", "FAB", "Card", "Chip", "TextField", "MaterialStateProperty", "button hierarchy", "widget selection"]
+---
+
 # Components
 
 ## Core concepts
@@ -47,4 +54,4 @@ FilledButton.styleFrom(
 **Button hierarchy:** One primary action → `FilledButton`. Secondary → `OutlinedButton` or `TextButton`. Multiple equal → `SegmentedButton`. Destructive → `TextButton.styleFrom(foregroundColor: colorScheme.error)`.
 
 ## Connection to other chapters
-Widgets consume `ColorScheme` (ch02), `TextTheme` (ch03), shape (ch04), motion (ch05). Navigation widgets connect to `LayoutBuilder` (ch07). States connect to `MaterialStateProperty` (ch01).
+Widgets consume `ColorScheme` (→ ch02), `TextTheme` (→ ch03), shape (→ ch04), motion (→ ch05). Navigation widgets connect to `LayoutBuilder` (→ ch07). States connect to `MaterialStateProperty` (→ ch01).
