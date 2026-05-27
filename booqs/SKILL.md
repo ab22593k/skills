@@ -3,270 +3,119 @@ name: booqs
 description: "Converts any documentation source — book (PDF/EPUB), URL, git repo, directory, or text file — into a structured, token-efficient knowledge base for LLM consumption. Extracts frameworks, mental models, principles, techniques, anti-patterns, and organized references. Trigger on: 'turn this into a skill', 'create a skill from', 'I want to study', 'study this documentation', 'add this to my skills', 'convert this to a skill', 'make a skill from', 'analyze this book/docs/repo', 'extract frameworks from'. Use when the user provides a path to a PDF/EPUB, a URL to documentation, a git repo URL, a local directory of docs, or any text source, and wants to build a reusable, structured knowledge base from it."
 ---
 
-# Booqs
-
-Converts any documentation source — book, URL, git repo, directory, or file — into a structured, token-efficient knowledge base for LLM consumption.
-
-## Query routing
-
-| User asks... | Load this section |
-|---|---|
-| "turn this PDF into a skill" | Detect source type → File path |
-| "turn this website into docs" | Detect source type → URL |
-| "turn this repo into a skill" | Detect source type → Git repo |
-| "study this docs folder" | Detect source type → Directory |
-| "what extraction method should I use" | Detect source type → pattern matching |
-| "how should I structure the output" | Step 3 (Generate files, templates) |
-| "what if the source has no chapters" | Edge cases |
-| "this source is huge" | Edge cases (very large sources) |
-| extraction / fetch failed | Dependencies |
-
 ## Pipeline
 
-0. Detect source type → 1. Extract text → 2. Analyze → 3. Generate files → 4. Install
+`0. Detect type → 1. Extract → 2. Analyze → 3. Generate files → 4. Install`
 
 ## Step 0 — Detect source type
 
-Determine what kind of input the user provided:
-
-| Input looks like... | Source type | Extraction strategy |
+| Input | Type | Strategy |
 |---|---|---|
-| `https://` or `http://` URL | URL | Firecrawl scrape or webfetch |
-| `github.com/owner/repo` or `git@` URL | Git repo | `git clone` → discover docs |
-| Local directory path (ends in `/` or no extension) | Directory | Walk `.md`/`.html`/`.rst` files |
-| `.pdf` file | File (PDF) | `scripts/extract.py --mode technical` |
-| `.epub` file | File (EPUB) | `scripts/extract.py` |
-| `.md` or `.txt` file | File (text) | `scripts/extract.py` |
-| Other file extension | File (unknown) | Sniff magic bytes or read directly |
+| `https://...` | URL | firecrawl_scrape / webfetch |
+| `github.com/...` or `git@` | Git repo | `git clone --depth 1` → walk docs |
+| Local dir path | Directory | Walk `.md`/`.rst`/`.html` files |
+| `.pdf` file | File | `extract.py --mode technical` |
+| `.epub` file | File | `extract.py` |
+| `.md` / `.txt` file | File | `extract.py` |
+| Other extension | Unknown | Sniff magic bytes |
 
-Derive the skill slug from the source name: lowercase, replace non-alphanumeric with hyphens, strip leading/trailing hyphens.
+Slug from source name: lowercase, `[^a-z0-9]+` → `-`, strip edges.
 
 ## Step 1 — Extract text by source type
 
-### Source: URL
+**URL** — `firecrawl_scrape` (or webfetch fallback). Save to `/tmp/booqs/full_text.txt` + `metadata.json` (`{source_type,url,estimated_tokens,chapters_detected}`). For multi-page docs: `firecrawl_map` sub-pages, sitemap, or use `waitFor` for JS-rendered.
 
-Fetch the page or documentation site content:
+**Git repo** — `git clone --depth 1 <url> /tmp/booqs/repo/`. Find `.md`/`.rst`/`.html`/`.txt` (prioritize README, docs/). Concatenate into `full_text.txt` with `[FILE: path]` markers. Skip `node_modules/`, `.git/`, `__pycache__/`, vendor dirs, binary files. Metadata: `{source_type:git, repo, files_discovered, files_read, estimated_tokens}`.
 
-```markdown
-1. Use firecrawl_scrape or webfetch to get the content
-2. Save to /tmp/booqs/full_text.txt
-3. Save metadata to /tmp/booqs/metadata.json:
-   {"source_type": "url", "url": "...", "estimated_tokens": N, "chapters_detected": M}
-```
+**Directory** — Recursively walk `.md`/`.rst`/`.html`/`.txt` files. Skip hidden dirs (`.`/`__`), build artifacts (`node_modules/`,`target/`,`dist/`,`build/`). Same concat format as git. Same metadata shape.
 
-For multi-page docs (SPAs, doc sites), try:
-- `firecrawl_map` to discover sub-page URLs, then scrape each
-- Look for a sitemap or table of contents on the main page
-- If JavaScript-rendered, use `waitFor` or the firecrawl agent
+**File (PDF/EPUB/MD/TXT)** — `python3 <skill-dir>/scripts/extract.py "<path>" --mode <technical|text>`. For PDFs, first read ~2K token sample and signal-detect:
 
-If firecrawl is unavailable, fall back to `webfetch`.
-
-### Source: Git repo
-
-```bash
-git clone --depth 1 <repo-url> /tmp/booqs/repo/
-```
-
-Then discover documentation files:
-
-```
-Find all .md, .rst, .html, .txt files under /tmp/booqs/repo/
-Prioritize: README*, docs/, doc/, wiki/, *.md docs/*.md
-```
-
-Read the key doc files and concatenate them into `/tmp/booqs/full_text.txt` with clear file-path markers:
-
-```
-[FILE: README.md]
-...
-[FILE: docs/getting-started.md]
-...
-```
-
-Skip: `node_modules/`, `.git/`, `__pycache__/`, binary files, vendor directories.
-
-Save metadata:
-```json
-{"source_type": "git", "repo": "...", "files_discovered": N, "files_read": N, "estimated_tokens": N}
-```
-
-### Source: Directory
-
-Walk the directory tree recursively, collect `.md`, `.rst`, `.html`, `.txt` files. Skip hidden dirs (`.`, `__`), build artifacts (`node_modules/`, `target/`, `dist/`, `build/`), and binary files.
-
-Read and concatenate into `/tmp/booqs/full_text.txt` with file-path markers (same format as git repo above).
-
-Save metadata:
-```json
-{"source_type": "directory", "path": "...", "files_discovered": N, "files_read": N, "estimated_tokens": N}
-```
-
-### Source: File (PDF / EPUB / MD / TXT)
-
-Run the extraction script:
-
-```bash
-python3 <skill-dir>/scripts/extract.py "<path-to-file>" --mode <technical|text>
-```
-
-Read metadata at `/tmp/booqs/metadata.json`. Key fields: `extraction_method`, `estimated_tokens`, `chapters_detected`, `has_toc`.
-
-If the file is a markdown or text file, the script reads it directly. For PDFs also run content-type detection:
-
-Read a ~2K token sample and score these signals:
-
-| Signal | Detected by | High if... | Implies |
+| Signal | Check | High if | → mode |
 |---|---|---|---|
-| Code density | Count ` ``` `, indented blocks, `{` `}` `fn` `def` | >5 code blocks per 2K | Technical — use Docling |
-| Table density | Count `|` row patterns, aligned columns | >3 row patterns per 2K | Technical — use Docling |
-| Framework terms | Named models, theorems, patterns | >3 named frameworks | Text-heavy — fast extraction OK |
-| Formula density | Math notation: `=`, `∑`, `∫`, `→` | >5 formulas per 2K | Technical — use Docling |
-| Prose ratio | Paragraph-to-heading ratio | >80% paragraph text | Text-heavy — fast extraction OK |
+| Code density | ` ``` ` `{` `def` `fn` | >5 blocks/2K | technical |
+| Table density | `|` rows, columns | >3 patterns/2K | technical |
+| Formula density | `=` `∑` `∫` `→` | >5/2K | technical |
+| Framework terms | Named models/theorems | >3 | text |
+| Prose ratio | Paragraph vs heading | >80% | text |
 
-**Decision tree:**
-- High code **or** table **or** formula density → `--mode technical`
-- High framework terms **or** prose ratio → `--mode text`
-- Mixed → show evidence and let user choose
-- EPUBs always use ebooklib regardless of mode
+Decision: high code/table/formula → `technical`; frameworks/prose → `text`. EPUBs always use ebooklib. On failure: suggest `uv sync`.
 
-If extraction fails, suggest `uv sync` from the skill directory.
+**Token-efficient extraction rules:**
+- Read metadata with `jq` or `python3 -c "import json;..."` — don't Read the full JSON file
+- Check file size with `wc -l` / `wc -c` before reading source text
+- If >50K tokens, read first ~15K + section markers, then sample
+- Use `grep -n "^#\|^Chapter\|^[A-Z ]\{5,\}"` to find section markers without reading full file
+- Use `wc -l /tmp/booqs/full_text.txt` to assess size cheaply
+- For metadata fields: `python3 -c "import json; m=json.load(open('/tmp/booqs/metadata.json')); print(m['estimated_tokens'], m['chapters_detected'])"`
 
-## Step 2 — Analyze text
+## Step 2 — Analyze
 
-Read `/tmp/booqs/full_text.txt`. If >50K tokens, read the first ~15K tokens plus section markers, then sample strategically.
+Read `/tmp/booqs/full_text.txt` (sampled if >50K). Per section identify: **Frameworks**, **Mental models**, **Principles**, **Techniques**, **Anti-patterns**, **Decision trees**. Produce 800–1,200 token summaries with code examples for technical content.
 
-Identify these six categories per section:
+## Step 3 — Generate files
 
-- **Frameworks** — Named conceptual structures (e.g., "CAP theorem", "strangler fig")
-- **Mental models** — Ways of thinking the author teaches (e.g., "thinking in streams")
-- **Principles** — Rules of thumb (e.g., "prefer composition over inheritance")
-- **Techniques** — Specific procedures (e.g., "pipeline pattern with channels")
-- **Anti-patterns** — What NOT to do (e.g., "the blob", "god class")
-- **Decision trees** — "Use X when Y, use Z when W"
-
-For each section/chapter, produce a 800–1,200 token summary: core idea, frameworks introduced, connections. For technical sources, include key code examples and tables.
-
-## Step 3 — Generate skill files
-
-Create files in `/tmp/booqs/<slug>/`.
-
-### File structure
+Output: `/tmp/booqs/<slug>/`
 
 ```
-<slug>/
-├── SKILL.md            # ~4,000 tokens — core mental models + chapter index
-├── chapters/
-│   ├── ch01-<slug>.md  # ~1,000 tokens each
-│   ├── ch02-<slug>.md
-│   └── ...
-├── glossary.md         # ~1,500 tokens — key terms, alphabetized
-├── patterns.md         # ~2,000 tokens — techniques, algorithms, patterns
-└── cheatsheet.md       # ~1,000 tokens — decision tables, quick-reference
+SKILL.md          ~4K tokens — mental models, chapter index, query routing
+chapters/chN.md   ~1K each — core ideas, frameworks, techniques, connections
+glossary.md       ~1.5K — alphabetized key terms → chN
+patterns.md       ~2K — techniques, principles, anti-patterns with context
+cheatsheet.md     ~1K — decision tables for quick reference
 ```
 
-### SKILL.md template
+SKILL.md frontmatter: `name:<slug>` + `description:"one-sentence actionable summary"`.
 
-```yaml
----
-name: <slug>
-description: "<one-sentence summary focusing on what the source teaches you to do>"
----
-```
+Body order: Core mental models (When→Idea→Apply→Pitfalls per model), Query routing table, Chapter index (#,Title,Topic,Best for), Reference file pointers.
 
-Body sections in order:
+Chapter frontmatter: `chapter:N` `topic:"..."` `when:"User needs...", queries:["..."]`. Body: Core concepts→Frameworks→Techniques→Connections (+ Code/Reference tables if technical).
 
-**Core mental models** — Per model: **When to use** → **The idea** → **How to apply** → **Pitfalls**
+Glossary: `**term** — definition. (→ chN)`. Patterns: `## Name` + Type/Context/Solution/Consequences/Related. Cheatsheet: `## Choosing X` + `If|Then` table.
 
-**Query routing** — Map user questions to chapters. Same format as this page.
-
-**Chapter index** — Table with #, Title, Topic, Best for (critical for on-demand loading).
-
-**Reference files** — Pointers to glossary.md, patterns.md, cheatsheet.md.
-
-### Chapter file template
-
-```yaml
----
-chapter: N
-topic: "..."
-when: "User needs...", queries: ["...", "..."]
----
-```
-
-Followed by: **Core concepts** → **Frameworks introduced** → **Key techniques** → **Connection to other sections**. For technical content, also add **Code examples** and **Reference tables**.
-
-### Glossary format
-
-```
-**term** — definition. (→ chN)
-```
-
-Alphabetized. Every key term the source introduces.
-
-### Patterns format
-
-```markdown
-## Pattern Name
-
-**Type:** technique | principle | anti-pattern
-**Context:** When to use this
-**Solution:** What to do
-**Consequences:** What happens
-**Related:** (→ skill.md), (→ chN)
-```
-
-### Cheatsheet format
-
-Decision tables for skimming:
-
-```markdown
-## Choosing X
-
-| If          | Then       |
-| ----------- | ---------- |
-| condition A | approach Y |
-| condition B | approach Z |
-```
+**Token-efficient generation:** Apply same density rules to every output file. Never dump raw text. Each file must justify its token budget.
 
 ## Step 4 — Install
 
 ```bash
-mkdir -p ~/.agents/skills/<slug>
-cp -r /tmp/booqs/<slug>/* ~/.agents/skills/<slug>/
+mkdir -p ~/.agents/skills/<slug> && cp -r /tmp/booqs/<slug>/* "$_"
 ```
 
-Tell the user the slug, section count, estimated total tokens, and a usage example.
+Report slug, section count, total tokens, usage example. Clean up `/tmp/booqs/`.
 
 ## Dependencies
 
-- **Any source**: Python 3.10+, `uv`
-- **PDF extraction**: PyMuPDF, pdftotext (poppler-utils), PyPDF2, pdfminer.six, docling
-- **EPUB extraction**: ebooklib, beautifulsoup4
-- **URL fetching**: firecrawl MCP tools, or webfetch
-- **Git repo**: `git` CLI
-- **Install all**: `uv sync` from the skill directory
+Python 3.10+, `uv`. PDF: PyMuPDF/pdftotext/PyPDF2/pdfminer/docling. EPUB: ebooklib+bs4. URL: firecrawl/webfetch. Git: `git` CLI. All via `uv sync`.
+
+## Efficiency guidelines during execution
+
+- **Prefer bash over Read** for file operations: `cp`, `mv`, `mkdir`, `python3 -c` for JSON, `jq` for metadata
+- **Check size first**: `wc -l /tmp/booqs/full_text.txt` — Read only if needed
+- **Sample strategically**: head 15K + grep section markers for large files
+- **Never Read entire JSON/metadata files** — use `python3 -c "import json;..."` to extract one field
+- **Batch operations** when possible (e.g., `find ... -exec cat {} +` instead of Read loop)
+- **Use Write tool** for new file creation (not bash heredocs)
+- **Use Edit tool** for code modifications (reviewability > token cost for code)
+- **Summarize, don't dump** — structured summaries of contents, not raw outputs
 
 ## Edge cases
 
-**Very large sources (300+ pages / 150K+ tokens)** — Read only section markers and a ~2K token sample from each section's start. Generate summaries from samples.
+- >150K tokens: read only section markers + 2K per section sample
+- No sections detected: scan for `^#`, `^Chapter`, `^[A-Z ]{5,}`; otherwise single-chapter
+- Skill exists: warn + ask before overwrite
+- Partial failure: mark "needs review"
+- Login-gated URL: explain limitation, suggest saving to file
+- Large git repo: `--depth 1`, prioritize README + docs/
 
-**No clear section structure** — If section detection yields 0, scan for markdown headings, numbered sections, all-caps headings. If still nothing, create a single-chapter skill.
+## Constraints
 
-**Skill already exists** — Warn and ask before overwriting.
-
-**Partial failures** — Note sections you couldn't extract as "needs review."
-
-**URL behind login** — Note to the user that authentication isn't supported; suggest saving the page content to a file first.
-
-**Very large git repo** — Use `--depth 1` for fast clone. If docs are spread across many files, prioritize top-level README + docs/ directory.
-
-## What NOT to do
-
-- Don't dump raw extracted text into skill files. Every output must be a synthesis.
-- Don't guess section content you can't identify — mark as "needs review."
-- Don't skip the glossary. It's the most useful file for precise lookups.
-- Don't mix content across files (cheatsheet into SKILL.md, patterns into glossary). Each file has a purpose.
-- Don't leave orphaned `/tmp/booqs/` directories. Clean up always.
+- No raw dumps into output files — always synthesize
+- No guessing unreadable content — mark "needs review"
+- Never skip glossary — it's the most-used file for lookups
+- No cross-file content mixing — each file has a distinct purpose
+- Always clean up `/tmp/booqs/`
+- Prefer Write tool for new files over heredocs
+- Use `uv sync` for dep installs, not pip
 
 ## Design principles
 
