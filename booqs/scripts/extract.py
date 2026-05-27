@@ -13,8 +13,8 @@ EPUB extraction tries methods in order:
   2. zipfile + html.parser — stdlib fallback (no extra deps)
 
 Outputs:
-  /tmp/book_skill_work/full_text.txt  — full extracted text
-  /tmp/book_skill_work/metadata.json  — stats and metadata
+  /tmp/booqs/full_text.txt  — full extracted text
+  /tmp/booqs/metadata.json  — stats and metadata
 """
 
 import html
@@ -29,7 +29,7 @@ import unicodedata
 import zipfile
 from pathlib import Path
 
-OUTPUT_DIR = Path("/tmp/book_skill_work")
+OUTPUT_DIR = Path("/tmp/booqs")
 OUTPUT_TEXT = OUTPUT_DIR / "full_text.txt"
 OUTPUT_META = OUTPUT_DIR / "metadata.json"
 
