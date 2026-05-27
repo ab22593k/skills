@@ -90,3 +90,7 @@ iteration-N/
 ## Ignored files
 
 `.gitignore` only ignores `**/*.pdf.txt` and `__pycache__/*.pyc`.
+
+## Token Efficiency
+
+See [token-efficiency](./token-efficiency/SKILL.md) for model selection and tool optimization strategies.

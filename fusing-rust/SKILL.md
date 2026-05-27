@@ -1,76 +1,77 @@
 ---
 name: fusing-rust
-description: "Master Rust systems programming — ownership, concurrency, FFI, embedded, WebAssembly, and scripting — to build secure, scalable, and high-performance applications."
+description: "Master Rust systems programming — ownership, concurrency, FFI, embedded, WebAssembly, and scripting."
 effort: high
 ---
 
-## Core mental models
+## Core Mental Models
 
 ### Ownership Principle
-
-- **When to use** — Managing memory safely without a garbage collector in any Rust program.
-- **The idea** — Every value has exactly one owner. When the owner goes out of scope, the value is dropped. The compiler enforces this at compile time — no runtime overhead, no data races.
-- **How to apply** — Track who owns each piece of data. Use borrowing (`&T`, `&mut T`) when you need temporary access without transferring ownership. Clone explicitly when shared ownership is needed.
-- **Pitfalls** — Fighting the borrow checker usually means your design shares ownership too broadly. Restructure to minimize long-lived references.
+- **Use:** Safe memory management without GC
+- **Idea:** One owner per value; compiler enforces at compile time
+- **Apply:** Track ownership; borrow (`&T`, `&mut T`) for temporary access; clone for shared ownership
+- **Pitfall:** Fighting borrow checker → restructure design
 
 ### Send and Sync Traits
-
-- **When to use** — Designing concurrent or multi-threaded Rust programs.
-- **The idea** — `Send` types are safe to transfer ownership across threads. `Sync` types are safe to share references across threads. Most types auto-implement both.
-- **How to apply** — Use `Arc<T>` for shared ownership across threads. Use `Mutex<T>` for interior mutability in concurrent contexts. The compiler prevents you from accidentally sending non-Send types across threads.
-- **Pitfalls** — Raw pointers and some FFI types are neither Send nor Sync. Wrap them in newtypes and implement the traits only after verifying safety.
+- **Use:** Concurrent/multi-threaded programs
+- **Idea:** `Send` = transfer across threads; `Sync` = share references across threads
+- **Apply:** `Arc<T>` for shared ownership; `Mutex<T>` for interior mutability
+- **Pitfall:** Raw pointers aren't Send/Sync → wrap in newtypes after safety verification
 
 ### Error Handling with Result
-
-- **When to use** — Any operation that can fail — I/O, parsing, network calls.
-- **The idea** — Rust divides errors into recoverable (`Result<T, E>`) and unrecoverable (`panic!`). The `?` operator propagates errors up the call stack ergonomically.
-- **How to apply** — Return `Result` from fallible functions. Use `?` to unwrap early on error. Use `unwrap()` or `expect()` only when failure is truly impossible or you want a controlled crash.
-- **Pitfalls** — Swallowing errors with `.ok()` or ignoring `Result` warnings leads to silent failures. Define custom error types with `thiserror` or `anyhow` for production code.
+- **Use:** Fallible operations (I/O, parsing, network)
+- **Idea:** `Result<T, E>` for recoverable errors; `?` propagates; `panic!` for unrecoverable
+- **Apply:** Return `Result` from fallible functions; use `?` for propagation
+- **Pitfall:** Swallowing errors with `.ok()` → use `thiserror` or `anyhow`
 
 ### `unsafe` Superpowers
+- **Use:** FFI, raw pointers, performance-critical hot paths
+- **Idea:** Five operations require `unsafe` — caller responsible for memory safety
+- **Apply:** Minimize unsafe blocks; encapsulate in safe abstractions
+- **Pitfall:** Undefined behavior from mistakes
 
-- **When to use** — FFI, raw pointer manipulation, performance-critical hot paths where the borrow checker is too restrictive.
-- **The idea** — Five operations require `unsafe`: dereferencing raw pointers, calling unsafe functions, accessing mutable statics, implementing unsafe traits, and accessing union fields. The caller bears responsibility for memory safety.
-- **How to apply** — Minimize unsafe blocks. Encapsulate each unsafe operation in a safe abstraction. Validate invariants before entering unsafe code.
-- **Pitfalls** — Unsafe code is not checked by the compiler. A single mistake can introduce undefined behavior — segfaults, use-after-free, or corrupted data.
+## How to Use
 
-## How to use this skill
+Load when writing/reviewing Rust code (ownership, concurrency, unsafe, FFI, embedded, WASM).
 
-Load this skill when writing or reviewing Rust systems-level code — ownership, concurrency, unsafe, FFI, embedded, or WebAssembly. The chapter files are loaded on demand by referencing the index below.
+```
+@fusing-rust load chapter 7    # Generics and traits
+@fusing-rust glossary          # Term lookups
+@fusing-rust patterns          # Techniques and anti-patterns
+```
 
-- `skill integrating-rust` — loads this SKILL.md (mental models + index)
-- Read `chapters/chXX-*.md` for deep-dive on a specific topic
-- `glossary.md` for quick term lookups
-- `patterns.md` for reusable techniques
-- `cheatsheet.md` for decision tables
+## Chapter Index
 
-## Chapter index
+| # | Title | Topic |
+|---|-------|-------|
+| 1 | Getting Started | rustup, cargo, profiles |
+| 2 | Fundamentals | Variables, types, functions |
+| 3 | Ownership | Ownership, borrowing, slices |
+| 4 | Structs/Enums | Structs, enums, collections |
+| 5 | Modules | Module system, crates |
+| 6 | Error Handling | Result, panic!, abort |
+| 7 | Generics/Traits | Generic types, trait bounds |
+| 8 | File Systems | std::fs, paths, metadata |
+| 9 | Text Processing | String, Unicode, format! |
+| 10 | Concurrency | thread::spawn, Mutex, channels |
+| 11 | Device I/O | BufReader, stdin/stdout |
+| 12 | Terminals | crossterm, tui-rs |
+| 13 | Processes | Command, child processes, signals |
+| 14 | Databases | SQLite, MongoDB, CRUD |
+| 15 | Network | TcpListener, TcpStream, Tokio |
+| 16 | Unsafe Rust | raw pointers, mutable statics |
+| 17 | FFI | extern "C", CString, #[repr(C)] |
+| 18 | Embedded | HAL, microcontrollers |
+| 19 | WebAssembly | wasm-pack, wasm-bindgen |
+| 20 | Rhai | Scripting, Engine API |
 
-| #   | Title                           | Topic                                                                      | Tokens |
-| --- | ------------------------------- | -------------------------------------------------------------------------- | ------ |
-| 1   | Getting Started with Rust       | Installation, rustup, cargo, Hello World, profiles                         | ~1K    |
-| 2   | Fundamentals of Rust            | Variables, mutability, data types, functions, control flow                 | ~1K    |
-| 3   | Ownership and Memory Management | Ownership rules, stack vs heap, move/clone/copy, borrowing, slices         | ~1K    |
-| 4   | Structs, Enums, and Collections | Structs, field init shorthand, update syntax, enums, match, Vec, HashMap   | ~1K    |
-| 5   | Packages, Crates, and Modules   | Module system, packages, binary/library crates, paths, `use`               | ~1K    |
-| 6   | Error Handling                  | Result, panic!, backtrace, unwrap, expect, abort strategy                  | ~1K    |
-| 7   | Generics and Traits             | Generic types, trait definition, impl Trait, trait bounds, multiple traits | ~1K    |
-| 8   | Working with File Systems       | std::fs, file I/O, directories, paths, hard/soft links, metadata queries   | ~1K    |
-| 9   | Text Processing                 | String vs &str, Unicode/UTF-8, format!, println!, pattern matching         | ~1K    |
-| 10  | Concurrency and Parallelism     | thread::spawn, Mutex, channels, Arc, Send/Sync, data race prevention       | ~1K    |
-| 11  | Device Input/Output             | Device files, BufReader/BufWriter, stdin/stdout/stderr, USB detection      | ~1K    |
-| 12  | Working with Terminals          | Terminal I/O, crossterm, tui-rs, cursor control, styling, keyboard/mouse   | ~1K    |
-| 13  | Processes and Signal Handling   | Command::new, child processes, signals, environment vars, basic shell      | ~1K    |
-| 14  | Working with Databases          | SQLite (rusqlite), MongoDB, CRUD, transactions, SQL vs NoSQL               | ~1K    |
-| 15  | Network Programming             | std::net, TcpListener, TcpStream, UDP, Tokio async, DNS resolution         | ~1K    |
-| 16  | Unsafe Rust                     | unsafe keyword, raw pointers, mutable statics, unsafe traits, unions       | ~1K    |
-| 17  | Foreign Function Interface      | extern "C", FFI, CString, #[repr(C)], callbacks, build.rs                  | ~1K    |
-| 18  | Embedded Rust                   | Microcontrollers, HAL, AVR-Rust, Arduino Uno, LED blink                    | ~1K    |
-| 19  | Running Rust from Web Browsers  | WebAssembly, wasm-pack, wasm-bindgen, cargo-generate, login app            | ~1K    |
-| 20  | Working with Rhai               | Rhai scripting, Engine API, Rust↔Rhai interop, plugins                    | ~1K    |
+## Reference Files
 
-## Reference files
+- `glossary.md` — Term definitions
+- `patterns.md` — Techniques and anti-patterns
+- `cheatsheet.md` — Decision tables
+- `chapters/chXX-*.md` — Deep dives (load on demand)
 
-- **glossary.md** — Alphabetized terms across all chapters
-- **patterns.md** — Reusable techniques, principles, anti-patterns
-- **cheatsheet.md** — Decision tables and quick-reference
+## Token Efficiency
+
+Apply `@token-efficiency` for model selection and tool optimization strategies when implementing Rust code.
