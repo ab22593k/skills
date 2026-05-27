@@ -1,72 +1,141 @@
 ---
 name: booqs
-description: "Converts a technical book (PDF or EPUB) into a structured Agent Code skill — extracting frameworks, mental models, principles, techniques, and anti-patterns. Trigger on: 'turn this book into a skill', 'create a skill from this PDF/EPUB', 'I want to study [book]', 'add this book to my skills', 'convert PDF/EPUB to skill', 'analyze this book', 'extract frameworks from this book'. Use when the user provides a path to a PDF or EPUB and wants to build a reusable knowledge base from it, or wants to study a book through an AI agent."
+description: "Converts any documentation source — book (PDF/EPUB), URL, git repo, directory, or text file — into a structured, token-efficient knowledge base for LLM consumption. Extracts frameworks, mental models, principles, techniques, anti-patterns, and organized references. Trigger on: 'turn this into a skill', 'create a skill from', 'I want to study', 'study this documentation', 'add this to my skills', 'convert this to a skill', 'make a skill from', 'analyze this book/docs/repo', 'extract frameworks from'. Use when the user provides a path to a PDF/EPUB, a URL to documentation, a git repo URL, a local directory of docs, or any text source, and wants to build a reusable, structured knowledge base from it."
 ---
 
 # Booqs
 
-Converts a PDF/EPUB technical book into a structured Agent Code skill — a browsable knowledge base of frameworks, mental models, principles, techniques, and anti-patterns.
+Converts any documentation source — book, URL, git repo, directory, or file — into a structured, token-efficient knowledge base for LLM consumption.
 
 ## Query routing
 
 | User asks... | Load this section |
 |---|---|
-| "turn this PDF into a skill" | Pipeline → Steps 1–6 |
-| "what extraction method should I use" | Step 2 (Pattern matching) → Step 3 |
-| "how should I structure the output" | Step 5 (Generate files, templates) |
-| "what if the book has no chapters" | Edge cases |
-| "this book is 500 pages" | Edge cases (very large books) |
-| extraction script failed | Step 3 (dependency install) |
+| "turn this PDF into a skill" | Detect source type → File path |
+| "turn this website into docs" | Detect source type → URL |
+| "turn this repo into a skill" | Detect source type → Git repo |
+| "study this docs folder" | Detect source type → Directory |
+| "what extraction method should I use" | Detect source type → pattern matching |
+| "how should I structure the output" | Step 3 (Generate files, templates) |
+| "what if the source has no chapters" | Edge cases |
+| "this source is huge" | Edge cases (very large sources) |
+| extraction / fetch failed | Dependencies |
 
 ## Pipeline
 
-1. Validate input → 2. Detect book type → 3. Extract text → 4. Analyze → 5. Generate files → 6. Install
+0. Detect source type → 1. Extract text → 2. Analyze → 3. Generate files → 4. Install
 
-## Step 1 — Validate input
+## Step 0 — Detect source type
 
-Verify the file exists and has a supported extension (.pdf, .epub, .txt, .md). If no extension, sniff magic bytes: PDF starts with `%PDF`, EPUB starts with ZIP magic `PK`. If unsupported, list supported formats and stop.
+Determine what kind of input the user provided:
 
-Derive the skill slug from the filename if none was provided: lowercase, replace non-alphanumeric with hyphens, strip leading/trailing hyphens.
+| Input looks like... | Source type | Extraction strategy |
+|---|---|---|
+| `https://` or `http://` URL | URL | Firecrawl scrape or webfetch |
+| `github.com/owner/repo` or `git@` URL | Git repo | `git clone` → discover docs |
+| Local directory path (ends in `/` or no extension) | Directory | Walk `.md`/`.html`/`.rst` files |
+| `.pdf` file | File (PDF) | `scripts/extract.py --mode technical` |
+| `.epub` file | File (EPUB) | `scripts/extract.py` |
+| `.md` or `.txt` file | File (text) | `scripts/extract.py` |
+| Other file extension | File (unknown) | Sniff magic bytes or read directly |
 
-## Step 2 — Detect book type with pattern matching
+Derive the skill slug from the source name: lowercase, replace non-alphanumeric with hyphens, strip leading/trailing hyphens.
 
-Read a ~2K token sample from the start of the book and score these signals to auto-detect extraction strategy:
+## Step 1 — Extract text by source type
+
+### Source: URL
+
+Fetch the page or documentation site content:
+
+```markdown
+1. Use firecrawl_scrape or webfetch to get the content
+2. Save to /tmp/booqs/full_text.txt
+3. Save metadata to /tmp/booqs/metadata.json:
+   {"source_type": "url", "url": "...", "estimated_tokens": N, "chapters_detected": M}
+```
+
+For multi-page docs (SPAs, doc sites), try:
+- `firecrawl_map` to discover sub-page URLs, then scrape each
+- Look for a sitemap or table of contents on the main page
+- If JavaScript-rendered, use `waitFor` or the firecrawl agent
+
+If firecrawl is unavailable, fall back to `webfetch`.
+
+### Source: Git repo
+
+```bash
+git clone --depth 1 <repo-url> /tmp/booqs/repo/
+```
+
+Then discover documentation files:
+
+```
+Find all .md, .rst, .html, .txt files under /tmp/booqs/repo/
+Prioritize: README*, docs/, doc/, wiki/, *.md docs/*.md
+```
+
+Read the key doc files and concatenate them into `/tmp/booqs/full_text.txt` with clear file-path markers:
+
+```
+[FILE: README.md]
+...
+[FILE: docs/getting-started.md]
+...
+```
+
+Skip: `node_modules/`, `.git/`, `__pycache__/`, binary files, vendor directories.
+
+Save metadata:
+```json
+{"source_type": "git", "repo": "...", "files_discovered": N, "files_read": N, "estimated_tokens": N}
+```
+
+### Source: Directory
+
+Walk the directory tree recursively, collect `.md`, `.rst`, `.html`, `.txt` files. Skip hidden dirs (`.`, `__`), build artifacts (`node_modules/`, `target/`, `dist/`, `build/`), and binary files.
+
+Read and concatenate into `/tmp/booqs/full_text.txt` with file-path markers (same format as git repo above).
+
+Save metadata:
+```json
+{"source_type": "directory", "path": "...", "files_discovered": N, "files_read": N, "estimated_tokens": N}
+```
+
+### Source: File (PDF / EPUB / MD / TXT)
+
+Run the extraction script:
+
+```bash
+python3 <skill-dir>/scripts/extract.py "<path-to-file>" --mode <technical|text>
+```
+
+Read metadata at `/tmp/booqs/metadata.json`. Key fields: `extraction_method`, `estimated_tokens`, `chapters_detected`, `has_toc`.
+
+If the file is a markdown or text file, the script reads it directly. For PDFs also run content-type detection:
+
+Read a ~2K token sample and score these signals:
 
 | Signal | Detected by | High if... | Implies |
 |---|---|---|---|
-| Code density | Count ` ``` `, indented blocks `    `, `{` `}` `fn` `def` `class` | >5 code blocks per 2K tokens | Technical — tables, code structure matter |
-| Table density | Count `|` row patterns, aligned columns | >3 row patterns per 2K tokens | Technical — layout matters |
-| Framework terms | Named models, theorems, patterns (e.g., "CAP theorem", "observer pattern") | >3 named frameworks | Text-heavy — concepts matter more than code |
-| Formula density | Math notation: `=`, `∑`, `∫`, `→`, superscript patterns | >5 formulas per 2K tokens | Technical — Docling preserves formulas |
+| Code density | Count ` ``` `, indented blocks, `{` `}` `fn` `def` | >5 code blocks per 2K | Technical — use Docling |
+| Table density | Count `|` row patterns, aligned columns | >3 row patterns per 2K | Technical — use Docling |
+| Framework terms | Named models, theorems, patterns | >3 named frameworks | Text-heavy — fast extraction OK |
+| Formula density | Math notation: `=`, `∑`, `∫`, `→` | >5 formulas per 2K | Technical — use Docling |
 | Prose ratio | Paragraph-to-heading ratio | >80% paragraph text | Text-heavy — fast extraction OK |
 
 **Decision tree:**
-- High code **or** table **or** formula density → `--mode technical` (Docling preserves structure)
-- High framework terms **or** prose ratio → `--mode text` (PyMuPDF fast fallback chain)
-- Mixed signals → show the evidence to the user and let them choose
-- If the user explicitly provided `--mode`, skip detection and use their choice
+- High code **or** table **or** formula density → `--mode technical`
+- High framework terms **or** prose ratio → `--mode text`
+- Mixed → show evidence and let user choose
 - EPUBs always use ebooklib regardless of mode
 
-## Step 3 — Extract text
+If extraction fails, suggest `uv sync` from the skill directory.
 
-```bash
-python3 <skill-dir>/scripts/extract.py "<path-to-book>" --mode <technical|text>
-```
+## Step 2 — Analyze text
 
-The script writes:
+Read `/tmp/booqs/full_text.txt`. If >50K tokens, read the first ~15K tokens plus section markers, then sample strategically.
 
-- `/tmp/booqs/full_text.txt` — extracted text
-- `/tmp/booqs/metadata.json` — stats (method, pages, tokens, chapters, ToC)
-
-Read the metadata first. Key fields: `extraction_method`, `estimated_tokens`, `chapters_detected`, `has_toc`.
-
-If extraction fails, show the error and suggest running `uv sync` from the skill directory.
-
-## Step 4 — Analyze text
-
-Read `/tmp/booqs/full_text.txt`. If >50K tokens, read the first ~15K tokens plus chapter markers, then sample strategically.
-
-Identify these six categories per chapter:
+Identify these six categories per section:
 
 - **Frameworks** — Named conceptual structures (e.g., "CAP theorem", "strangler fig")
 - **Mental models** — Ways of thinking the author teaches (e.g., "thinking in streams")
@@ -75,9 +144,9 @@ Identify these six categories per chapter:
 - **Anti-patterns** — What NOT to do (e.g., "the blob", "god class")
 - **Decision trees** — "Use X when Y, use Z when W"
 
-For each chapter, produce a 800–1,200 token summary: core idea, frameworks introduced, connections. For technical mode, include key code examples and tables.
+For each section/chapter, produce a 800–1,200 token summary: core idea, frameworks introduced, connections. For technical sources, include key code examples and tables.
 
-## Step 5 — Generate skill files
+## Step 3 — Generate skill files
 
 Create files in `/tmp/booqs/<slug>/`.
 
@@ -100,7 +169,7 @@ Create files in `/tmp/booqs/<slug>/`.
 ```yaml
 ---
 name: <slug>
-description: "<one-sentence summary focusing on what the book teaches you to do>"
+description: "<one-sentence summary focusing on what the source teaches you to do>"
 ---
 ```
 
@@ -124,7 +193,7 @@ when: "User needs...", queries: ["...", "..."]
 ---
 ```
 
-Followed by: **Core concepts** → **Frameworks introduced** → **Key techniques** → **Connection to other chapters**. For technical mode, also add **Code examples** and **Reference tables**.
+Followed by: **Core concepts** → **Frameworks introduced** → **Key techniques** → **Connection to other sections**. For technical content, also add **Code examples** and **Reference tables**.
 
 ### Glossary format
 
@@ -132,7 +201,7 @@ Followed by: **Core concepts** → **Frameworks introduced** → **Key technique
 **term** — definition. (→ chN)
 ```
 
-Alphabetized. Every key term the book introduces.
+Alphabetized. Every key term the source introduces.
 
 ### Patterns format
 
@@ -159,31 +228,42 @@ Decision tables for skimming:
 | condition B | approach Z |
 ```
 
-## Step 6 — Install
+## Step 4 — Install
 
 ```bash
 mkdir -p ~/.agents/skills/<slug>
 cp -r /tmp/booqs/<slug>/* ~/.agents/skills/<slug>/
 ```
 
-Tell the user the slug, chapter count, estimated total tokens, and a usage example.
+Tell the user the slug, section count, estimated total tokens, and a usage example.
+
+## Dependencies
+
+- **Any source**: Python 3.10+, `uv`
+- **PDF extraction**: PyMuPDF, pdftotext (poppler-utils), PyPDF2, pdfminer.six, docling
+- **EPUB extraction**: ebooklib, beautifulsoup4
+- **URL fetching**: firecrawl MCP tools, or webfetch
+- **Git repo**: `git` CLI
+- **Install all**: `uv sync` from the skill directory
 
 ## Edge cases
 
-**Missing dependencies** — Run `uv sync` from the skill directory.
+**Very large sources (300+ pages / 150K+ tokens)** — Read only section markers and a ~2K token sample from each section's start. Generate summaries from samples.
 
-**Very large books (300+ pages / 150K+ tokens)** — Read only chapter markers and a ~2K token sample from each chapter's first page. Generate summaries from samples.
-
-**No clear chapter structure** — If `chapters_detected` is 0, scan for "Chapter N", numbered sections, all-caps headings. If still nothing, create a single-chapter skill.
+**No clear section structure** — If section detection yields 0, scan for markdown headings, numbered sections, all-caps headings. If still nothing, create a single-chapter skill.
 
 **Skill already exists** — Warn and ask before overwriting.
 
-**Partial failures** — Note diagram-heavy pages as "needs review."
+**Partial failures** — Note sections you couldn't extract as "needs review."
+
+**URL behind login** — Note to the user that authentication isn't supported; suggest saving the page content to a file first.
+
+**Very large git repo** — Use `--depth 1` for fast clone. If docs are spread across many files, prioritize top-level README + docs/ directory.
 
 ## What NOT to do
 
 - Don't dump raw extracted text into skill files. Every output must be a synthesis.
-- Don't guess chapter content you can't identify — mark as "needs review."
+- Don't guess section content you can't identify — mark as "needs review."
 - Don't skip the glossary. It's the most useful file for precise lookups.
 - Don't mix content across files (cheatsheet into SKILL.md, patterns into glossary). Each file has a purpose.
 - Don't leave orphaned `/tmp/booqs/` directories. Clean up always.
@@ -191,7 +271,7 @@ Tell the user the slug, chapter count, estimated total tokens, and a usage examp
 ## Design principles
 
 1. **Density over completeness** — 1K token summary beats 10K excerpt. Compress, don't copy.
-2. **Practitioner voice** — "Use X when Y" not "The book explains X." Agent thinks in action.
+2. **Practitioner voice** — "Use X when Y" not "The source explains X." Agent thinks in action.
 3. **Front-load SKILL.md** — First ~5K tokens are always in context. Lead with mental models and chapter index.
 4. **On-demand chapters** — Never inline chapter content into SKILL.md. Load only what's asked for.
 5. **Always synthesize** — Every sentence is a step removed from the source: compressed, interpreted, structured.

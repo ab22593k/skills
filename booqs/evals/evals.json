@@ -1,16 +1,16 @@
 {
-  "skill_name": "book-to-skill",
+  "skill_name": "booqs",
   "evals": [
     {
       "id": 0,
       "name": "out-of-scope",
-      "prompt": "turn this into a skill: not-a-file.txt",
-      "expected_output": "The skill should identify that the file is not a PDF or EPUB and provide usage instructions.",
+      "prompt": "turn this into a skill: not-a-file.xyz",
+      "expected_output": "The skill should identify that the file format is not supported and provide usage instructions.",
       "files": [],
       "expectations": [
-        "The agent identifies that .txt is not a supported format",
-        "The agent lists supported formats (PDF, EPUB, or similar)",
-        "No skill files are created in ~/.claude/skills/",
+        "The agent identifies that .xyz is not a supported format",
+        "The agent lists supported formats (PDF, EPUB, MD, TXT, URL, git repo, directory)",
+        "No skill files are created in ~/.agents/skills/",
         "The agent does not attempt to run extract.py"
       ]
     },
@@ -36,7 +36,7 @@
         "The agent reads and analyzes the provided file",
         "The agent identifies at least 2 frameworks or mental models from the content",
         "The agent provides a structured analysis (frameworks, principles, techniques)",
-        "No skill files are created in ~/.claude/skills/"
+        "No skill files are created in ~/.agents/skills/"
       ]
     },
     {
@@ -52,6 +52,44 @@
         "The agent generates a glossary.md with key terms",
         "The generated SKILL.md has a chapter index table",
         "The generated content is a synthesis, not raw text dump"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "url-source",
+      "prompt": "study this documentation: https://example.com/docs",
+      "expected_output": "The skill should detect that a URL was provided, fetch the content, and present a structured plan for conversion.",
+      "files": [],
+      "expectations": [
+        "The agent detects the source type as a URL",
+        "The agent fetches or attempts to fetch content from the URL",
+        "The agent provides a structured plan with estimated output size",
+        "No skill files are created (dry-run planning phase)"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "git-repo-source",
+      "prompt": "turn this repo into a skill: https://github.com/example/docs-repo",
+      "expected_output": "The skill should detect that a git repo URL was provided, propose cloning and analyzing documentation files.",
+      "files": [],
+      "expectations": [
+        "The agent detects the source type as a git repo",
+        "The agent proposes cloning with --depth 1",
+        "The agent identifies doc file types to look for (.md, .rst)",
+        "The agent provides a structured conversion approach"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "directory-source",
+      "prompt": "create a skill from evals/",
+      "expected_output": "The skill should detect that a directory was provided and propose walking it for documentation files.",
+      "files": ["evals/sample_book.md", "evals/sample_technical.md"],
+      "expectations": [
+        "The agent detects the source type as a local directory",
+        "The agent lists documentation files found in the directory",
+        "The agent provides a plan with estimated token count and section count"
       ]
     }
   ]
