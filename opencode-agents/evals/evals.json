@@ -1,0 +1,44 @@
+{
+  "skill_name": "opencode-agents",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to set up a code review agent in OpenCode that can look at my code and suggest improvements but never make any changes. It should be a subagent that I can @mention. Can you show me how to configure this as a markdown file?",
+      "expected_output": "A markdown agent file for a read-only code reviewer with edit: deny, focusing on code quality, security, and best practices",
+      "files": [],
+      "expectations": [
+        "The output includes a Markdown code block with YAML frontmatter containing description, mode, and permission fields",
+        "The agent mode is set to subagent",
+        "The edit permission is set to deny",
+        "The explanation mentions @mention usage for invoking subagents",
+        "The description field clearly indicates code review functionality"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "What's the difference between primary agents and subagents in OpenCode? Also, how do I switch between my Build and Plan agents?",
+      "expected_output": "An explanation distinguishing primary and subagent types, with instructions on using Tab key or switch_agent keybind",
+      "files": [],
+      "expectations": [
+        "The explanation distinguishes primary agents as main conversation agents from subagents as specialized assistants",
+        "Tab key is mentioned as the way to cycle between primary agents",
+        "Build is identified as the default primary agent with full tools",
+        "Plan is identified as a restricted agent for analysis without changes",
+        "Subagents can be invoked via @mention"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I need to create an OpenCode agent that can only read files and run git commands. It should use a fast model and be a primary agent. Can you give me the config for opencode.json?",
+      "expected_output": "A JSON agent configuration with restricted bash permissions (git only), read-only edit policy, and model specification",
+      "files": [],
+      "expectations": [
+        "The configuration uses JSON format inside the agent block of opencode.json",
+        "The mode is set to primary",
+        "Edit permission is set to deny or ask",
+        "Bash permission uses granular rules allowing git commands while denying others",
+        "The model field specifies a provider/model-id format"
+      ]
+    }
+  ]
+}
