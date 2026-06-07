@@ -11,19 +11,85 @@ Write comprehensive implementation plans assuming the engineer has zero context 
 
 Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
 
+The planning process is split into three phases — work through them in order.
+
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
 **Save plans to:** `.agents/plans/MM-DD-<feature-name>.md`
 
 - (User preferences for plan location override this default)
 
-## Scope Check
+---
+
+## Phase 1: Deep Comprehension
+
+Understand the problem before proposing a solution. A plan built on shallow reading produces the wrong thing, efficiently.
+
+### Read the Spec — Extract the Map
+
+Read the spec or requirements closely. Document what you find:
+
+- **Explicit constraints:** Technology choices, performance targets, budget, timeline, compliance requirements. These are non-negotiable — plan around them, not against them.
+- **Implicit needs:** What the spec assumes but doesn't say. Common examples: authentication/authorization for any multi-user feature, idempotency for payment flows, audit logging for data mutations, rate limiting for public endpoints.
+- **Unstated assumptions:** Every spec leaves gaps. Identify them explicitly so the engineer can validate them.
+
+### Identify the "Why"
+
+Understand the business value the feature delivers. This guards against gold-plating:
+
+- What problem does this solve for the user?
+- What does success look like from the business side?
+- **Equally important — what NOT to build:** If the spec is ambiguous about scope, document the boundary. Building 80% of a feature that delivers 100% of the value is better than building 120%.
+
+### Define Success Criteria
+
+Write down exactly how you will prove the feature works. These become the acceptance tests:
+
+- **Functional criteria:** The happy-path behavior — "user can X and sees Y"
+- **Non-functional criteria:** Performance threshold, max latency, concurrent users supported
+- **Verification method:** Automated test, manual QA script, or monitoring dashboard
+
+### Scope Check
 
 If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
 
-## File Structure
+---
 
-Before defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.
+> **If the spec requires multi-source research (technology comparisons, regulatory requirements, competitive analysis):** Load the deep-research skill  → `skill:deep-research` before starting Phase 2. It produces a structured research report you can reference directly in the Architecture Decisions and Tech Stack sections of the plan header.
+
+## Phase 2: Architecture & Data Flow
+
+Design the shape of the solution. Decisions made here ripple through every task — get them right before writing code.
+
+### Map the Data Lifecycle
+
+Sketch how data enters, changes, and leaves the system. For each data entity:
+
+- **Source:** Where does it originate? (user input, webhook, cron, upstream service)
+- **Transformation:** What processing happens? (validation, enrichment, aggregation)
+- **Storage:** Where does it live? (DB table, cache, blob storage, message queue)
+- **Egress:** When and how is it consumed or emitted? (API response, event, export file)
+
+### Design the Schema
+
+Define database tables, key relationships, and data types early. Include:
+
+- Table/collection names and columns/fields with types
+- Primary and foreign key relationships
+- Indexes needed for query patterns
+- Migration strategy (new tables vs. altering existing ones)
+
+### Choose API Contracts
+
+Write out the JSON payloads for endpoints before coding them. This surfaces mismatches between frontend and backend expectations early:
+
+- Request body shape, required vs. optional fields, validation rules
+- Response shape, pagination format, error response structure
+- Status codes for each outcome (200, 201, 400, 404, 409, 500)
+
+### File Structure
+
+Map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.
 
 - Design units with clear boundaries and well-defined interfaces. Each file should have one clear responsibility.
 - You reason best about code you can hold in context at once, and your edits are more reliable when files are focused. Prefer smaller, focused files over large ones that do too much.
@@ -34,17 +100,29 @@ Before defining tasks, map out which files will be created or modified and what 
 
 This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.
 
-## Bite-Sized Task Granularity
+### Pre-Work: Dependency Audit
 
-**Each step is one action:**
+Before writing any task code, every plan MUST include a **Task 0: Dependency Audit**. This prevents NIH syndrome — building what already exists.
 
-- "Write the failing test" - step
-- "Run it to make sure it fails" - step
-- "Implement the minimal code to make the test pass" - step
-- "Run the tests and make sure they pass" - step
-- "Commit" - step
+```markdown
+### Task 0: Dependency Audit
 
-## Plan Document Header
+- [ ] **Step 1: Search for existing solutions**
+
+Check npm, Maven, PyPI, SaaS APIs, or whatever registry the tech stack uses for each major piece of functionality. For each, note what was found and whether it was adopted or rejected and why.
+
+- [ ] **Step 2: Document decisions**
+
+Save a dependency decision table:
+| Need | Library/Solution Considered | Chosen? | Rationale |
+|---|---|---|---|
+| Auth | supabase-js, next-auth, custom | next-auth | Lightweight, fits Next.js App Router |
+| State | Zustand, Redux, Jotai | Zustand | Minimal boilerplate, sufficient for this case |
+```
+
+Custom code is justified only for: specific domain logic, performance-critical paths, security-sensitive code, or when no suitable library exists after thorough evaluation.
+
+### Plan Document Header
 
 **Every plan MUST start with this header:**
 
@@ -74,29 +152,49 @@ This structure informs the task decomposition. Each task should produce self-con
 ---
 ```
 
-## Pre-Work: Dependency Audit
+### Bite-Sized Task Granularity
 
-Before writing any task code, every plan MUST include a **Task 0: Dependency Audit**. This prevents NIH syndrome — building what already exists.
+**Each step is one action:**
 
-```markdown
-### Task 0: Dependency Audit
+- "Write the failing test" — step
+- "Run it to make sure it fails" — step
+- "Implement the minimal code to make the test pass" — step
+- "Run the tests and make sure they pass" — step
+- "Commit" — step
 
-- [ ] **Step 1: Search for existing solutions**
+---
 
-Check npm, Maven, PyPI, SaaS APIs, or whatever registry the tech stack uses for each major piece of functionality. For each, note what was found and whether it was adopted or rejected and why.
+## Phase 3: Risk & Edge Case Analysis
 
-- [ ] **Step 2: Document decisions**
+Anticipate what breaks before it breaks. Every plan looks good on the happy path — the quality is in how it handles the unhappy ones.
 
-Save a dependency decision table:
-| Need | Library/Solution Considered | Chosen? | Rationale |
-|---|---|---|---|
-| Auth | supabase-js, next-auth, custom | next-auth | Lightweight, fits Next.js App Router |
-| State | Zustand, Redux, Jotai | Zustand | Minimal boilerplate, sufficient for this case |
-```
+### Identify Failure Points
 
-Custom code is justified only for: specific domain logic, performance-critical paths, security-sensitive code, or when no suitable library exists after thorough evaluation.
+Plan for what happens when things go wrong. For every operation in the plan, consider:
 
-## Task Structure
+- **Network failures:** API call timeout, dropped connection, DNS resolution failure. How does the system retry or degrade?
+- **Slow queries:** What happens when a DB query takes 10x longer than expected? Does the endpoint have a timeout? Can it be paginated or cached?
+- **Bad user input:** Malformed JSON, excessively large payloads, injection attempts. Where is validation enforced? (Prefer at the boundary, not deep in business logic.)
+- **Downstream outages:** The service your feature depends on is unreachable. Does it fail open (graceful degradation) or fail closed?
+
+### List the Edge Cases
+
+Define behavior for the boundaries of your input space:
+
+- **Empty states:** What does the UI show when a list has zero items? When a query returns no results?
+- **Null / optional values:** Every nullable field in the schema — what does the system do with null? Crash? Skip? Show a placeholder?
+- **Extreme limits:** Max-length strings, max-page-size pagination, concurrent users at the same moment, file uploads at the size limit.
+- **Duplicate / conflicting data:** Idempotency keys for writes, unique constraint violations, concurrent updates to the same row.
+
+### Plan Data Migration
+
+If the feature changes existing data structures, define the migration before coding the feature:
+
+- **Schema changes:** New tables, altered columns, backfills — order them so there is no window where the old and new code conflict.
+- **Existing data:** How will current production data be transformed to fit the new schema? Is a one-time migration script needed, or can it be done lazily?
+- **Rollback strategy:** How do you undo the migration if the deployment is rolled back? Forward-only migrations are a trap.
+
+### Task Structure
 
 ```markdown
 ### Task N: [Component Name]
@@ -110,7 +208,7 @@ Custom code is justified only for: specific domain logic, performance-critical p
 - [ ] **Step 4: Run test to verify it passes**
 ```
 
-## No Placeholders
+### No Placeholders
 
 Every step must contain the actual content an engineer needs. These are **plan failures** — never write them:
 
@@ -121,14 +219,14 @@ Every step must contain the actual content an engineer needs. These are **plan f
 - Steps that describe what to do without showing how (code blocks required for code steps)
 - References to types, functions, or methods not defined in any task
 
-## Remember
+### Remember
 
 - Exact file paths always
 - Complete code in every step — if a step changes code, show the code
 - Exact commands with expected output
 - DRY, YAGNI, TDD, frequent commits
 
-## Self-Review
+### Self-Review
 
 After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.
 
@@ -140,9 +238,11 @@ After writing the complete plan, look at the spec with fresh eyes and check the 
 
 **4. Decomposition check:** Does any step's code exceed 80-line functions or 200-line files? If yes, flag for a split. Does any step introduce a `utils`/`helpers`/`common` module? If yes, replace with a domain-specific name.
 
+**5. Phase coverage:** Does every question raised in Phase 1 (success criteria, implicit needs) and Phase 3 (failure points, edge cases) have a corresponding task? If not, add it.
+
 If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
 
-## Efficient Implementation
+### Efficient Implementation
 
 The plan should guide implementers toward token-efficient execution. Embed these principles in your task steps:
 
@@ -152,15 +252,17 @@ The plan should guide implementers toward token-efficient execution. Embed these
 - **Scope tool to task:** A step that inspects 3 files in unrelated parts of the codebase should be 3 separate steps, not one step with 3 parallel reads. Each step is bite-sized.
 - **Progressive disclosure:** If a reference skill bundles large EXAMPLES.md files, the plan should reference them by line range rather than loading the full file (`grep -n 'pattern name' REFERENCES.md` then read only the matching section).
 
+---
+
 ## Execution Handoff
 
 After saving the plan, offer execution choice:
 
 **"Plan complete and saved to `.agents/plans/<filename>.md`. Two execution options:**
 
-**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
+**1. Subagent-Driven (recommended)** — I dispatch a fresh subagent per task, review between tasks, fast iteration
 
-**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
+**2. Inline Execution** — Execute tasks in this session using executing-plans, batch execution with checkpoints
 
 **Which approach?"**
 
