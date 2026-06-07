@@ -1,0 +1,65 @@
+{
+  "skill_name": "writing-plans",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to add a paginated GET /api/users endpoint to our Flask REST API. We have Flask-SQLAlchemy with a User model already (id, username, email, created_at). The endpoint should support ?page=1&per_page=20 query params and return a JSON response with results, total count, and pagination metadata. Write me an implementation plan.",
+      "expected_output": "A complete implementation plan with header, file structure map, bite-sized tasks, complete code in each step, and no placeholders",
+      "files": [],
+      "expectations": [
+        "The plan includes the REQUIRED SUB-SKILL line in the header",
+        "The plan has a Goal section in the header",
+        "The plan has an Architecture section in the header",
+        "The plan has a Tech Stack section in the header",
+        "The plan maps out which files to create and modify with Create/Modify labels",
+        "All steps contain complete code in code blocks (no TBD, TODO, or placeholders)",
+        "Each task follows TDD pattern: test -> run to fail -> implement -> run to pass -> commit",
+        "Steps include exact command-line commands with expected output",
+        "The plan has a Self-Review section",
+        "The plan has an Execution Handoff section offering execution options",
+        "Tasks use - [ ] checkbox syntax for tracking",
+        "Git commit commands are included at the end of each task"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "We need to add an in-app notification system. When user A sends user B a message, user B should get a notification (stored in DB, fetched via API, shown in a bell icon dropdown). This touches the DB schema, the message sending flow, a new notifications API, and the frontend component. Write me an implementation plan.",
+      "expected_output": "A plan that either breaks this into multiple sub-plans or explains why it stays as one, with proper scope analysis",
+      "files": [],
+      "expectations": [
+        "The plan includes the REQUIRED SUB-SKILL line in the header",
+        "The plan has a Goal section in the header",
+        "The plan has an Architecture section in the header",
+        "The plan has a Tech Stack section in the header",
+        "The plan maps out which files to create and modify with Create/Modify labels",
+        "All steps contain complete code in code blocks (no TBD, TODO, or placeholders)",
+        "Each task follows TDD pattern: test -> run to fail -> implement -> run to pass -> commit",
+        "Steps include exact command-line commands with expected output",
+        "The plan has a Self-Review section",
+        "The plan has an Execution Handoff section offering execution options",
+        "Tasks use - [ ] checkbox syntax for tracking",
+        "Git commit commands are included at the end of each task"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "We want to add a Redis-based rate limiter middleware to our FastAPI app. It needs to track requests per IP with a sliding window, raise 429 when exceeded, and be configurable per-route (e.g., /api/ requires 100/hour, /auth/ requires 20/minute). We already have redis-py installed. There's an existing middleware.py where we add app middleware. Write me an implementation plan.",
+      "expected_output": "A plan showing file structure, existing code patterns to follow, TDD steps with actual test code, and no placeholder steps",
+      "files": [],
+      "expectations": [
+        "The plan includes the REQUIRED SUB-SKILL line in the header",
+        "The plan has a Goal section in the header",
+        "The plan has an Architecture section in the header",
+        "The plan has a Tech Stack section in the header",
+        "The plan maps out which files to create and modify with Create/Modify labels",
+        "All steps contain complete code in code blocks (no TBD, TODO, or placeholders)",
+        "Each task follows TDD pattern: test -> run to fail -> implement -> run to pass -> commit",
+        "Steps include exact command-line commands with expected output",
+        "The plan has a Self-Review section",
+        "The plan has an Execution Handoff section offering execution options",
+        "Tasks use - [ ] checkbox syntax for tracking",
+        "Git commit commands are included at the end of each task"
+      ]
+    }
+  ]
+}
