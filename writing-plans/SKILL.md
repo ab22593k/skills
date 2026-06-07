@@ -29,6 +29,7 @@ Before defining tasks, map out which files will be created or modified and what 
 - You reason best about code you can hold in context at once, and your edits are more reliable when files are focused. Prefer smaller, focused files over large ones that do too much.
 - Files that change together should live together. Split by responsibility, not by technical layer.
 - In existing codebases, follow established patterns. If the codebase uses large files, don't unilaterally restructure - but if a file you're modifying has grown unwieldy, including a split in the plan is reasonable.
+- **Hard limits in plan code:** Functions ≤ 80 lines, files ≤ 200 lines, nesting ≤ 3 levels. If plan code exceeds these, the task must include a decomposition step.
 
 This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.
 
@@ -55,10 +56,36 @@ This structure informs the task decomposition. Each task should produce self-con
 
 **Architecture:** [2-3 sentences about approach]
 
+**Architecture Decisions:**
+- **Bounded contexts & layers:** [Which contexts/layers the work touches, and how they stay separated]
+- **Naming conventions:** [Key domain names to use; note any banned generic names like `utils`/`helpers`/`common`]
+- **Dependency rationale:** [For each custom component, why no existing library was chosen — or which libraries ARE used and why]
+
 **Tech Stack:** [Key technologies/libraries]
 
 ---
 ```
+
+## Pre-Work: Dependency Audit
+
+Before writing any task code, every plan MUST include a **Task 0: Dependency Audit**. This prevents NIH syndrome — building what already exists.
+
+```markdown
+### Task 0: Dependency Audit
+
+- [ ] **Step 1: Search for existing solutions**
+
+Check npm, Maven, PyPI, SaaS APIs, or whatever registry the tech stack uses for each major piece of functionality. For each, note what was found and whether it was adopted or rejected and why.
+
+- [ ] **Step 2: Document decisions**
+
+Save a dependency decision table:
+| Need | Library/Solution Considered | Chosen? | Rationale |
+|---|---|---|---|
+| Auth | supabase-js, next-auth, custom | next-auth | Lightweight, fits Next.js App Router |
+| State | Zustand, Redux, Jotai | Zustand | Minimal boilerplate, sufficient for this case |
+```
+Custom code is justified only for: specific domain logic, performance-critical paths, security-sensitive code, or when no suitable library exists after thorough evaluation.
 
 ## Task Structure
 
@@ -131,6 +158,8 @@ After writing the complete plan, look at the spec with fresh eyes and check the 
 **2. Placeholder scan:** Search your plan for red flags — any of the patterns from the "No Placeholders" section above. Fix them.
 
 **3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
+
+**4. Decomposition check:** Does any step's code exceed 80-line functions or 200-line files? If yes, flag for a split. Does any step introduce a `utils`/`helpers`/`common` module? If yes, replace with a domain-specific name.
 
 If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
 
