@@ -29,6 +29,7 @@ Before defining tasks, map out which files will be created or modified and what 
 - You reason best about code you can hold in context at once, and your edits are more reliable when files are focused. Prefer smaller, focused files over large ones that do too much.
 - Files that change together should live together. Split by responsibility, not by technical layer.
 - In existing codebases, follow established patterns. If the codebase uses large files, don't unilaterally restructure - but if a file you're modifying has grown unwieldy, including a split in the plan is reasonable.
+- **Efficient pre-work inspection:** When you need to understand an existing file, use `head -50`, `wc -l`, `grep -n 'class\|def \|function\|export'` to get the shape before deciding to read the full file. Include these inspection commands in your plan steps rather than bare "Read the file" instructions.
 - **Hard limits in plan code:** Functions ≤ 80 lines, files ≤ 200 lines, nesting ≤ 3 levels. If plan code exceeds these, the task must include a decomposition step.
 
 This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.
@@ -160,15 +161,25 @@ Every step must contain the actual content an engineer needs. These are **plan f
 
 After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.
 
-**1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps.
+**1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps. (Use `grep -c '^### Task'` to quickly check you have enough tasks for the spec's scope.)
 
-**2. Placeholder scan:** Search your plan for red flags — any of the patterns from the "No Placeholders" section above. Fix them.
+**2. Placeholder scan:** Run `grep -in 'TBD\|TODO\|FIXME\|implement later\|placeholder'` on the plan file to catch red flags from "No Placeholders" above. Fix any matches.
 
 **3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
 
 **4. Decomposition check:** Does any step's code exceed 80-line functions or 200-line files? If yes, flag for a split. Does any step introduce a `utils`/`helpers`/`common` module? If yes, replace with a domain-specific name.
 
 If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
+
+## Efficient Implementation
+
+The plan should guide implementers toward token-efficient execution. Embed these principles in your task steps:
+
+- **Filter before you read:** Always `grep` for the relevant line/number/function before reading a file. A step that says "check existing tests" should include `grep -n 'class\|def ' tests/path/to/` rather than a bare Read.
+- **Shape before detail:** Use `head -30`, `wc -l`, `ls -la`, and `grep -c` to size up unknowns before deciding what to read in full.
+- **Bash for verification:** Test commands (`pytest`, `cargo test`, `npm test`) are already bash — keep them that way. Plan steps should also use `grep -c PASS` or `wc -l` for quick pass/fail checks before reading full test output.
+- **Scope tool to task:** A step that inspects 3 files in unrelated parts of the codebase should be 3 separate steps, not one step with 3 parallel reads. Each step is bite-sized.
+- **Progressive disclosure:** If a reference skill bundles large EXAMPLES.md files, the plan should reference them by line range rather than loading the full file (`grep -n 'pattern name' REFERENCES.md` then read only the matching section).
 
 ## Execution Handoff
 
