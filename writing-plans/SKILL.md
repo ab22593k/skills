@@ -58,6 +58,7 @@ This structure informs the task decomposition. Each task should produce self-con
 **Architecture:** [2-3 sentences about approach]
 
 **Architecture Decisions:**
+
 - **Bounded contexts & layers:** [Which contexts/layers the work touches, and how they stay separated]
 - **Naming conventions:** [Key domain names to use; note any banned generic names like `utils`/`helpers`/`common`]
 - **Dependency rationale:** [For each custom component, why no existing library was chosen — or which libraries ARE used and why]
@@ -65,6 +66,7 @@ This structure informs the task decomposition. Each task should produce self-con
 **Tech Stack:** [Key technologies/libraries]
 
 **Test Strategy:**
+
 - **Risk-based prioritization:** What to test first based on failure impact (critical paths, security, data integrity, core domain logic)
 - **Oracle choice:** How to determine correct behavior — deterministic assertions, property-based testing, snapshot testing, or comparison against a reference implementation
 - **Edge case areas:** Boundary conditions, error states, empty/null/zero inputs, concurrency, and failure modes specific to this feature
@@ -91,53 +93,22 @@ Save a dependency decision table:
 | Auth | supabase-js, next-auth, custom | next-auth | Lightweight, fits Next.js App Router |
 | State | Zustand, Redux, Jotai | Zustand | Minimal boilerplate, sufficient for this case |
 ```
+
 Custom code is justified only for: specific domain logic, performance-critical paths, security-sensitive code, or when no suitable library exists after thorough evaluation.
 
 ## Task Structure
 
-````markdown
+```markdown
 ### Task N: [Component Name]
 
 **Layer:** `domain | use-case | adapter | infrastructure`
-
 **Files:**
 
-- Create: `exact/path/to/file.py`
-- Modify: `exact/path/to/existing.py:123-145`
-- Test: `tests/exact/path/to/test.py`
-
 - [ ] **Step 1: Write the failing test**
-
-```python
-def test_specific_behavior():
-    result = function(input)
-    assert result == expected
-```
-
 - [ ] **Step 2: Run test to verify it fails**
-
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: FAIL with "function not defined"
-
 - [ ] **Step 3: Write minimal implementation**
-
-```python
-def function(input):
-    return expected
-```
-
 - [ ] **Step 4: Run test to verify it passes**
-
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: PASS
-
-- [ ] **Step 5: Commit**
-
-```bash
-git add tests/path/test.py src/path/file.py
-git commit -m "feat: add specific feature"
 ```
-````
 
 ## No Placeholders
 
