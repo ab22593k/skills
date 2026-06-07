@@ -63,6 +63,11 @@ This structure informs the task decomposition. Each task should produce self-con
 
 **Tech Stack:** [Key technologies/libraries]
 
+**Test Strategy:**
+- **Risk-based prioritization:** What to test first based on failure impact (critical paths, security, data integrity, core domain logic)
+- **Oracle choice:** How to determine correct behavior — deterministic assertions, property-based testing, snapshot testing, or comparison against a reference implementation
+- **Edge case areas:** Boundary conditions, error states, empty/null/zero inputs, concurrency, and failure modes specific to this feature
+
 ---
 ```
 
@@ -91,6 +96,8 @@ Custom code is justified only for: specific domain logic, performance-critical p
 
 ````markdown
 ### Task N: [Component Name]
+
+**Layer:** `domain | use-case | adapter | infrastructure`
 
 **Files:**
 
