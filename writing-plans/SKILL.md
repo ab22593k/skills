@@ -55,7 +55,7 @@ If the spec covers multiple independent subsystems, it should have been broken i
 
 ---
 
-> **If the spec requires multi-source research (technology comparisons, regulatory requirements, competitive analysis):** Load the deep-research skill  → `skill:deep-research` before starting Phase 2. It produces a structured research report you can reference directly in the Architecture Decisions and Tech Stack sections of the plan header.
+> **If the spec requires multi-source research (technology comparisons, regulatory requirements, competitive analysis):** Load the deep-research skill → `skill:deep-research` before starting Phase 2. It produces a structured research report you can reference directly in the Architecture Decisions and Tech Stack sections of the plan header.
 
 ## Phase 2: Architecture & Data Flow
 
@@ -268,10 +268,8 @@ After saving the plan, offer execution choice:
 
 **If Subagent-Driven chosen:**
 
-- **REQUIRED SUB-SKILL:** Use SUB-subagent-driven-development
-- Fresh subagent per task + two-stage review
+- **REQUIRED SUB-SKILL:** Load skill → `skill:subagent-driven-development` with Fresh subagent per task + two-stage review
 
 **If Inline Execution chosen:**
 
-- **REQUIRED SUB-SKILL:** Use executing-plans
-- Batch execution with checkpoints for review
+- **REQUIRED SUB-SKILL:** Load skill → `skill:executing-plans` and Batch execution with checkpoints for review
