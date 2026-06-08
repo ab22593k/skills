@@ -1,7 +1,2 @@
-**/*.pdf.txt
-
 __pycache__/
 *.pyc
-
-# book-to-skill temporary files
-/tmp/book_skill_work/
