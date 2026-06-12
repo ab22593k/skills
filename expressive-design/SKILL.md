@@ -58,33 +58,33 @@ description: "Apply Google's Material Design 3 (MD3) and M3 Expressive system in
 
 When a user asks about a M3/Flutter topic, load the corresponding chapter:
 
-| User asks about... | Load this chapter |
-|---|---|
-| Theme generation, brand color → `ThemeData`, dark mode, Material Theme Builder | ch10 |
-| `ColorScheme.fromSeed`, dynamic color, tonal palettes, color roles | ch02 |
-| Responsive layout, `LayoutBuilder`, window size classes, navigation switching | ch07 |
-| NavigationBar / Rail / Drawer, FAB, Cards, Dialogs, Buttons, Chips, TextField | ch06 |
-| `TextTheme`, Google Fonts, brand vs plain typefaces, type scale | ch03 |
-| Shape radii, `ShapeBorder`, tonal elevation, `surfaceContainer*` | ch04 |
-| `Curves.emphasized`, spring physics, `AnimationController`, `AnimatedContainer` | ch05 |
-| `Semantics`, contrast ratios, touch targets, `SemanticsDebugger`, a11y checklist | ch09 |
-| Design token architecture, custom token class, `ThemeData` extension | ch08 |
-| Interaction states, state layers, `InkWell`, MD3 principles, widget selection | ch01 |
-| Implementation patterns, anti-patterns, decision trees | patterns.md |
-| Quick code snippets, radius/opacity/easing reference tables | cheatsheet.md |
-| M3 term definitions, Flutter API name lookup | glossary.md |
+| User asks about...                                                               | Load this chapter |
+| -------------------------------------------------------------------------------- | ----------------- |
+| Theme generation, brand color → `ThemeData`, dark mode, Material Theme Builder   | ch10              |
+| `ColorScheme.fromSeed`, dynamic color, tonal palettes, color roles               | ch02              |
+| Responsive layout, `LayoutBuilder`, window size classes, navigation switching    | ch07              |
+| NavigationBar / Rail / Drawer, FAB, Cards, Dialogs, Buttons, Chips, TextField    | ch06              |
+| `TextTheme`, Google Fonts, brand vs plain typefaces, type scale                  | ch03              |
+| Shape radii, `ShapeBorder`, tonal elevation, `surfaceContainer*`                 | ch04              |
+| `Curves.emphasized`, spring physics, `AnimationController`, `AnimatedContainer`  | ch05              |
+| `Semantics`, contrast ratios, touch targets, `SemanticsDebugger`, a11y checklist | ch09              |
+| Design token architecture, custom token class, `ThemeData` extension             | ch08              |
+| Interaction states, state layers, `InkWell`, MD3 principles, widget selection    | ch01              |
+| Implementation patterns, anti-patterns, decision trees                           | patterns.md       |
+| Quick code snippets, radius/opacity/easing reference tables                      | cheatsheet.md     |
+| M3 term definitions, Flutter API name lookup                                     | glossary.md       |
 
 ## Chapter index
 
-| #   | Title                   | Topic                                                             | Best for |
-| --- | ----------------------- | ----------------------------------------------------------------- | -------- |
-| 01  | Foundations             | Principles, accessibility, interaction states, usability          | MD3 overview, state layer pattern, widget selection guidance |
-| 02  | Color System            | Dynamic color, tonal palettes, color roles, Flutter `ColorScheme` | Accessible palette generation, `ColorScheme.fromSeed`, brand-to-seed mapping |
-| 03  | Typography              | Type scale, `TextTheme`, brand vs plain, Google Fonts in Flutter  | Custom type scales, Google Fonts setup, emphasized type, component type mapping |
-| 04  | Shape & Elevation       | Corner radii, `ShapeBorder`, tonal elevation, Flutter `Material`  | Shape radius decisions, `surfaceContainer*` elevation, shape morphing |
-| 05  | Motion                  | Spring physics, `AnimationController`, `Curves.emphasized`        | Spring vs eased motion, implicit animations, enter/exit transitions |
-| 06  | Components              | All 30+ widgets with Flutter class names and usage                | Widget selection, button hierarchy, FAB sizes, navigation switching |
-| 07  | Layout & Navigation     | `LayoutBuilder`, breakpoints, `NavigationBar`/`Rail`/`Drawer`     | Responsive scaffolds, canonical layouts, edge-to-edge, foldable support |
-| 08  | Design Tokens           | Token architecture, `TokenTheme` extension, platform mapping      | Custom token class, 3-layer architecture, `ThemeData` extension |
-| 09  | Accessibility           | `Semantics`, contrast, `MediaQuery`, `MergeSemantics`             | Contrast auditing, `SemanticsDebugger`, focus navigation, touch targets |
+| #   | Title                   | Topic                                                             | Best for                                                                             |
+| --- | ----------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 01  | Foundations             | Principles, accessibility, interaction states, usability          | MD3 overview, state layer pattern, widget selection guidance                         |
+| 02  | Color System            | Dynamic color, tonal palettes, color roles, Flutter `ColorScheme` | Accessible palette generation, `ColorScheme.fromSeed`, brand-to-seed mapping         |
+| 03  | Typography              | Type scale, `TextTheme`, brand vs plain, Google Fonts in Flutter  | Custom type scales, Google Fonts setup, emphasized type, component type mapping      |
+| 04  | Shape & Elevation       | Corner radii, `ShapeBorder`, tonal elevation, Flutter `Material`  | Shape radius decisions, `surfaceContainer*` elevation, shape morphing                |
+| 05  | Motion                  | Spring physics, `AnimationController`, `Curves.emphasized`        | Spring vs eased motion, implicit animations, enter/exit transitions                  |
+| 06  | Components              | All 30+ widgets with Flutter class names and usage                | Widget selection, button hierarchy, FAB sizes, navigation switching                  |
+| 07  | Layout & Navigation     | `LayoutBuilder`, breakpoints, `NavigationBar`/`Rail`/`Drawer`     | Responsive scaffolds, canonical layouts, edge-to-edge, foldable support              |
+| 08  | Design Tokens           | Token architecture, `TokenTheme` extension, platform mapping      | Custom token class, 3-layer architecture, `ThemeData` extension                      |
+| 09  | Accessibility           | `Semantics`, contrast, `MediaQuery`, `MergeSemantics`             | Contrast auditing, `SemanticsDebugger`, focus navigation, touch targets              |
 | 10  | Theming & Customization | Seed-to-`ThemeData`, `Material3Theme`, dark mode, Expressive      | Full app theme setup, dark mode, brand customization beyond seed, Expressive theming |

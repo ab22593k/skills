@@ -2,12 +2,23 @@
 chapter: 5
 topic: Motion
 when: User needs spring physics, Curves.emphasized, AnimationController with SpringDescription, implicit animations, or enter/exit transition decisions
-queries: ["spring animation", "Curves.emphasized", "AnimationController", "SpringDescription", "implicit animation", "enter exit transition", "AnimatedContainer", "motion duration"]
+queries:
+  [
+    "spring animation",
+    "Curves.emphasized",
+    "AnimationController",
+    "SpringDescription",
+    "implicit animation",
+    "enter exit transition",
+    "AnimatedContainer",
+    "motion duration",
+  ]
 ---
 
 # Motion
 
 ## Core concepts
+
 - Spring-based physics replaces fixed-duration animations for natural, responsive motion
 - Flutter's `AnimationController` with `SpringDescription` gives direct physics control
 - Two MD3 schemes: Standard (utilitarian) and Expressive (bouncy)
@@ -45,6 +56,7 @@ controller.drive(CurveTween(curve: Curves.emphasizedDecelerate));
 ```
 
 **Duration scale —** 16 levels (50ms–1000ms). Recommended pairings:
+
 - Element stays on screen → Emphasized, 500ms
 - Element enters → Emphasized Decelerate, 400ms
 - Element exits permanently → Emphasized Accelerate, 200ms
@@ -60,12 +72,13 @@ controller.drive(CurveTween(curve: Curves.emphasizedDecelerate));
 
 ## Reference table
 
-| Transition | Flutter curve | Duration |
-|-----------|---------------|----------|
-| Stay on screen | `Curves.emphasized` | 500ms |
-| Enter | `Curves.emphasizedDecelerate` | 400ms |
-| Exit permanently | `Curves.emphasizedAccelerate` | 200ms |
-| Exit temporarily | `Curves.emphasized` | 300ms |
+| Transition       | Flutter curve                 | Duration |
+| ---------------- | ----------------------------- | -------- |
+| Stay on screen   | `Curves.emphasized`           | 500ms    |
+| Enter            | `Curves.emphasizedDecelerate` | 400ms    |
+| Exit permanently | `Curves.emphasizedAccelerate` | 200ms    |
+| Exit temporarily | `Curves.emphasized`           | 300ms    |
 
 ## Connection to other chapters
+
 Shape morphing (→ ch04) uses `AnimatedContainer` + `Curves.emphasized`. Dialog/sheet enter/exit (→ ch06) use specific motion pairings. Dark mode toggle can animate via `AnimatedTheme`.

@@ -59,13 +59,13 @@ mod kw { syn::custom_keyword!(my_keyword); }
 
 ## Common Conversions
 
-| From | To | Method |
-|------|----|--------|
-| `String` | `Ident` | `Ident::new(&s, Span::call_site())` |
-| `&str` | `LitStr` | `LitStr::new(s, Span::call_site())` |
-| `u16` | `LitInt` | `LitInt::new(&s, LitIntType::Unsuffixed, Span::call_site())` |
-| `proc_macro2::TS` | `proc_macro::TS` | `.into()` |
-| `proc_macro::TS` | `proc_macro2::TS` | `.into()` |
+| From              | To                | Method                                                       |
+| ----------------- | ----------------- | ------------------------------------------------------------ |
+| `String`          | `Ident`           | `Ident::new(&s, Span::call_site())`                          |
+| `&str`            | `LitStr`          | `LitStr::new(s, Span::call_site())`                          |
+| `u16`             | `LitInt`          | `LitInt::new(&s, LitIntType::Unsuffixed, Span::call_site())` |
+| `proc_macro2::TS` | `proc_macro::TS`  | `.into()`                                                    |
+| `proc_macro::TS`  | `proc_macro2::TS` | `.into()`                                                    |
 
 ## Testing
 

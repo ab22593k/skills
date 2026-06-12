@@ -1,6 +1,6 @@
 # Glossary
 
-An alphabetized reference guide to key terms and concepts in Adrienne Braganza's *Constructive Code Reviews*.
+An alphabetized reference guide to key terms and concepts in Adrienne Braganza's _Constructive Code Reviews_.
 
 **Active Reviewer** — A code review participant who actively inspects the proposed pull request changes, runs the code locally when necessary, asks clarifying questions, and leaves constructive feedback. (Chapter 2)
 

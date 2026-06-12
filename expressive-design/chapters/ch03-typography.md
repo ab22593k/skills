@@ -2,12 +2,22 @@
 chapter: 3
 topic: Typography
 when: User needs custom type scales, Google Fonts setup, emphasized type styles, brand vs plain typefaces, or component type mapping
-queries: ["TextTheme", "Google Fonts", "type scale", "emphasized type", "brand font", "component text style", "font family"]
+queries:
+  [
+    "TextTheme",
+    "Google Fonts",
+    "type scale",
+    "emphasized type",
+    "brand font",
+    "component text style",
+    "font family",
+  ]
 ---
 
 # Typography
 
 ## Core concepts
+
 - 15 baseline type styles in 5 categories × 3 sizes: Display, Headline, Title, Body, Label
 - 15 emphasized variants (increase weight by 100) for selection, primary actions, unread badges
 - Two typeface roles: Brand (Display, Headline) and Plain (Title, Body, Label)
@@ -17,6 +27,7 @@ queries: ["TextTheme", "Google Fonts", "type scale", "emphasized type", "brand f
 **Flutter TextTheme** — `TextTheme` holds all 15+ type styles. Accessed via `Theme.of(context).textTheme`. Each property returns a `TextStyle`. Default: Google's Roboto font. Override via `ThemeData(textTheme: ...)` or the `google_fonts` package.
 
 **Baseline styles in Flutter:**
+
 ```dart
 TextTheme(
   displayLarge: const TextStyle(fontSize: 57, fontWeight: FontWeight.w400),
@@ -32,6 +43,7 @@ TextTheme(
 ```
 
 **Google Fonts in Flutter:**
+
 ```dart
 // pubspec.yaml: google_fonts: ^6.x
 ThemeData(
@@ -54,15 +66,16 @@ ThemeData(
 
 ## Component type mapping
 
-| Widget | TextTheme style |
-|--------|----------------|
-| `TextButton` | `labelLarge` |
-| `Card` title | `titleMedium` |
-| `AppBar` title | `titleLarge` |
+| Widget              | TextTheme style |
+| ------------------- | --------------- |
+| `TextButton`        | `labelLarge`    |
+| `Card` title        | `titleMedium`   |
+| `AppBar` title      | `titleLarge`    |
 | `AlertDialog` title | `headlineSmall` |
-| `Chip` label | `labelLarge` |
-| `TextField` input | `bodyLarge` |
-| `SnackBar` | `bodyMedium` |
+| `Chip` label        | `labelLarge`    |
+| `TextField` input   | `bodyLarge`     |
+| `SnackBar`          | `bodyMedium`    |
 
 ## Connection to other chapters
+
 `TextTheme` is set in `ThemeData` (→ ch10). Readability affects accessibility (→ ch09). Component-specific usage links to each widget (→ ch06).

@@ -3,6 +3,7 @@
 The HTSM is a set of guidewords and categories designed to help testers brainstorm a comprehensive test strategy. It serves as a mental map for coverage.
 
 ## 1. Project Environment (Resources, Constraints, and Pressures)
+
 - **Customers**: Who are the stakeholders? Whose opinion matters? Who will read the test reports?
 - **Information**: What do we know about the product? (Specs, user manuals, code, rumors, legacy behavior).
 - **Developer Relations**: How do we communicate with builders? Is there trust or friction?
@@ -13,6 +14,7 @@ The HTSM is a set of guidewords and categories designed to help testers brainsto
 - **Deliverables**: What must we provide? (Bug reports, status summaries, coverage outlines, test scripts).
 
 ## 2. Product Elements (The Product as a System)
+
 - **Structure**: What is it made of? (Code, interfaces, data structures, files, configuration).
 - **Function**: What does it do? (Features, calculations, error handling, startup/shutdown).
 - **Data**: What does it process? (Inputs, outputs, internal states, large data sets, invalid data).
@@ -21,7 +23,9 @@ The HTSM is a set of guidewords and categories designed to help testers brainsto
 - **Time**: How does time affect it? (Concurrency, timeouts, history, date/time handling, performance over time).
 
 ## 3. Quality Criteria Categories (The "Ilities")
+
 ### External (User-Focused)
+
 - **Capability**: Can it perform the required functions?
 - **Reliability**: Can it perform consistently? (Robustness, Error recovery, Data integrity).
 - **Usability**: Is it easy to use? (Learnability, Accessibility, Aesthetics).
@@ -32,11 +36,13 @@ The HTSM is a set of guidewords and categories designed to help testers brainsto
 - **Compatibility**: Does it work with other systems? (Backward compatibility, Hardware/Software combos).
 
 ### Internal (Builder-Focused)
+
 - **Supportability**: Can it be maintained and supported? (Serviceability, Documentation).
 - **Testability**: How easy is it to test? (Observability, Controllability, Simplicity, Stability).
 - **Maintainability**: Can it be modified? (Modularity, Extensibility, Portability).
 
 ## 4. General Test Techniques
+
 - **Function Testing**: Testing what it does (features and functions).
 - **Domain Testing**: Testing data and parameters (boundaries, equivalence classes).
 - **Stress Testing**: Testing under extreme conditions (overload, low resources).

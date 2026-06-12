@@ -1,6 +1,7 @@
 # Chapter 8: Builder with Attributes
 
 ## Derive Macro Helper Attributes
+
 Declare by appending to the derive attribute:
 
 ```rust
@@ -11,6 +12,7 @@ pub fn derive_builder(item: TokenStream) -> TokenStream { ... }
 These are **inert** — they survive expansion and are only meaningful to the derive macro.
 
 ## Parsing Attributes
+
 `syn::Field` has an `attrs: Vec<Attribute>` field. Each `Attribute` has:
 
 - `meta: Meta` — enum of `Path`, `List`, or `NameValue`
@@ -27,6 +29,7 @@ fn get_rename(field: &Field) -> Option<Ident> {
 ```
 
 ## Type State Pattern
+
 Convert runtime errors to compile-time errors by encoding build steps as generic type parameters:
 
 ```rust
@@ -38,9 +41,11 @@ impl Builder<HasName> { fn build(self) -> Final { ... } }
 ```
 
 ## Attribute Token Types
+
 - `Meta::List` — `#[rename("value")]` — use `parse_args::<LitStr>()`
 - `Meta::NameValue` — `#[rename = "value"]` — match `Meta::NameValue { value: Expr::Lit(ExprLit { lit: Lit::Str(s), .. }), .. }`
 - `Meta::Path` — `#[rename]` — no arguments
 
 ## Sensible Defaults
+
 Use `unwrap_or_else(|| default_value)` with lazy evaluation for performance — avoids constructing default `TokenStream` objects when every field already has an override.

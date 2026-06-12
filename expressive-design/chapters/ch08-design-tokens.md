@@ -2,12 +2,23 @@
 chapter: 8
 topic: Design Tokens
 when: User needs token architecture, custom token class, ThemeData extension, or the 3-layer reference/system/component token model
-queries: ["design token", "token architecture", "custom token class", "ThemeData extension", "reference token", "system token", "component token", "token layers"]
+queries:
+  [
+    "design token",
+    "token architecture",
+    "custom token class",
+    "ThemeData extension",
+    "reference token",
+    "system token",
+    "component token",
+    "token layers",
+  ]
 ---
 
 # Design Tokens
 
 ## Core concepts
+
 - Tokens are single source-of-truth values for every visual attribute
 - Three-layer architecture: Reference → System → Component
 - In Flutter, `ThemeData` is the token system container
@@ -17,6 +28,7 @@ queries: ["design token", "token architecture", "custom token class", "ThemeData
 **Token architecture —** Reference tokens are raw values (e.g., brand hex, font file path). System tokens are semantic (`ColorScheme.primary`, `TextTheme.bodyLarge`). Component tokens bridge system to widget-specific properties (`FilledButtonTheme.style`).
 
 **Token categories in Flutter:**
+
 - **Color:** `ColorScheme` (29+ roles)
 - **Typography:** `TextTheme` (15+ `TextStyle` values)
 - **Shape:** Per-theme properties (`CardTheme.shape`, `DialogTheme.shape`)
@@ -25,6 +37,7 @@ queries: ["design token", "token architecture", "custom token class", "ThemeData
 - **Motion:** `Curves` (easing) + `Duration` constants
 
 **Flutter theme inheritance:**
+
 ```dart
 ThemeData(
   colorScheme: ColorScheme.fromSeed(seedColor: brandPrimary),
@@ -39,6 +52,7 @@ ThemeData(
 ## Key techniques
 
 **Custom token class:** Extract raw values into a constants class for reuse.
+
 ```dart
 class AppTokens {
   static const Color seedColor = Color(0xFF1A73E8);
@@ -51,6 +65,7 @@ class AppTokens {
 ```
 
 **ThemeData extension:** Access tokens consistently.
+
 ```dart
 extension TokenX on ThemeData {
   Color get surfaceContainerHigh => colorScheme.surfaceContainerHigh;
@@ -61,6 +76,7 @@ extension TokenX on ThemeData {
 ```
 
 **Dark mode:** Generate both schemes from the same seed.
+
 ```dart
 ThemeData lightTheme(Color seed) => ThemeData(
   useMaterial3: true,
@@ -74,11 +90,12 @@ ThemeData darkTheme(Color seed) => ThemeData(
 
 ## Reference table
 
-| Token Layer | Flutter container | Example |
-|-------------|-----------------|---------|
-| Reference | Constants class | `AppTokens.seedColor` |
-| System | `ThemeData.colorScheme` / `textTheme` | `colorScheme.primary` |
-| Component | `XxxTheme` / `XxxThemeData` | `CardTheme.shape` |
+| Token Layer | Flutter container                     | Example               |
+| ----------- | ------------------------------------- | --------------------- |
+| Reference   | Constants class                       | `AppTokens.seedColor` |
+| System      | `ThemeData.colorScheme` / `textTheme` | `colorScheme.primary` |
+| Component   | `XxxTheme` / `XxxThemeData`           | `CardTheme.shape`     |
 
 ## Connection to other chapters
+
 Color tokens (→ ch02), type tokens (→ ch03), shape tokens (→ ch04), motion tokens (→ ch05). Token customization via `ThemeData` (→ ch10).

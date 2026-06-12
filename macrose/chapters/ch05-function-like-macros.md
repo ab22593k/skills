@@ -1,13 +1,16 @@
 # Chapter 5: Function-like Macros
 
 ## Signature
+
 ```rust
 #[proc_macro]
 pub fn my_macro(item: TokenStream) -> TokenStream
 ```
+
 Invoked as `my_macro!(args...)`. The input `TokenStream` is arbitrary — implement `Parse` for any custom syntax.
 
 ## Hiding Information
+
 Use function-like macros to encapsulate implementation details the user shouldn't see:
 
 ```rust
@@ -16,6 +19,7 @@ getters!(Animal { name: String, age: u8 });
 ```
 
 ## Ident and Span
+
 ```rust
 use proc_macro2::{Ident, Span};
 let method_name = Ident::new(&field_name, Span::call_site());
@@ -25,6 +29,7 @@ let method_name = Ident::new(&field_name, Span::call_site());
 - `Span::mixed_site()` — access to both local and call-site namespaces (rare)
 
 ## Debugging
+
 **Write the generated code as normal Rust first**, then convert it into macro output. This is the single most effective debugging technique.
 
 ## Composing with Custom DSL

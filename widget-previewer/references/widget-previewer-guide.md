@@ -7,6 +7,7 @@ Source: https://docs.flutter.dev/tools/widget-previewer
 The Flutter Widget Previewer allows you to see widgets render in real-time, separate from a full app, in the Chrome browser.
 
 **Version Requirements:**
+
 - Flutter 3.35+ for basic functionality
 - Flutter 3.38+ for IDE support
 
@@ -17,9 +18,11 @@ The Flutter Widget Previewer allows you to see widgets render in real-time, sepa
 ### IDEs (Automatic in Flutter 3.38+)
 
 **Android Studio / IntelliJ:**
+
 - Open the "Flutter Widget Preview" tab in the sidebar
 
 **Visual Studio Code:**
+
 - Open the "Flutter Widget Preview" tab in the sidebar
 
 ### Command Line
@@ -37,11 +40,13 @@ Launches a local server and opens Chrome with the Widget Preview environment.
 Defined in `package:flutter/widget_previews.dart`
 
 **Valid Targets:**
+
 1. Top-level functions returning `Widget` or `WidgetBuilder`
 2. Static methods within a class returning `Widget` or `WidgetBuilder`
 3. Public Widget constructors and factories with no required arguments
 
 **Basic Example:**
+
 ```dart
 import 'package:flutter/widget_previews.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +60,7 @@ Widget mySampleText() {
 ### Preview Controls
 
 From left to right:
+
 1. **Zoom in** - Magnify widget
 2. **Zoom out** - Reduce magnification
 3. **Reset zoom** - Return to default
@@ -65,16 +71,16 @@ Global hot restart available at bottom right for state changes.
 
 ## Preview Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `name` | `String` | Descriptive name |
-| `group` | `String` | Group for organization |
-| `size` | `Size` | Artificial constraints |
-| `textScaleFactor` | `double` | Font scale |
-| `wrapper` | `Widget Function(Widget)` | Widget tree wrapper |
-| `theme` | `PreviewThemeData Function()` | Theming data |
-| `brightness` | `Brightness` | Initial brightness |
-| `localizations` | `Function` | Localization config |
+| Parameter         | Type                          | Description            |
+| ----------------- | ----------------------------- | ---------------------- |
+| `name`            | `String`                      | Descriptive name       |
+| `group`           | `String`                      | Group for organization |
+| `size`            | `Size`                        | Artificial constraints |
+| `textScaleFactor` | `double`                      | Font scale             |
+| `wrapper`         | `Widget Function(Widget)`     | Widget tree wrapper    |
+| `theme`           | `PreviewThemeData Function()` | Theming data           |
+| `brightness`      | `Brightness`                  | Initial brightness     |
+| `localizations`   | `Function`                    | Localization config    |
 
 ## Custom Preview Annotations
 
@@ -218,22 +224,25 @@ Previewer filters by currently selected file. Toggle at bottom left to disable.
 ## Restrictions
 
 ### Callback Requirements
+
 - Must be **public** and **constant**
 - Required for code generation
 
 ### Unsupported APIs
 
-| API | Behavior |
-|-----|----------|
+| API            | Behavior                  |
+| -------------- | ------------------------- |
 | Native plugins | Not supported (web-based) |
-| `dart:io` | Throws exceptions |
-| `dart:ffi` | Widgets fail to load |
+| `dart:io`      | Throws exceptions         |
+| `dart:ffi`     | Widgets fail to load      |
 
 **Transitive dependencies:**
+
 - `dart:io` - Widgets load, APIs throw
 - `dart:ffi` - Widgets fail completely
 
 **Workaround - Conditional Imports:**
+
 ```dart
 import 'my_api_stub.dart'
     if (dart.library.io) 'my_api_io.dart'
@@ -243,6 +252,7 @@ import 'my_api_stub.dart'
 ### Asset Paths
 
 Use package-based paths:
+
 ```dart
 'packages/my_package_name/assets/my_image.png'
 ```

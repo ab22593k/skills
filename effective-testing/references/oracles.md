@@ -3,6 +3,7 @@
 A test oracle is a means by which we recognize a problem. Oracles are heuristics; they are fallible and require human judgment. You don't "run" an oracle; you apply it using your brain.
 
 ## FEW HICCUPS Heuristic
+
 Use these guidewords to identify potential problems when the product's behavior deviates from:
 
 - **F - Familiarity**: The way you expect it to work based on your general experience with software and systems.
@@ -17,13 +18,17 @@ Use these guidewords to identify potential problems when the product's behavior 
 - **S - Standards**: Explicit industry, regulatory, or internal coding/design standards.
 
 ## The Blink Oracle
-The ability to recognize a problem instantly through "thin-slicing" or pattern matching. 
+
+The ability to recognize a problem instantly through "thin-slicing" or pattern matching.
+
 - **Visual**: Spotting a misaligned pixel or a wrong color in a split second.
 - **Behavioral**: Noticing a slight lag or a "weird" transition that just feels wrong.
 - **Patterns**: Recognizing a crash pattern or a log error format you've seen before.
 
 ## Safety Language
+
 Since oracles are fallible, use safety language in your reports to maintain credibility and avoid unproductive arguments:
+
 - **Avoid**: "This is broken," "The requirement says X," "This is a bug."
 - **Prefer**: "I see a potential problem," "The behavior seems inconsistent with my understanding of X," "I'm concerned that a user might find this confusing."
 - **Why?**: It invites a conversation about risk rather than a debate about definitions.

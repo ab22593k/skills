@@ -30,34 +30,34 @@ When you load a chapter, also check its **Connection to Other Chapters** section
 
 ### Topic Lookup
 
-| When the user asks about... | Primary chapter | Also load |
-|---|---|---|
-| Why code reviews matter / team benefits / psychological safety | [ch01](chapters/ch01-constructive-code-reviews.md) | Glossary |
-| How PRs work / review workflows / roles & responsibilities | [ch02](chapters/ch02-constructive-code-reviews.md) | Cheatsheet |
-| Setting up a review process from scratch / phased rollout | [ch03](chapters/ch03-constructive-code-reviews.md) | [ch04](chapters/ch04-constructive-code-reviews.md) |
-| Team Working Agreement / SLAs / codifying team norms | [ch04](chapters/ch04-constructive-code-reviews.md) | Cheatsheet, [ch05](chapters/ch05-constructive-code-reviews.md) |
-| Automating linting / CI checks / removing human friction | [ch05](chapters/ch05-constructive-code-reviews.md) | [ch04](chapters/ch04-constructive-code-reviews.md) |
-| Writing better review comments / being empathetic / 5P process | [ch06](chapters/ch06-constructive-code-reviews.md) | Glossary, Patterns |
-| Toxic reviews / nitpicking / review creep / ego clashes | [ch07](chapters/ch07-constructive-code-reviews.md) | [ch05](chapters/ch05-constructive-code-reviews.md), [ch06](chapters/ch06-constructive-code-reviews.md) |
-| Slow reviews / reducing delays / unblocking PRs | [ch08](chapters/ch08-constructive-code-reviews.md) | [ch04](chapters/ch04-constructive-code-reviews.md), [ch11](chapters/ch11-constructive-code-reviews.md), [ch12](chapters/ch12-constructive-code-reviews.md) |
-| Loopholes / rubber-stamping / process gaps | [ch09](chapters/ch09-constructive-code-reviews.md) | [ch10](chapters/ch10-constructive-code-reviews.md) |
-| Emergency hotfixes / urgent production issues | [ch10](chapters/ch10-constructive-code-reviews.md) | [ch09](chapters/ch09-constructive-code-reviews.md), Cheatsheet |
-| Pair programming as review / driver-navigator | [ch11](chapters/ch11-constructive-code-reviews.md) | [ch08](chapters/ch08-constructive-code-reviews.md), [ch12](chapters/ch12-constructive-code-reviews.md) |
-| Mob programming / collective code ownership | [ch12](chapters/ch12-constructive-code-reviews.md) | [ch05](chapters/ch05-constructive-code-reviews.md), [ch11](chapters/ch11-constructive-code-reviews.md) |
-| AI-assisted reviews / human-AI review split | [ch13](chapters/ch13-constructive-code-reviews.md) | [ch05](chapters/ch05-constructive-code-reviews.md) |
+| When the user asks about...                                    | Primary chapter                                    | Also load                                                                                                                                                  |
+| -------------------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Why code reviews matter / team benefits / psychological safety | [ch01](chapters/ch01-constructive-code-reviews.md) | Glossary                                                                                                                                                   |
+| How PRs work / review workflows / roles & responsibilities     | [ch02](chapters/ch02-constructive-code-reviews.md) | Cheatsheet                                                                                                                                                 |
+| Setting up a review process from scratch / phased rollout      | [ch03](chapters/ch03-constructive-code-reviews.md) | [ch04](chapters/ch04-constructive-code-reviews.md)                                                                                                         |
+| Team Working Agreement / SLAs / codifying team norms           | [ch04](chapters/ch04-constructive-code-reviews.md) | Cheatsheet, [ch05](chapters/ch05-constructive-code-reviews.md)                                                                                             |
+| Automating linting / CI checks / removing human friction       | [ch05](chapters/ch05-constructive-code-reviews.md) | [ch04](chapters/ch04-constructive-code-reviews.md)                                                                                                         |
+| Writing better review comments / being empathetic / 5P process | [ch06](chapters/ch06-constructive-code-reviews.md) | Glossary, Patterns                                                                                                                                         |
+| Toxic reviews / nitpicking / review creep / ego clashes        | [ch07](chapters/ch07-constructive-code-reviews.md) | [ch05](chapters/ch05-constructive-code-reviews.md), [ch06](chapters/ch06-constructive-code-reviews.md)                                                     |
+| Slow reviews / reducing delays / unblocking PRs                | [ch08](chapters/ch08-constructive-code-reviews.md) | [ch04](chapters/ch04-constructive-code-reviews.md), [ch11](chapters/ch11-constructive-code-reviews.md), [ch12](chapters/ch12-constructive-code-reviews.md) |
+| Loopholes / rubber-stamping / process gaps                     | [ch09](chapters/ch09-constructive-code-reviews.md) | [ch10](chapters/ch10-constructive-code-reviews.md)                                                                                                         |
+| Emergency hotfixes / urgent production issues                  | [ch10](chapters/ch10-constructive-code-reviews.md) | [ch09](chapters/ch09-constructive-code-reviews.md), Cheatsheet                                                                                             |
+| Pair programming as review / driver-navigator                  | [ch11](chapters/ch11-constructive-code-reviews.md) | [ch08](chapters/ch08-constructive-code-reviews.md), [ch12](chapters/ch12-constructive-code-reviews.md)                                                     |
+| Mob programming / collective code ownership                    | [ch12](chapters/ch12-constructive-code-reviews.md) | [ch05](chapters/ch05-constructive-code-reviews.md), [ch11](chapters/ch11-constructive-code-reviews.md)                                                     |
+| AI-assisted reviews / human-AI review split                    | [ch13](chapters/ch13-constructive-code-reviews.md) | [ch05](chapters/ch05-constructive-code-reviews.md)                                                                                                         |
 
 ### Common Situations
 
-| Situation | What to do | Reference |
-|---|---|---|
-| "My PR has been sitting for 3 days with no review" | Check SLAs, trigger escalation, rotate reviewers | [ch08](chapters/ch08-constructive-code-reviews.md), Cheatsheet SLA matrix |
-| "A reviewer is demanding unrelated refactoring" | Politely decline, create follow-up ticket, enforce scope | [ch07](chapters/ch07-constructive-code-reviews.md) |
-| "We have no review process — where do we start?" | Phase-based setup: align, setup tools, codify rules | [ch03](chapters/ch03-constructive-code-reviews.md) |
-| "Our senior engineer is the bottleneck for all reviews" | Reviewer rotations, shadowing, distribute ownership | [ch08](chapters/ch08-constructive-code-reviews.md), [ch11](chapters/ch11-constructive-code-reviews.md) |
-| "People approve without actually reading the code" | Loophole audit, enforce 2-approver rule, automated checks | [ch09](chapters/ch09-constructive-code-reviews.md), [ch05](chapters/ch05-constructive-code-reviews.md) |
-| "We have a production outage — can I skip review?" | Follow the Emergency Playbook, not ad-hoc bypass | [ch10](chapters/ch10-constructive-code-reviews.md) |
-| "Review comments are getting personal and harsh" | Apply 5P process, focus on code not person, reset culture | [ch06](chapters/ch06-constructive-code-reviews.md), [ch07](chapters/ch07-constructive-code-reviews.md) |
-| "Should we use AI to review our code?" | AI as first responder — nits and syntax; humans own logic and architecture | [ch13](chapters/ch13-constructive-code-reviews.md) |
+| Situation                                               | What to do                                                                 | Reference                                                                                              |
+| ------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| "My PR has been sitting for 3 days with no review"      | Check SLAs, trigger escalation, rotate reviewers                           | [ch08](chapters/ch08-constructive-code-reviews.md), Cheatsheet SLA matrix                              |
+| "A reviewer is demanding unrelated refactoring"         | Politely decline, create follow-up ticket, enforce scope                   | [ch07](chapters/ch07-constructive-code-reviews.md)                                                     |
+| "We have no review process — where do we start?"        | Phase-based setup: align, setup tools, codify rules                        | [ch03](chapters/ch03-constructive-code-reviews.md)                                                     |
+| "Our senior engineer is the bottleneck for all reviews" | Reviewer rotations, shadowing, distribute ownership                        | [ch08](chapters/ch08-constructive-code-reviews.md), [ch11](chapters/ch11-constructive-code-reviews.md) |
+| "People approve without actually reading the code"      | Loophole audit, enforce 2-approver rule, automated checks                  | [ch09](chapters/ch09-constructive-code-reviews.md), [ch05](chapters/ch05-constructive-code-reviews.md) |
+| "We have a production outage — can I skip review?"      | Follow the Emergency Playbook, not ad-hoc bypass                           | [ch10](chapters/ch10-constructive-code-reviews.md)                                                     |
+| "Review comments are getting personal and harsh"        | Apply 5P process, focus on code not person, reset culture                  | [ch06](chapters/ch06-constructive-code-reviews.md), [ch07](chapters/ch07-constructive-code-reviews.md) |
+| "Should we use AI to review our code?"                  | AI as first responder — nits and syntax; humans own logic and architecture | [ch13](chapters/ch13-constructive-code-reviews.md)                                                     |
 
 ---
 
@@ -108,41 +108,41 @@ When you load a chapter, also check its **Connection to Other Chapters** section
 
 When you load a chapter, also consider loading its dependencies for complete context:
 
-| If you load... | Also load these for complementary guidance |
-|---|---|
-| **Ch01** (Significance) | — (foundational, few dependencies) |
-| **Ch02** (Dissecting Review) | — (foundational) |
-| **Ch03** (Building Process) | Ch04 (TWA codifies process rules) |
-| **Ch04** (TWA) | Ch05 (automate TWA rules), Ch08 (SLAs reduce delays) |
-| **Ch05** (Automation) | Ch04 (TWA provides rules to automate) |
-| **Ch06** (Comments) | Ch07 (toxic patterns to avoid), Glossary (comment signals) |
-| **Ch07** (How Reviews Suck) | Ch05 (automation eliminates nitpicking), Ch06 (5P prevents creep) |
-| **Ch08** (Reducing Delays) | Ch04 (SLA baseline), Ch11, Ch12 (pair/mob reduce bottlenecks) |
-| **Ch09** (Loopholes) | Ch10 (formal bypass path) |
-| **Ch10** (Emergency Playbook) | Ch09 (prevent abuse), Cheatsheet (checklist) |
-| **Ch11** (Pair Programming) | Ch08 (eliminates delays), Ch12 (mobbing for complex work) |
-| **Ch12** (Mob Programming) | Ch05 (automation frees mob focus), Ch11 (pairing as lighter alternative) |
-| **Ch13** (AI) | Ch05 (AI is advanced automation layer) |
+| If you load...                | Also load these for complementary guidance                               |
+| ----------------------------- | ------------------------------------------------------------------------ |
+| **Ch01** (Significance)       | — (foundational, few dependencies)                                       |
+| **Ch02** (Dissecting Review)  | — (foundational)                                                         |
+| **Ch03** (Building Process)   | Ch04 (TWA codifies process rules)                                        |
+| **Ch04** (TWA)                | Ch05 (automate TWA rules), Ch08 (SLAs reduce delays)                     |
+| **Ch05** (Automation)         | Ch04 (TWA provides rules to automate)                                    |
+| **Ch06** (Comments)           | Ch07 (toxic patterns to avoid), Glossary (comment signals)               |
+| **Ch07** (How Reviews Suck)   | Ch05 (automation eliminates nitpicking), Ch06 (5P prevents creep)        |
+| **Ch08** (Reducing Delays)    | Ch04 (SLA baseline), Ch11, Ch12 (pair/mob reduce bottlenecks)            |
+| **Ch09** (Loopholes)          | Ch10 (formal bypass path)                                                |
+| **Ch10** (Emergency Playbook) | Ch09 (prevent abuse), Cheatsheet (checklist)                             |
+| **Ch11** (Pair Programming)   | Ch08 (eliminates delays), Ch12 (mobbing for complex work)                |
+| **Ch12** (Mob Programming)    | Ch05 (automation frees mob focus), Ch11 (pairing as lighter alternative) |
+| **Ch13** (AI)                 | Ch05 (AI is advanced automation layer)                                   |
 
 ---
 
 ## Chapter Index
 
-| Chapter | Title | Key Topic | Target File | Est. Tokens |
-|---|---|---|---|---|
-| **Ch 01** | The Significance of Code Reviews | Benefits, collective ownership, psych safety | [ch01-constructive-code-reviews.md](chapters/ch01-constructive-code-reviews.md) | ~1,000 |
-| **Ch 02** | Dissecting the Code Review | Review systems, workflow, PR parts, roles | [ch02-constructive-code-reviews.md](chapters/ch02-constructive-code-reviews.md) | ~1,100 |
-| **Ch 03** | Building Your First Process | Phase-based setup, goals, workflows, rules | [ch03-constructive-code-reviews.md](chapters/ch03-constructive-code-reviews.md) | ~1,100 |
-| **Ch 04** | The Team Working Agreement | Codifying rules, SLAs, styling, Git TWAs | [ch04-constructive-code-reviews.md](chapters/ch04-constructive-code-reviews.md) | ~1,200 |
-| **Ch 05** | The Advantages of Automation | Linting, formatters, automated CI checks, objectivity | [ch05-constructive-code-reviews.md](chapters/ch05-constructive-code-reviews.md) | ~1,000 |
-| **Ch 06** | Composing Effective Comments | Empathetic comment writing, 5P, MMG Exchange | [ch06-constructive-code-reviews.md](chapters/ch06-constructive-code-reviews.md) | ~1,200 |
-| **Ch 07** | How Code Reviews Can Suck | Nitpicking, review creep, delayed loops, friction | [ch07-constructive-code-reviews.md](chapters/ch07-constructive-code-reviews.md) | ~1,000 |
-| **Ch 08** | Decreasing Review Delays | Review bottlenecks, taking chats offline, ticket sizing | [ch08-constructive-code-reviews.md](chapters/ch08-constructive-code-reviews.md) | ~1,100 |
-| **Ch 09** | Eliminating Process Loopholes | Merging around reviews, rubber stamping, bypass auditing | [ch09-constructive-code-reviews.md](chapters/ch09-constructive-code-reviews.md) | ~1,100 |
-| **Ch 10** | The Emergency Playbook | Hotfixes, bypass authorization, post-incident reviews | [ch10-constructive-code-reviews.md](chapters/ch10-constructive-code-reviews.md) | ~1,100 |
-| **Ch 11** | Code Reviews and Pair Programming | Drivers, Navigators, pairing vs. reviewing, hybrid flows | [ch11-constructive-code-reviews.md](chapters/ch11-constructive-code-reviews.md) | ~1,000 |
-| **Ch 12** | Code Reviews and Mob Programming | Mobbing, knowledge sharing, "agree then split" approach | [ch12-constructive-code-reviews.md](chapters/ch12-constructive-code-reviews.md) | ~1,000 |
-| **Ch 13** | Code Reviews and AI | AI benefits, limitations, tools, Human-AI pairing | [ch13-constructive-code-reviews.md](chapters/ch13-constructive-code-reviews.md) | ~1,000 |
+| Chapter   | Title                             | Key Topic                                                | Target File                                                                     | Est. Tokens |
+| --------- | --------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------- |
+| **Ch 01** | The Significance of Code Reviews  | Benefits, collective ownership, psych safety             | [ch01-constructive-code-reviews.md](chapters/ch01-constructive-code-reviews.md) | ~1,000      |
+| **Ch 02** | Dissecting the Code Review        | Review systems, workflow, PR parts, roles                | [ch02-constructive-code-reviews.md](chapters/ch02-constructive-code-reviews.md) | ~1,100      |
+| **Ch 03** | Building Your First Process       | Phase-based setup, goals, workflows, rules               | [ch03-constructive-code-reviews.md](chapters/ch03-constructive-code-reviews.md) | ~1,100      |
+| **Ch 04** | The Team Working Agreement        | Codifying rules, SLAs, styling, Git TWAs                 | [ch04-constructive-code-reviews.md](chapters/ch04-constructive-code-reviews.md) | ~1,200      |
+| **Ch 05** | The Advantages of Automation      | Linting, formatters, automated CI checks, objectivity    | [ch05-constructive-code-reviews.md](chapters/ch05-constructive-code-reviews.md) | ~1,000      |
+| **Ch 06** | Composing Effective Comments      | Empathetic comment writing, 5P, MMG Exchange             | [ch06-constructive-code-reviews.md](chapters/ch06-constructive-code-reviews.md) | ~1,200      |
+| **Ch 07** | How Code Reviews Can Suck         | Nitpicking, review creep, delayed loops, friction        | [ch07-constructive-code-reviews.md](chapters/ch07-constructive-code-reviews.md) | ~1,000      |
+| **Ch 08** | Decreasing Review Delays          | Review bottlenecks, taking chats offline, ticket sizing  | [ch08-constructive-code-reviews.md](chapters/ch08-constructive-code-reviews.md) | ~1,100      |
+| **Ch 09** | Eliminating Process Loopholes     | Merging around reviews, rubber stamping, bypass auditing | [ch09-constructive-code-reviews.md](chapters/ch09-constructive-code-reviews.md) | ~1,100      |
+| **Ch 10** | The Emergency Playbook            | Hotfixes, bypass authorization, post-incident reviews    | [ch10-constructive-code-reviews.md](chapters/ch10-constructive-code-reviews.md) | ~1,100      |
+| **Ch 11** | Code Reviews and Pair Programming | Drivers, Navigators, pairing vs. reviewing, hybrid flows | [ch11-constructive-code-reviews.md](chapters/ch11-constructive-code-reviews.md) | ~1,000      |
+| **Ch 12** | Code Reviews and Mob Programming  | Mobbing, knowledge sharing, "agree then split" approach  | [ch12-constructive-code-reviews.md](chapters/ch12-constructive-code-reviews.md) | ~1,000      |
+| **Ch 13** | Code Reviews and AI               | AI benefits, limitations, tools, Human-AI pairing        | [ch13-constructive-code-reviews.md](chapters/ch13-constructive-code-reviews.md) | ~1,000      |
 
 ---
 

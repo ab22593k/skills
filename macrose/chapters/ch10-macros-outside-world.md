@@ -1,12 +1,15 @@
 # Chapter 10: Macros and the Outside World
 
 ## Full Paths in Generated Code
+
 Always use full paths (`std::collections::HashMap` not `HashMap`) to:
+
 - Avoid name collisions with user-defined types
 - Hide implementation details
 - Work without imports in the caller's scope
 
 ## Multiple Macros in One Library
+
 A `proc-macro` crate can export any number of macro entry points, but cannot export normal functions, structs, or modules:
 
 ```rust
@@ -35,7 +38,8 @@ pub fn config_struct(attr: TokenStream, item: TokenStream) -> TokenStream { ... 
 Features must be **additive** — never remove existing functionality behind a feature.
 
 ## Documentation
-```rust
+
+````rust
 /// Generates a `Config` struct from a YAML file.
 ///
 /// ```rust
@@ -46,13 +50,15 @@ Features must be **additive** — never remove existing functionality behind a f
 /// ```
 #[proc_macro]
 pub fn config(item: TokenStream) -> TokenStream { ... }
-```
+````
+
 - Use `///` for per-macro documentation
 - Doctests must be valid — they run under `cargo test`
 - Use `#[cfg(any(feature = "struct", doc))]` to document feature-gated items
 - `cargo doc --open` generates HTML docs with examples
 
 ## Publishing Checklist
+
 - Clean `Cargo.toml` with correct metadata
 - `README.md` with quick-start example
 - Documentation with runnable doctests

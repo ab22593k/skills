@@ -12,6 +12,7 @@ builder-workspace/
 ## Testing Strategy
 
 ### White-box Tests (in `builder-macro/`)
+
 Test parsing logic, edge cases, intermediate data structures directly:
 
 ```rust
@@ -26,6 +27,7 @@ fn test_parses_simple_struct() {
 ```
 
 ### Black-box Tests (in `builder-usage/`)
+
 Test the generated code compiles and behaves correctly:
 
 ```rust
@@ -39,6 +41,7 @@ fn test_builder_creates_struct() {
 ```
 
 ### Compile-failure Tests (with `trybuild`)
+
 Test that invalid inputs produce the expected compilation errors:
 
 ```rust
@@ -50,6 +53,7 @@ fn ui_tests() {
 ```
 
 ## Common Errors
+
 - **Expected identifier** — forgetting to convert `LitStr` to `Ident`, or using wrong `Ident` type (`proc_macro` vs `proc_macro2`)
 - **proc-macro crate types not exported** — proc-macro crates can only export `#[proc_macro]` items
 - **`From`/`ToTokens` not available** — types from the proc_macro crate are only convertible to/from `TokenStream`

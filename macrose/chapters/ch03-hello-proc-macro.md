@@ -1,6 +1,7 @@
 # Chapter 3: Hello World Procedural Macro
 
 ## Project Setup
+
 Two directories in a Cargo workspace:
 
 ```
@@ -45,6 +46,7 @@ pub fn hello_macro(item: TokenStream) -> TokenStream {
 ```
 
 ## Code Flow
+
 1. `proc_macro::TokenStream` arrives
 2. `parse_macro_input!` parses into `syn::DeriveInput`
 3. Logic extracts identifiers, fields, attributes
@@ -52,6 +54,7 @@ pub fn hello_macro(item: TokenStream) -> TokenStream {
 5. `.into()` converts `proc_macro2::TokenStream` → `proc_macro::TokenStream`
 
 ## Tooling
+
 - `cargo expand` — shows macro expansion output
 - Without `syn`/`quote`: use only `proc_macro::TokenStream` (manual iteration)
 - Alternative: `venial` crate for simpler derive-focused parsing

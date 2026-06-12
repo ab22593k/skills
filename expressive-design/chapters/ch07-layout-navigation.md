@@ -2,12 +2,24 @@
 chapter: 7
 topic: Layout & Navigation
 when: User needs responsive layout, LayoutBuilder breakpoints, window size classes, canonical layouts, edge-to-edge, or foldable support
-queries: ["responsive layout", "LayoutBuilder", "window size class", "compact medium expanded", "canonical layout", "edge-to-edge", "foldable", "8dp spacing", "navigation switch"]
+queries:
+  [
+    "responsive layout",
+    "LayoutBuilder",
+    "window size class",
+    "compact medium expanded",
+    "canonical layout",
+    "edge-to-edge",
+    "foldable",
+    "8dp spacing",
+    "navigation switch",
+  ]
 ---
 
 # Layout & Navigation
 
 ## Core concepts
+
 - Three canonical window size classes (compact, medium, expanded) define layout strategy
 - Navigation switches between `NavigationBar`/`Rail`/`Drawer` per class
 - Flutter's `LayoutBuilder` is the idiomatic tool for responsive layout
@@ -15,6 +27,7 @@ queries: ["responsive layout", "LayoutBuilder", "window size class", "compact me
 ## Frameworks introduced
 
 **Window size classes in Flutter —** Use `LayoutBuilder` to read `BoxConstraints.maxWidth` and choose layout + navigation variant. No dedicated `WindowSizeClass` widget in core Flutter — the `adaptive_breakpoints` package provides it.
+
 ```dart
 LayoutBuilder(builder: (context, constraints) {
   if (constraints.maxWidth < 600) return _CompactLayout();
@@ -24,6 +37,7 @@ LayoutBuilder(builder: (context, constraints) {
 ```
 
 **Navigation by size class:**
+
 ```dart
 Widget _navigationForSize(double width) {
   if (width < 600) return NavigationBar(destinations: destinations);
@@ -39,6 +53,7 @@ Widget _navigationForSize(double width) {
 ## Key techniques
 
 **Responsive scaffold:**
+
 ```dart
 @override
 Widget build(BuildContext context) {
@@ -73,11 +88,12 @@ Widget _mediumScaffold() => Scaffold(
 
 ## Reference tables
 
-| Window class | Width | Nav widget | Margin |
-|-------------|-------|-----------|--------|
-| Compact | <600dp | `NavigationBar` | 16dp |
-| Medium | 600–839dp | `NavigationRail` | 24dp |
-| Expanded | ≥840dp | `NavigationDrawer` | 24dp+ |
+| Window class | Width     | Nav widget         | Margin |
+| ------------ | --------- | ------------------ | ------ |
+| Compact      | <600dp    | `NavigationBar`    | 16dp   |
+| Medium       | 600–839dp | `NavigationRail`   | 24dp   |
+| Expanded     | ≥840dp    | `NavigationDrawer` | 24dp+  |
 
 ## Connection to other chapters
+
 Navigation widgets (→ ch06) vary by size class. Spacing is a design token (→ ch08). Responsive shape radius (→ ch04) can vary per breakpoint.

@@ -2,12 +2,23 @@
 chapter: 10
 topic: Theming & Customization
 when: User needs full app theme setup, seed-to-ThemeData pipeline, dark mode, brand customization beyond seed, Material Theme Builder export, or Expressive theming guidance
-queries: ["ThemeData", "full theme setup", "seed to theme", "dark mode", "brand customization", "Material Theme Builder", "Material3Theme package", "Expressive theming"]
+queries:
+  [
+    "ThemeData",
+    "full theme setup",
+    "seed to theme",
+    "dark mode",
+    "brand customization",
+    "Material Theme Builder",
+    "Material3Theme package",
+    "Expressive theming",
+  ]
 ---
 
 # Theming & Customization
 
 ## Core concepts
+
 - Customize M3 by overriding `ThemeData` — never fight the system
 - Seed color drives the entire `ColorScheme` automatically
 - Flutter's `Material3Theme` (community package) provides structured token overrides
@@ -15,6 +26,7 @@ queries: ["ThemeData", "full theme setup", "seed to theme", "dark mode", "brand 
 ## Frameworks introduced
 
 **Seed to ThemeData pipeline:**
+
 ```dart
 ThemeData buildTheme(Color seed, Brightness brightness) {
   final scheme = ColorScheme.fromSeed(seedColor: seed, brightness: brightness);
@@ -41,6 +53,7 @@ ThemeData buildTheme(Color seed, Brightness brightness) {
 ## Key techniques
 
 **Full Flutter app setup:**
+
 ```dart
 class MyApp extends StatelessWidget {
   @override
@@ -70,6 +83,7 @@ class MyApp extends StatelessWidget {
 **Dark mode:** Never manually invert colors. Use `ColorScheme.fromSeed(seedColor:, brightness: Brightness.dark)`. Surface tones invert automatically (tone 6 for dark surfaces, tone 90 for text). `ThemeMode.system` follows the device setting.
 
 **Brand customization beyond seed:**
+
 ```dart
 // If brand has explicit secondary/tertiary
 ColorScheme.fromSeed(
@@ -86,10 +100,12 @@ ColorScheme.fromSeed(
 M3 Expressive (May 2025 / Google I/O 2026) adds for Flutter:
 
 **Check current Flutter SDK version for availability:**
+
 - `Curves.emphasized` family — available
 - `ColorScheme.surfaceContainer*` — available since Flutter 3.22
 - Spring-based `AnimationController` — always available
 - Expressive components (flexible nav bar, Xl buttons, FAB menus) — check latest SDK
 
 ## Connection to other chapters
+
 Consumes `ColorScheme` (→ ch02), `TextTheme` (→ ch03), shape (→ ch04), motion (→ ch05), tokens (→ ch08). Platform affects component availability (→ ch06) and dynamic color support (→ ch02).

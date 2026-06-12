@@ -20,11 +20,11 @@
 
 ## Reference tables
 
-| Tool | Security issues found | Performance issues found | Score |
-|------|---------------------|------------------------|-------|
-| Codacy | 2/2 (SQLi, XSS) | 0/2 | 8/10 |
-| DeepCode | 1/2 (SQLi only) | 0/2 | 6/10 |
-| CodeRabbit | 2/2 (SQLi, XSS) | 0/2 | 7/10 |
+| Tool       | Security issues found | Performance issues found | Score |
+| ---------- | --------------------- | ------------------------ | ----- |
+| Codacy     | 2/2 (SQLi, XSS)       | 0/2                      | 8/10  |
+| DeepCode   | 1/2 (SQLi only)       | 0/2                      | 6/10  |
+| CodeRabbit | 2/2 (SQLi, XSS)       | 0/2                      | 7/10  |
 
 ## Connection to other chapters
 

@@ -20,21 +20,21 @@ OpenCode agents are specialized AI assistants with custom prompts, models, and t
 
 ### Primary agents
 
-| Agent | Description |
-|---|---|
-| **Build** | Default primary agent. All tools enabled. Full development access. |
-| **Plan** | Restricted read-only agent. `edit: ask`, `bash: ask`. Analysis without changes. |
-| **Compaction** | Hidden system agent — compacts long context. Runs automatically. |
-| **Title** | Hidden system agent — generates session titles. Runs automatically. |
-| **Summary** | Hidden system agent — creates session summaries. Runs automatically. |
+| Agent          | Description                                                                     |
+| -------------- | ------------------------------------------------------------------------------- |
+| **Build**      | Default primary agent. All tools enabled. Full development access.              |
+| **Plan**       | Restricted read-only agent. `edit: ask`, `bash: ask`. Analysis without changes. |
+| **Compaction** | Hidden system agent — compacts long context. Runs automatically.                |
+| **Title**      | Hidden system agent — generates session titles. Runs automatically.             |
+| **Summary**    | Hidden system agent — creates session summaries. Runs automatically.            |
 
 ### Subagents
 
-| Agent | Description |
-|---|---|
-| **General** | Full tool access (except todo). Complex multi-step research and tasks. |
-| **Explore** | Fast, read-only. Codebase exploration — patterns, keywords, questions. |
-| **Scout** | Read-only. External docs and dependency research — clone repos, inspect library source. |
+| Agent       | Description                                                                             |
+| ----------- | --------------------------------------------------------------------------------------- |
+| **General** | Full tool access (except todo). Complex multi-step research and tasks.                  |
+| **Explore** | Fast, read-only. Codebase exploration — patterns, keywords, questions.                  |
+| **Scout**   | Read-only. External docs and dependency research — clone repos, inspect library source. |
 
 ## Configuration
 
@@ -49,21 +49,21 @@ or as standalone Markdown files (`~/.config/opencode/agents/<name>.md` or `.open
   "agent": {
     "my-agent": {
       "description": "What this agent does and when to use it",
-      "mode": "subagent",    // "primary" | "subagent" | "all"
+      "mode": "subagent", // "primary" | "subagent" | "all"
       "model": "anthropic/claude-sonnet-4-20250514",
       "prompt": "You are a specialized assistant. Focus on X.",
       "temperature": 0.1,
-      "steps": 10,           // max agentic iterations (replaces deprecated maxSteps)
+      "steps": 10, // max agentic iterations (replaces deprecated maxSteps)
       "permission": {
         "edit": "deny",
-        "bash": "deny"
+        "bash": "deny",
       },
-      "hidden": false,       // hide from @ autocomplete
-      "color": "#ff6b6b",    // hex or theme color
+      "hidden": false, // hide from @ autocomplete
+      "color": "#ff6b6b", // hex or theme color
       "topP": 0.9,
-      "disable": false       // disable the agent
-    }
-  }
+      "disable": false, // disable the agent
+    },
+  },
 }
 ```
 
@@ -83,6 +83,7 @@ permission:
 ---
 
 You are in code review mode. Focus on:
+
 - Code quality and best practices
 - Potential bugs and edge cases
 - Performance implications
@@ -92,29 +93,37 @@ You are in code review mode. Focus on:
 ## Agent Options
 
 ### description (required)
+
 Brief description of what the agent does and when it should be used. Primary agents also show this in the agent switcher.
 
 ### temperature
+
 Control response randomness: `0.0-0.2` focused/deterministic (analysis, planning), `0.3-0.5` balanced (general dev),
 `0.6-1.0` creative (brainstorming). Defaults: 0 for most models, 0.55 for Qwen.
 
 ### steps (max iterations)
+
 Max number of agentic iterations before forced text-only response. `maxSteps` is deprecated — use `steps`.
 
 ### disable
+
 Set to `true` to disable the agent.
 
 ### prompt
+
 Custom system prompt file path relative to config location: `"{file:./prompts/my-agent.txt}"`.
 
 ### model
+
 Override the model for this agent. Format: `provider/model-id` (e.g. `anthropic/claude-sonnet-4-20250514`).
 Primary agents default to the globally configured model; subagents default to the invoking agent's model.
 
 ### permissions
+
 Control tool access per agent. Each key: `"allow"` | `"ask"` | `"deny"`.
 
 Available permission keys:
+
 - **read** — file reads
 - **edit** — file modifications (write, edit, apply_patch)
 - **glob** — file pattern matching
@@ -132,6 +141,7 @@ Available permission keys:
 - **doom_loop** — recovery when tool call repeats 3× with same input
 
 Granular bash permissions example:
+
 ```jsonc
 "permission": {
   "bash": {
@@ -141,9 +151,11 @@ Granular bash permissions example:
   }
 }
 ```
+
 Last matching rule wins — put `"*"` first and specific rules after.
 
 Task permissions control which subagents an agent can invoke:
+
 ```jsonc
 "permission": {
   "task": {
@@ -153,22 +165,28 @@ Task permissions control which subagents an agent can invoke:
   }
 }
 ```
+
 Users can still invoke any subagent directly via `@`.
 
 ### mode
+
 `"primary"` — main conversation agent (cycled via Tab). `"subagent"` — invoked via @mention or Task tool.
 `"all"` — both. Defaults to `"all"` if not specified.
 
 ### hidden
+
 Only for `mode: subagent`. Hides from `@` autocomplete menu. Can still be invoked via Task tool.
 
 ### color
+
 Visual appearance in UI. Hex color (e.g. `#FF5733`) or theme color (`primary`, `secondary`, `accent`, `success`, `warning`, `error`, `info`).
 
 ### topP
+
 Alternative to temperature for controlling response diversity. Range 0.0-1.0.
 
 ### additional
+
 Any extra options are passed through directly to the provider as model options (e.g. `reasoningEffort`, `textVerbosity`).
 
 ```jsonc
@@ -176,15 +194,16 @@ Any extra options are passed through directly to the provider as model options (
   "agent": {
     "deep-thinker": {
       "reasoningEffort": "high",
-      "textVerbosity": "low"
-    }
-  }
+      "textVerbosity": "low",
+    },
+  },
 }
 ```
 
 ## Creating Agents
 
 Use the `opencode agent create` interactive command:
+
 1. Choose global (`~/.config/opencode/agents/`) or project-specific (`.opencode/agents/`)
 2. Describe what the agent should do
 3. OpenCode generates the system prompt and identifier
@@ -199,18 +218,19 @@ Use the `opencode agent create` interactive command:
 
 ## Agent Design Patterns
 
-| Pattern | Mode | Permissions | Use case |
-|---|---|---|---|
-| Full stack dev | primary | all tools allowed | General development |
-| Planner | primary | edit: ask, bash: ask | Code analysis, architecture design |
-| Code reviewer | subagent | edit: deny | Read-only code review |
-| Debugger | subagent | read: allow, bash: allow | Bug investigation |
-| Security auditor | subagent | edit: deny | Vulnerability scanning |
-| Docs writer | subagent | bash: deny | Documentation creation |
+| Pattern          | Mode     | Permissions              | Use case                           |
+| ---------------- | -------- | ------------------------ | ---------------------------------- |
+| Full stack dev   | primary  | all tools allowed        | General development                |
+| Planner          | primary  | edit: ask, bash: ask     | Code analysis, architecture design |
+| Code reviewer    | subagent | edit: deny               | Read-only code review              |
+| Debugger         | subagent | read: allow, bash: allow | Bug investigation                  |
+| Security auditor | subagent | edit: deny               | Vulnerability scanning             |
+| Docs writer      | subagent | bash: deny               | Documentation creation             |
 
 ## Examples
 
 ### Documentation agent (`~/.config/opencode/agents/docs-writer.md`)
+
 ```markdown
 ---
 description: Writes and maintains project documentation
@@ -218,11 +238,13 @@ mode: subagent
 permission:
   bash: deny
 ---
+
 You are a technical writer. Create clear, comprehensive documentation.
 Focus on: clear explanations, proper structure, code examples, user-friendly language.
 ```
 
 ### Security auditor (`~/.config/opencode/agents/security-auditor.md`)
+
 ```markdown
 ---
 description: Performs security audits and identifies vulnerabilities
@@ -230,11 +252,13 @@ mode: subagent
 permission:
   edit: deny
 ---
+
 You are a security expert. Look for: input validation vulnerabilities,
 authentication and authorization flaws, data exposure risks, dependency vulnerabilities.
 ```
 
 ### Orchestrator with task permissions (`opencode.json`)
+
 ```jsonc
 {
   "agent": {
@@ -244,10 +268,10 @@ authentication and authorization flaws, data exposure risks, dependency vulnerab
         "task": {
           "*": "deny",
           "orchestrator-*": "allow",
-          "code-reviewer": "ask"
-        }
-      }
-    }
-  }
+          "code-reviewer": "ask",
+        },
+      },
+    },
+  },
 }
 ```

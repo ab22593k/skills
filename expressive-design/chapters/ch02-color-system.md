@@ -2,12 +2,22 @@
 chapter: 2
 topic: Color System
 when: User needs accessible color palettes, dynamic color, ColorScheme.fromSeed, tonal palettes, or brand-to-seed mapping
-queries: ["generate a color scheme", "dynamic color", "ColorScheme.fromSeed", "seed color", "tonal palette", "color roles", "brand color to seed"]
+queries:
+  [
+    "generate a color scheme",
+    "dynamic color",
+    "ColorScheme.fromSeed",
+    "seed color",
+    "tonal palette",
+    "color roles",
+    "brand color to seed",
+  ]
 ---
 
 # Color System
 
 ## Core concepts
+
 - Color roles are semantic — use `Theme.of(context).colorScheme.primary` not a literal `Color(0xFF...`
 - 29+ color roles in Flutter's `ColorScheme` class: primary, secondary, tertiary, surface, error + container variants
 - Dynamic color derives a full accessible palette from a single seed color
@@ -23,6 +33,7 @@ queries: ["generate a color scheme", "dynamic color", "ColorScheme.fromSeed", "s
 ## Key techniques
 
 **Generate a Flutter theme from seed:**
+
 ```dart
 final ColorScheme lightScheme = ColorScheme.fromSeed(
   seedColor: const Color(0xFF1A73E8),
@@ -35,6 +46,7 @@ final ColorScheme darkScheme = ColorScheme.fromSeed(
 ```
 
 **Dynamic color on Android 12+:**
+
 ```dart
 bool useDynamic = true; // Platform check or user toggle
 ColorScheme colorScheme;
@@ -50,16 +62,17 @@ if (useDynamic && Theme.of(context).platform == TargetPlatform.android) {
 
 ## Reference table
 
-| ColorScheme property | M3 Role | Typical light tone |
-|---------------------|---------|-------------------|
-| `primary` | Primary | 40 |
-| `onPrimary` | Text/icons on primary | 100 |
-| `primaryContainer` | Container fill | 90 |
-| `secondary` | Secondary | 40 |
-| `surface` | Surface / backgrounds | 98 |
-| `surfaceContainerLow` → `highest` | Elevation levels L0–L5 | 96 → 90 |
-| `onSurface` | Text on surface | 10 |
-| `error` | Error | 40 |
+| ColorScheme property              | M3 Role                | Typical light tone |
+| --------------------------------- | ---------------------- | ------------------ |
+| `primary`                         | Primary                | 40                 |
+| `onPrimary`                       | Text/icons on primary  | 100                |
+| `primaryContainer`                | Container fill         | 90                 |
+| `secondary`                       | Secondary              | 40                 |
+| `surface`                         | Surface / backgrounds  | 98                 |
+| `surfaceContainerLow` → `highest` | Elevation levels L0–L5 | 96 → 90            |
+| `onSurface`                       | Text on surface        | 10                 |
+| `error`                           | Error                  | 40                 |
 
 ## Connection to other chapters
+
 `ColorScheme` consumed by every widget (→ ch06). Tonal elevation via surface containers (→ ch04). Contrast to accessibility (→ ch09). Theme generation (→ ch10).

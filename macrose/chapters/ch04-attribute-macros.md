@@ -1,6 +1,7 @@
 # Chapter 4: Attribute Macros
 
 ## Signature
+
 ```rust
 #[proc_macro_attribute]
 pub fn make_public(attr: TokenStream, item: TokenStream) -> TokenStream
@@ -37,6 +38,7 @@ if let Data::Struct(DataStruct { fields: Fields::Named(named), .. }) = &ast.data
 ```
 
 ## Key Techniques
+
 - **ToTokens trait** — custom structs can implement `ToTokens` to control their generated code
 - **Parse trait** — implement `Parse` for custom DSLs within attribute arguments
 - **Named vs unnamed fields** — `field.ident` is `Some(Ident)` for named, `None` for tuple structs

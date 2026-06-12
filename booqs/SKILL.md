@@ -9,15 +9,15 @@ description: "Converts any documentation source — book (PDF/EPUB), URL, git re
 
 ## Step 0 — Detect source type
 
-| Input | Type | Strategy |
-|---|---|---|
-| `https://...` | URL | firecrawl_scrape / webfetch |
-| `github.com/...` or `git@` | Git repo | `git clone --depth 1` → walk docs |
-| Local dir path | Directory | Walk `.md`/`.rst`/`.html` files |
-| `.pdf` file | File | `extract.py --mode technical` |
-| `.epub` file | File | `extract.py` |
-| `.md` / `.txt` file | File | `extract.py` |
-| Other extension | Unknown | Sniff magic bytes |
+| Input                      | Type      | Strategy                          |
+| -------------------------- | --------- | --------------------------------- |
+| `https://...`              | URL       | firecrawl_scrape / webfetch       |
+| `github.com/...` or `git@` | Git repo  | `git clone --depth 1` → walk docs |
+| Local dir path             | Directory | Walk `.md`/`.rst`/`.html` files   |
+| `.pdf` file                | File      | `extract.py --mode technical`     |
+| `.epub` file               | File      | `extract.py`                      |
+| `.md` / `.txt` file        | File      | `extract.py`                      |
+| Other extension            | Unknown   | Sniff magic bytes                 |
 
 Slug from source name: lowercase, `[^a-z0-9]+` → `-`, strip edges.
 
@@ -51,17 +51,18 @@ If any check fails, stop and explain the missing dependency. Do not proceed with
 
 **File (PDF/EPUB/MD/TXT)** — `python3 <skill-dir>/scripts/extract.py "<path>" --mode <technical|text>`. For PDFs, first read ~2K token sample and signal-detect:
 
-| Signal | Check | High if | → mode |
-|---|---|---|---|
-| Code density | ` ``` ` `{` `def` `fn` | >5 blocks/2K | technical |
-| Table density | `|` rows, columns | >3 patterns/2K | technical |
-| Formula density | `=` `∑` `∫` `→` | >5/2K | technical |
-| Framework terms | Named models/theorems | >3 | text |
-| Prose ratio | Paragraph vs heading | >80% | text |
+| Signal          | Check                  | High if         | → mode         |
+| --------------- | ---------------------- | --------------- | -------------- | --------- |
+| Code density    | ` ``` ` `{` `def` `fn` | >5 blocks/2K    | technical      |
+| Table density   | `                      | ` rows, columns | >3 patterns/2K | technical |
+| Formula density | `=` `∑` `∫` `→`        | >5/2K           | technical      |
+| Framework terms | Named models/theorems  | >3              | text           |
+| Prose ratio     | Paragraph vs heading   | >80%            | text           |
 
 Decision: high code/table/formula → `technical`; frameworks/prose → `text`. EPUBs always use ebooklib. On failure: suggest `uv sync`.
 
 **Token-efficient extraction rules:**
+
 - Read metadata with `jq` or `python3 -c "import json;..."` — don't Read the full JSON file
 - Check file size with `wc -l` / `wc -c` before reading source text
 - Use `wc -l /tmp/booqs/full_text.txt` to assess size cheaply
@@ -91,6 +92,7 @@ For sources exceeding ~50K tokens, the full text is too large to process in one 
      - **Global thesis** (from step 1) — prepended as system context
 
 4. **Chunk data structure (stored as `/tmp/booqs/chunks.json`):**
+
    ```json
    [
      {
@@ -112,24 +114,25 @@ When Step 2 says "read the source", use the chunked representation: analyze each
 
 Read `/tmp/booqs/full_text.txt` (or the chunked representation if >50K). Per section extract:
 
-| Category | What to capture |
-|---|---|
-| **Frameworks** | Structured approaches, step-by-step methodologies, decision trees |
-| **Mental models** | Heuristics, simplifying lenses, rules of thumb |
-| **Principles** | Invariant guidelines, laws, axioms |
-| **Techniques** | Specific procedures, algorithms, code patterns |
+| Category          | What to capture                                                            |
+| ----------------- | -------------------------------------------------------------------------- |
+| **Frameworks**    | Structured approaches, step-by-step methodologies, decision trees          |
+| **Mental models** | Heuristics, simplifying lenses, rules of thumb                             |
+| **Principles**    | Invariant guidelines, laws, axioms                                         |
+| **Techniques**    | Specific procedures, algorithms, code patterns                             |
 | **Anti-patterns** | Design mistakes, architectural traps, security risks, performance pitfalls |
-| **Terminology** | Author-defined terms, coined names, precise definitions |
-| **Trade-offs** | Comparison matrices, boundary conditions, failure regimes |
+| **Terminology**   | Author-defined terms, coined names, precise definitions                    |
+| **Trade-offs**    | Comparison matrices, boundary conditions, failure regimes                  |
 
 **Critical extraction rule:** Do NOT capture descriptions of patterns. Capture their **mechanics** and **trade-offs**. Target:
+
 - Comparison tables (A vs B, columns, trade-off axes)
 - Structural diagrams / decision matrices
 - Boundary conditions — exactly when a pattern or approach fails
 - Specific criteria that dictate architectural or algorithmic choices (e.g., consistency model selection under high latency, split-brain handling in read-heavy systems)
 - **Failure conditions** — the specific setup that makes something a risk (e.g., "JWT without refresh rotation → no revocation capability", "N+1 query under 100ms SLAs → 10x p99 latency")
 
-If a passage describes *what* a thing is but doesn't state *when to use it, when to avoid it, or what breaks*, skip it or surface it only as a brief anchor. The output should let a practitioner make concrete engineering trade-off decisions.
+If a passage describes _what_ a thing is but doesn't state _when to use it, when to avoid it, or what breaks_, skip it or surface it only as a brief anchor. The output should let a practitioner make concrete engineering trade-off decisions.
 
 Map every extracted term back to its source chapter — the practitioner needs a path back to the original.
 
@@ -184,7 +187,7 @@ Python 3.10+, `uv`. PDF: PyMuPDF/pdftotext/PyPDF2/pdfminer/docling. EPUB: ebookl
 
 ## Edge cases
 
-- >150K tokens: apply rolling-window chunking (8K windows, 2K overlap), then sample strategically — every Nth window prioritizing chapter-boundary windows. Each sampled window still carries the global thesis payload and breadcrumb.
+- > 150K tokens: apply rolling-window chunking (8K windows, 2K overlap), then sample strategically — every Nth window prioritizing chapter-boundary windows. Each sampled window still carries the global thesis payload and breadcrumb.
 - No sections detected: scan for `^#`, `^Chapter`, `^[A-Z ]{5,}`; otherwise single-chapter
 - Skill exists: warn + ask before overwrite
 - Partial failure: mark "needs review"
@@ -209,4 +212,4 @@ Python 3.10+, `uv`. PDF: PyMuPDF/pdftotext/PyPDF2/pdfminer/docling. EPUB: ebookl
 3. **Front-load SKILL.md** — First ~5K tokens are always in context. Lead with mental models and chapter index.
 4. **On-demand chapters** — Never inline chapter content into SKILL.md. Load only what's asked for.
 5. **Always synthesize** — Every sentence is a step removed from the source: compressed, interpreted, structured.
-6. **Extract mechanics, not descriptions** — If the source says "Event Sourcing is a pattern where...", skip that sentence. Capture only: what concrete problem it solves, the specific conditions under which it backfires (event schema evolution cost, replay latency), and what trades it forces versus alternatives. A practitioner needs to know *when to choose it and when it burns them*, not what it is.
+6. **Extract mechanics, not descriptions** — If the source says "Event Sourcing is a pattern where...", skip that sentence. Capture only: what concrete problem it solves, the specific conditions under which it backfires (event schema evolution cost, replay latency), and what trades it forces versus alternatives. A practitioner needs to know _when to choose it and when it burns them_, not what it is.

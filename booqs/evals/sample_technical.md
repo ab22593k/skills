@@ -46,7 +46,7 @@ if err != nil {
 }
 ```
 
-*Anti-pattern:* Using `%v` or `%s` instead of `%w` breaks the error chain and prevents callers from using `errors.Is()` and `errors.As()`.
+_Anti-pattern:_ Using `%v` or `%s` instead of `%w` breaks the error chain and prevents callers from using `errors.Is()` and `errors.As()`.
 
 ## Chapter 2: Concurrency Patterns
 
@@ -73,7 +73,7 @@ func generate(ctx context.Context, nums ...int) <-chan int {
 }
 ```
 
-*Principle:* Always let the receiver close channels in a fan-in pattern. The generator closes its output when done.
+_Principle:_ Always let the receiver close channels in a fan-in pattern. The generator closes its output when done.
 
 ### Fan-Out, Fan-In
 
@@ -122,9 +122,9 @@ Put test data in `testdata/` directories. Use `io/fs` to access them. This is a 
 
 ## Appendix: Decision Tables
 
-| Pattern | When to Use | Trade-off |
-|---------|-------------|-----------|
-| Pipeline | Sequential processing stages | Bounded channel memory |
-| Fan-Out | Independent parallel work | Goroutine management overhead |
-| Context propagation | Any blocking call | Passes through entire call chain |
-| Table-driven tests | Multiple input cases | Slightly more verbose for simple cases |
+| Pattern             | When to Use                  | Trade-off                              |
+| ------------------- | ---------------------------- | -------------------------------------- |
+| Pipeline            | Sequential processing stages | Bounded channel memory                 |
+| Fan-Out             | Independent parallel work    | Goroutine management overhead          |
+| Context propagation | Any blocking call            | Passes through entire call chain       |
+| Table-driven tests  | Multiple input cases         | Slightly more verbose for simple cases |

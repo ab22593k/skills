@@ -2,11 +2,11 @@
 
 ## Principles
 
-| Property | Pure Function | Impure Function |
-|----------|--------------|-----------------|
-| Returns | `Result<T, syn::Error>` | `syn::Result<T>` (alias) |
-| Mutable input | No | Sometimes (ParseStream) |
-| Panics | Never | Avoid if possible |
+| Property      | Pure Function           | Impure Function          |
+| ------------- | ----------------------- | ------------------------ |
+| Returns       | `Result<T, syn::Error>` | `syn::Result<T>` (alias) |
+| Mutable input | No                      | Sometimes (ParseStream)  |
+| Panics        | Never                   | Avoid if possible        |
 
 ## Converting Panics to Results
 
@@ -19,6 +19,7 @@ fn parse_field(input: ParseStream) -> syn::Result<Field> { ... }
 ```
 
 ## Using `syn::Error`
+
 ```rust
 return Err(syn::Error::new(
     field.span(),
@@ -27,6 +28,7 @@ return Err(syn::Error::new(
 ```
 
 ## The `proc_macro_error` Crate
+
 Adds `abort!` / `abort_call_site!` macros for non-recoverable errors with beautiful formatting:
 
 ```rust
@@ -42,6 +44,7 @@ fn some_helper() {
 ```
 
 ## When to Panic vs Return Error
+
 - **Panic** — when something is logically impossible at the call site (e.g., `parse()` after `peek()` succeeded)
 - **Return `syn::Error`** — for user-facing validation failures with span information
 - **`abort!`** — when you want proc_macro_error's nice formatting and immediate termination

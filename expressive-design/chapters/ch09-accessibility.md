@@ -2,12 +2,24 @@
 chapter: 9
 topic: Accessibility
 when: User needs contrast auditing, Semantics setup, SemanticsDebugger, focus navigation, touch targets, or the accessibility checklist
-queries: ["accessibility", "Semantics", "SemanticsDebugger", "contrast ratio", "focus navigation", "touch target", "MergeSemantics", "ExcludeSemantics", "a11y checklist"]
+queries:
+  [
+    "accessibility",
+    "Semantics",
+    "SemanticsDebugger",
+    "contrast ratio",
+    "focus navigation",
+    "touch target",
+    "MergeSemantics",
+    "ExcludeSemantics",
+    "a11y checklist",
+  ]
 ---
 
 # Accessibility
 
 ## Core concepts
+
 - Accessibility by default — Flutter's Material widgets embed WCAG-compliant accessibility
 - Flutter's `Semantics` widget provides fine-grained control
 - Use `FlutterSemanticsDebugger` to visualize the accessibility tree
@@ -33,15 +45,18 @@ Semantics(
 ## Key techniques
 
 **Semantics debugger:**
+
 ```dart
 MaterialApp(
   showSemanticsDebugger: true, // Toggle during development
   // ...
 );
 ```
+
 Enables overlay showing semantic labels, roles, actions. Verify every interactive element has `label` + `action` pair.
 
 **Touch targets:** Flutter's `Material` widgets default to ≥48×48dp. For custom tappable areas:
+
 ```dart
 GestureDetector(
   behavior: HitTestBehavior.opaque,
@@ -54,6 +69,7 @@ GestureDetector(
 ```
 
 **Accesibility checklist in Flutter:**
+
 - `Semantics(label: ...)` on all `IconButton`s
 - `ExcludeSemantics` on decorative `Icon`s
 - `MergeSemantics` on tightly coupled elements (e.g., chip text + icon)
@@ -62,4 +78,5 @@ GestureDetector(
 - Test with `AccessibilityNodeInfo` on Android, `UIAccessibility` on iOS
 
 ## Connection to other chapters
+
 Color contrast depends on `ColorScheme.fromSeed` (→ ch02). Type size respects `MediaQuery.textScaler` (→ ch03). Focus indicators use shape tokens (→ ch04). Component states (→ ch01) require accessible contrast.

@@ -2,12 +2,23 @@
 chapter: 4
 topic: Shape & Elevation
 when: User needs shape radius decisions, tonal elevation via surfaceContainer*, ShapeBorder subclasses, shape morphing, or the Expressive 35-shape library
-queries: ["shape radius", "border radius", "tonal elevation", "surfaceContainer", "ShapeBorder", "shape morphing", "card shape", "35-shape library"]
+queries:
+  [
+    "shape radius",
+    "border radius",
+    "tonal elevation",
+    "surfaceContainer",
+    "ShapeBorder",
+    "shape morphing",
+    "card shape",
+    "35-shape library",
+  ]
 ---
 
 # Shape & Elevation
 
 ## Core concepts
+
 - Shape radius communicates containment hierarchy — larger radius = more important container
 - Elevation uses tonal surface colors (`ColorScheme.surfaceContainer*`) not shadows
 - M3 Expressive adds a 35-shape library and updated radii
@@ -40,6 +51,7 @@ Color level4 = theme.colorScheme.surfaceContainerHighest;
 ## Key techniques
 
 **Apply shape via theme:**
+
 ```dart
 ThemeData(
   cardTheme: CardTheme(
@@ -52,6 +64,7 @@ ThemeData(
 ```
 
 **Elevation via surface color:**
+
 ```dart
 // Instead of elevation: 2, use tonal surface
 Container(
@@ -64,15 +77,16 @@ Container(
 
 ## Component shape mapping
 
-| Widget | Shape |
-|--------|-------|
+| Widget                        | Shape                  |
+| ----------------------------- | ---------------------- |
 | `FilledButton` / `TextButton` | `StadiumBorder` (full) |
-| `Card` | 12dp rounded |
-| `AlertDialog` | 32dp rounded |
-| `BottomSheet` | 48dp top rounded |
-| `FloatingActionButton` | 20dp rounded (56dp) |
-| `Chip` | 8dp rounded |
-| `TextField` | 4dp top rounded |
+| `Card`                        | 12dp rounded           |
+| `AlertDialog`                 | 32dp rounded           |
+| `BottomSheet`                 | 48dp top rounded       |
+| `FloatingActionButton`        | 20dp rounded (56dp)    |
+| `Chip`                        | 8dp rounded            |
+| `TextField`                   | 4dp top rounded        |
 
 ## Connection to other chapters
+
 `ShapeBorder` values are design tokens (→ ch08). Tonal elevation depends on `ColorScheme` surface container roles (→ ch02). Shape morphing uses `Curves.emphasized` (→ ch05).

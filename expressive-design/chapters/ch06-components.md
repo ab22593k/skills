@@ -2,12 +2,26 @@
 chapter: 6
 topic: Components
 when: User needs Flutter M3 widget selection, button hierarchy, FAB sizes, navigation switching, card variants, or MaterialStateProperty usage
-queries: ["FilledButton", "NavigationBar", "NavigationRail", "NavigationDrawer", "FAB", "Card", "Chip", "TextField", "MaterialStateProperty", "button hierarchy", "widget selection"]
+queries:
+  [
+    "FilledButton",
+    "NavigationBar",
+    "NavigationRail",
+    "NavigationDrawer",
+    "FAB",
+    "Card",
+    "Chip",
+    "TextField",
+    "MaterialStateProperty",
+    "button hierarchy",
+    "widget selection",
+  ]
 ---
 
 # Components
 
 ## Core concepts
+
 - 30+ Material widgets implementing MD3 specifications
 - Every widget color-correct for `useMaterial3: true`
 - M3 Expressive adds: flexible nav bar, extra-large button, expressive lists, FAB menus, split buttons
@@ -24,6 +38,7 @@ queries: ["FilledButton", "NavigationBar", "NavigationRail", "NavigationDrawer",
 **Text input:** `TextField` (filled/outlined), `DatePickerDialog`, `TimePickerDialog`
 
 **FAB size decisions:**
+
 ```dart
 FloatingActionButton.small()    // 40×40dp (replaces "mini")
 FloatingActionButton()          // 56×56dp default
@@ -32,6 +47,7 @@ ExtendedFloatingActionButton()  // Label + icon, on surface
 ```
 
 **Navigation by window size:**
+
 - Compact (<600dp): `NavigationBar` (3–5 destinations)
 - Medium (600–839dp): `NavigationRail` (collapsed or expanded)
 - Expanded (≥840dp): `NavigationDrawer`
@@ -39,6 +55,7 @@ ExtendedFloatingActionButton()  // Label + icon, on surface
 ## Key techniques
 
 **State via MaterialStateProperty:** All Flutter M3 widgets accept uniform state overrides via `MaterialStateProperty`.
+
 ```dart
 FilledButton.styleFrom(
   backgroundColor: WidgetStateProperty.resolveWith((states) {
@@ -54,4 +71,5 @@ FilledButton.styleFrom(
 **Button hierarchy:** One primary action → `FilledButton`. Secondary → `OutlinedButton` or `TextButton`. Multiple equal → `SegmentedButton`. Destructive → `TextButton.styleFrom(foregroundColor: colorScheme.error)`.
 
 ## Connection to other chapters
+
 Widgets consume `ColorScheme` (→ ch02), `TextTheme` (→ ch03), shape (→ ch04), motion (→ ch05). Navigation widgets connect to `LayoutBuilder` (→ ch07). States connect to `MaterialStateProperty` (→ ch01).

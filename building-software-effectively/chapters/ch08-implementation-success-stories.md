@@ -20,12 +20,12 @@
 
 ## Historical parallels
 
-| Innovation | Jobs eliminated | Jobs created/expanded |
-|-----------|----------------|----------------------|
-| ATMs (1970s) | None (teller jobs grew) | More bank branches |
-| Elevator buttons | Elevator operators | None (narrow role) |
-| Excel (1980s) | Bookkeeping clerks | Accountants, analysts, financial managers |
-| AI coding tools | Pure boilerplate coders | Prompt engineers, AI integration specialists, code reviewers |
+| Innovation       | Jobs eliminated         | Jobs created/expanded                                        |
+| ---------------- | ----------------------- | ------------------------------------------------------------ |
+| ATMs (1970s)     | None (teller jobs grew) | More bank branches                                           |
+| Elevator buttons | Elevator operators      | None (narrow role)                                           |
+| Excel (1980s)    | Bookkeeping clerks      | Accountants, analysts, financial managers                    |
+| AI coding tools  | Pure boilerplate coders | Prompt engineers, AI integration specialists, code reviewers |
 
 ## Connection to other chapters
 

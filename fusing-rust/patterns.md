@@ -5,11 +5,12 @@
 **Type:** technique
 **Context:** Assigning or passing a value to another variable or function.
 **Solution:**
+
 - **Copy** — Use for stack-only types (integers, bools, chars). Implicit, no runtime cost.
 - **Move** — Default for heap types (`String`, `Vec`). Ownership transfers; source is invalidated.
 - **Clone** — Explicit `.clone()` for heap types when both copies must remain valid.
-**Consequences:** Move prevents double-free bugs. Clone has runtime cost. Copy is free but only for simple types.
-**Related:** Ch3 Ownership
+  **Consequences:** Move prevents double-free bugs. Clone has runtime cost. Copy is free but only for simple types.
+  **Related:** Ch3 Ownership
 
 ## Safe Unsafe Boundary
 

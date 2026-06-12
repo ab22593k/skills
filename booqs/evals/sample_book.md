@@ -12,7 +12,7 @@ Systems are not linear. When you push on a system, the effects ripple and echo. 
 
 A reinforcing loop amplifies change. More A leads to more B, which leads to even more A. This is the engine of growth — and the engine of collapse.
 
-*Example:* The more users a social network has, the more valuable it is, which attracts even more users. This is a classic reinforcing loop.
+_Example:_ The more users a social network has, the more valuable it is, which attracts even more users. This is a classic reinforcing loop.
 
 ### Balancing Loops
 
@@ -34,7 +34,7 @@ Less powerful but more practical: change the rules of the system. Incentives, co
 
 Delays are everywhere in systems: the time between a decision and its effect, the time between learning something and applying it. Delays create oscillations.
 
-*Principle:* If you don't understand the delays in a system, your interventions will always be mistimed.
+_Principle:_ If you don't understand the delays in a system, your interventions will always be mistimed.
 
 ## Chapter 4: Bounded Rationality
 
@@ -43,6 +43,7 @@ People make decisions based on the information available to them in the moment. 
 ## Appendix: Systems Archetypes
 
 Common patterns that recur across domains:
+
 - **Tragedy of the Commons:** Shared resource gets overused because each individual acts in their own interest
 - **Shifting the Burden:** A quick fix solves a symptom but undermines the ability to solve the root cause
 - **Success to the Successful:** Winners keep winning because initial advantages compound
