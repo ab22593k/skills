@@ -1,0 +1,59 @@
+{
+  "skill_name": "rust-linux-kernel",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write a Rust kernel module for a platform device that registers with the device tree compatible string \"vendor,my-device\". On probe, it should allocate a KVec, store a greeting string, and schedule a delayed work item that prints the greeting after 5 jiffies. The module should clean up properly on unload. Use GPL license.",
+      "expected_output": "A complete, compilable Rust kernel module with module! macro, platform::Driver impl, pin-init initialization, workqueue usage, and proper error handling.",
+      "files": [],
+      "expectations": [
+        "Uses module! macro with correct fields",
+        "Implements platform::Driver with probe returning PinInit",
+        "Uses #[pin_data] and #[pin] for the work field",
+        "Uses new_work! macro for work initialization",
+        "Implements WorkItem with run() method that prints via pr_info!",
+        "Uses impl_has_work! macro",
+        "Uses workqueue::system() or workqueue::system_long() to enqueue",
+        "Properly handles errors with ? and returns Result",
+        "Includes OF device ID table with compatible string",
+        "Uses GFP_KERNEL for allocations"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need a PCI driver in Rust for a device with vendor ID 0x10EC and device ID 0x8168 (a Realtek network card). On probe, it should enable the PCI device, map BAR0 (region 0, size 256 bytes), read the first 4 bytes of the BAR (the vendor/device ID register), and log the value. It should also allocate a single MSI IRQ vector and register a dummy handler. Use proper error handling throughout.",
+      "expected_output": "A complete Rust kernel module implementing a PCI driver with BAR mapping, register read, MSI IRQ allocation, and device ID table.",
+      "files": [],
+      "expectations": [
+        "Uses module_pci_driver! macro",
+        "Implements pci::Driver trait",
+        "Accesses PCI BAR via Bar type",
+        "Uses io memory to read from BAR offset",
+        "Allocates IRQ vectors with MSI flag",
+        "Registers an IRQ handler",
+        "Includes PCI device ID table",
+        "Proper error propagation with ?",
+        "Uses dev_info! for logging",
+        "Includes SPDX license header"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "This Rust kernel module won't compile. Fix all the issues:\n\n```rust\n// SPDX-License-Identifier: GPL-2.0\n\nuse kernel::prelude::*;\nuse kernel::sync::Mutex;\n\nmodule! {\n    type: MyModule,\n    name: \"my_module\",\n    author: \"Test\",\n    description: \"broken module\",\n    license: \"GPL\",\n}\n\nstruct MyModule {\n    lock: Mutex<u32>,\n    data: KVec<u8>,\n}\n\nimpl kernel::Module for MyModule {\n    fn init(module: &'static ThisModule) -> Result<Self> {\n        let mut v = KVec::new();\n        v.push(1, GFP_KERNEL);\n        Ok(MyModule {\n            lock: Mutex::new(0),\n            data: v,\n        })\n    }\n}\n```",
+      "expected_output": "A corrected version of the module explaining each fix. The Mutex needs pin-init, the GFP_KERNEL result needs to be handled, and the module struct needs #[pin_data] and #[pin] on the lock field.",
+      "files": [],
+      "expectations": [
+        "Identifies that Mutex requires pin-init (cannot be directly constructed)",
+        "Correctly uses #[pin_data] attribute on struct",
+        "Correctly marks lock field with #[pin]",
+        "Uses InPlaceModule instead of Module (or uses try_pin_init!)",
+        "Handles the Result from v.push(..., GFP_KERNEL)?",
+        "Uses new_mutex! macro for initialization",
+        "Provides valid pin_init!/try_pin_init! expression",
+        "Explains why each change is needed",
+        "Uses proper pinned drop if needed (PinnedDrop)",
+        "Keeps original module! macro metadata intact"
+      ]
+    }
+  ]
+}
