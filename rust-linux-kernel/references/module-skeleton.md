@@ -3,6 +3,7 @@
 ## Build System
 
 ### Makefile
+
 ```makefile
 # SPDX-License-Identifier: GPL-2.0
 KDIR ?= /lib/modules/`uname -r`/build
@@ -18,12 +19,14 @@ clean:
 ```
 
 ### Kbuild
+
 ```makefile
 # SPDX-License-Identifier: GPL-2.0
 obj-m := my_module.o
 ```
 
 ### Build
+
 ```sh
 make KDIR=/path/to/linux-with-rust-support LLVM=1
 ```

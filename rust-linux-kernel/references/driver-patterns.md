@@ -69,6 +69,7 @@ const OF_ID_TABLE: Option<kernel::of::IdTable<Self::IdInfo>> = Some(
 ```
 
 Use `module_device_table!` for modpost alias:
+
 ```rust
 kernel::module_device_table! {
     of::IdTable<()>,
@@ -259,6 +260,7 @@ impl miscdevice::MiscDevice for MyMisc {
 ## File Operations
 
 For full file operation handlers, see:
+
 - `kernel::file` — File and file descriptor types.
 - `kernel::fs` — Kiocb wrapper, file system support.
 
@@ -285,6 +287,7 @@ impl auxiliary::Driver for MyAuxDrv {
 ## Common Patterns
 
 ### Registering an IRQ handler
+
 ```rust
 use kernel::irq;
 
@@ -305,6 +308,7 @@ let reg = irq::Registration::new(irq_number, Arc::clone(&my_drv), GFP_KERNEL)?;
 ```
 
 ### Using I/O memory
+
 ```rust
 use kernel::io::Io;
 
@@ -314,6 +318,7 @@ mmio.write(val | 0x01, 0x00);       // Set bit 0
 ```
 
 ### Workqueues
+
 ```rust
 use kernel::workqueue::{self, Work, WorkItem, impl_has_work, new_work};
 

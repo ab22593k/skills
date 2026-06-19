@@ -50,7 +50,6 @@ or as standalone Markdown files (`~/.config/opencode/agents/<name>.md` or `.open
     "my-agent": {
       "description": "What this agent does and when to use it",
       "mode": "subagent", // "primary" | "subagent" | "all"
-      "model": "anthropic/claude-sonnet-4-20250514",
       "prompt": "You are a specialized assistant. Focus on X.",
       "temperature": 0.1,
       "steps": 10, // max agentic iterations (replaces deprecated maxSteps)

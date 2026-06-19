@@ -30,7 +30,7 @@ Store the backlog at the repository root as `pomona-backlog.md` put it into .git
 ## P1 — Do First
 
 - [ ] **Description of the task**
-  - **File**: `path/to/file.py`
+  - **File**: `path/to/file.*`
   - **Source**: ruff rule violation / TODO comment / dead code / test gap / long function
   - **Details**: More context for the fix
   - **Sub-tasks** (if needed):

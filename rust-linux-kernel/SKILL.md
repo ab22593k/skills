@@ -97,12 +97,12 @@ This is the single most important concept to get right:
 Bus-specific drivers implement a `Driver` trait, then get wrapped in an `Adapter`
 and registered via `module_*_driver!` macro:
 
-| Bus        | Trait                  | Adapter                      | Macro                       |
-|------------|------------------------|------------------------------|-----------------------------|
-| Platform   | `platform::Driver`     | `platform::Adapter<T>`       | `module_platform_driver!`   |
-| PCI        | `pci::Driver`          | `pci::Adapter<T>`            | `module_pci_driver!`        |
-| USB        | `usb::Driver`          | `usb::Adapter<T>`            | `module_usb_driver!`        |
-| I2C        | `i2c::Driver`          | `i2c::Adapter<T>`            | `module_i2c_driver!`        |
+| Bus      | Trait              | Adapter                | Macro                     |
+| -------- | ------------------ | ---------------------- | ------------------------- |
+| Platform | `platform::Driver` | `platform::Adapter<T>` | `module_platform_driver!` |
+| PCI      | `pci::Driver`      | `pci::Adapter<T>`      | `module_pci_driver!`      |
+| USB      | `usb::Driver`      | `usb::Adapter<T>`      | `module_usb_driver!`      |
+| I2C      | `i2c::Driver`      | `i2c::Adapter<T>`      | `module_i2c_driver!`      |
 
 ### Synchronization Patterns
 

@@ -36,6 +36,7 @@ impl Drop for MyModule {
 ```
 
 Use `InPlaceModule` for pin-initialized modules:
+
 ```rust
 impl kernel::InPlaceModule for MyModule {
     fn init(_module: &'static ThisModule) -> impl PinInit<Self, Error> { ... }
@@ -54,6 +55,7 @@ impl kernel::InPlaceModule for MyModule {
 ## Memory Allocation (`kernel::alloc`)
 
 ### Types
+
 - `KBox<T>` — Box backed by kernel allocator (GFP-aware).
 - `KVec<T>` — Vec backed by kernel allocator (GFP-aware).
 - `VBox<T>` — Box for pages (virtually contiguous).
@@ -62,6 +64,7 @@ impl kernel::InPlaceModule for MyModule {
 - `Vec<T>` — Alias for `KVec<T>`.
 
 ### Allocation Flags (`kernel::alloc::flags`)
+
 - `GFP_KERNEL` — Typical allocation, caller can reclaim.
 - `GFP_KERNEL_ACCOUNT` — GFP_KERNEL accounted to kmemcg.
 - `GFP_ATOMIC` — Cannot sleep, allocation must succeed.
@@ -71,6 +74,7 @@ impl kernel::InPlaceModule for MyModule {
 - `__GFP_NOWARN` — Suppress allocation failure reports.
 
 ### Usage
+
 ```rust
 let mut v: KVec<u8> = KVec::new();
 v.push(42, GFP_KERNEL)?;
@@ -104,6 +108,7 @@ let b = KBox::new(value, GFP_KERNEL)?;
 - `Completion` — Completion support.
 
 ### Mutex Pattern
+
 ```rust
 use kernel::sync::{Mutex, new_mutex};
 
@@ -132,6 +137,7 @@ impl MyDriver {
 ```
 
 ### Arc Pattern
+
 ```rust
 use kernel::sync::Arc;
 
@@ -155,6 +161,7 @@ let clone = my_arc.clone();
 ## Printing (`kernel::print` + macros)
 
 ### Console messages
+
 - `pr_emerg!(fmt, ...)` — Emergency (level 0)
 - `pr_alert!(fmt, ...)` — Alert (level 1)
 - `pr_crit!(fmt, ...)` — Critical (level 2)
@@ -167,6 +174,7 @@ let clone = my_arc.clone();
 - `pr_*_once!(fmt, ...)` — Print-at-most-once variants
 
 ### Device-aware messages
+
 - `dev_emerg!(dev, fmt, ...)`
 - `dev_alert!(dev, fmt, ...)`
 - `dev_crit!(dev, fmt, ...)`
@@ -177,6 +185,7 @@ let clone = my_arc.clone();
 - `dev_dbg!(dev, fmt, ...)`
 
 ### Other
+
 - `dbg!(expr)` — Like `std::dbg!` but uses `pr_info!`.
 - `container_of!(ptr, type, field)` — Get container pointer from field pointer.
 
@@ -257,6 +266,7 @@ kernel::module_pci_driver! {
 ```
 
 ### PCI Types
+
 - `pci::Device` — PCI device representation.
 - `pci::Bar` — PCI BAR for I/O.
 - `pci::ConfigSpace` — PCI configuration space access.
@@ -287,11 +297,13 @@ kernel::module_pci_driver! {
 ## Workqueues (`kernel::workqueue`)
 
 ### Types
+
 - `Queue` — A kernel work queue. Get system queues via `system()`, `system_highpri()`, `system_long()`, `system_bh()`, `system_unbound()`, `system_power_efficient()`, `system_freezable()`, etc.
 - `Work<T, const ID: u64 = 0>` — Work item link. Use `#[pin]` attribute.
 - `DelayedWork<T, const ID: u64 = 0>` — Delayed work item link.
 
 ### Traits
+
 - `WorkItem<const ID: u64 = 0>` — Implement `run(this: Self::Pointer)`.
 - `HasWork<T, const ID: u64 = 0>` — Declares a type has a `Work<T, ID>` field.
 - `HasDelayedWork<T, const ID: u64 = 0>` — Declares a type has a `DelayedWork<T, ID>` field.
@@ -299,12 +311,14 @@ kernel::module_pci_driver! {
 - `WorkItemPointer` — Pointer-level work item trait.
 
 ### Macros
+
 - `impl_has_work! { impl HasWork<Self, ID> for T { self.field } }`
 - `impl_has_delayed_work! { ... }`
 - `new_work!("name")` — Create initializer for `Work`.
 - `new_delayed_work!("name")` — Create initializer for `DelayedWork`.
 
 ### Pattern
+
 ```rust
 #[pin_data]
 struct MyDrv {
