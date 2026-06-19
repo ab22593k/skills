@@ -91,6 +91,69 @@
         "The agent lists documentation files found in the directory",
         "The agent provides a plan with estimated token count and section count"
       ]
+    },
+    {
+      "id": 7,
+      "name": "procedural-classification",
+      "prompt": "study this server hardening guide and extract the step-by-step procedure: evals/sample_procedural.md",
+      "expected_output": "The skill should classify the content as procedural (step-by-step), extract actions-objects-equipment-temporal dimensions for each step using the two-stage CoT pipeline, and generate a steps.md table with action rows and a procedural-graph.md with step sequencing.",
+      "files": ["evals/sample_procedural.md"],
+      "expectations": [
+        "The agent detects the content as procedural based on imperative sentences, ordered steps, and equipment mentions",
+        "The agent classifies content_type: 'procedural' in metadata",
+        "The agent extracts at least 5 steps with action-object relationships",
+        "The agent produces steps.md with a table showing Step, Action, Object, Equipment columns",
+        "Each action is a separate row (e.g., 'Turn off the monitor and unplug it' produces two rows)",
+        "Implicit equipment is carried forward across steps (e.g., tools from prerequisites appear in later steps)",
+        "The agent produces procedural-graph.md with step sequencing",
+        "The agent does NOT create skill files in ~/.agents/skills/ (dry-run analysis mode)"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "mixed-content",
+      "prompt": "turn the sample_procedural.md into a knowledge base: evals/sample_procedural.md",
+      "expected_output": "The skill should detect mixed content (both procedural steps AND conceptual knowledge like principles, trade-offs), run both extraction pipelines, and generate a complete skill structure that includes both the standard files AND steps.md + procedural-graph.md.",
+      "files": ["evals/sample_procedural.md"],
+      "expectations": [
+        "The agent detects the content as mixed (both procedural and conceptual elements)",
+        "The agent extracts conceptual elements (principles like 'Verify before closing', trade-offs)",
+        "The agent extracts procedural elements with two-stage CoT",
+        "The generated skill includes both standard files (SKILL.md, glossary, patterns) AND procedural files (steps.md, procedural-graph.md)",
+        "steps.md has proper action-level granularity with Equipment and Temporal columns",
+        "procedural-graph.md includes step sequencing and at least one conditional branch",
+        "No skill files are created in ~/.agents/skills/ (output saved to /tmp/booqs/)"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "conceptual-only-nonprocedural",
+      "prompt": "study this and tell me the frameworks: evals/sample_book.md",
+      "expected_output": "The skill should classify the sample book as conceptual (systems thinking concepts, no step-by-step procedures), run only the conceptual extraction pipeline, and NOT produce procedural output files.",
+      "files": ["evals/sample_book.md"],
+      "expectations": [
+        "The agent classifies the content as conceptual (content_type: 'conceptual')",
+        "The agent extracts frameworks (Feedback Loops, Leverage Points) and mental models",
+        "The agent does NOT produce steps.md or procedural-graph.md",
+        "The agent provides structured analysis with source backlinks to chapters"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "procedural-cross-doc-merging",
+      "prompt": "study the multiple files in evals/ and build a unified knowledge base that merges all procedural content",
+      "expected_output": "The skill should handle multiple input files, classify each by content type, and merge procedural content from procedural files while maintaining separate conceptual analysis for the others.",
+      "files": [
+        "evals/sample_book.md",
+        "evals/sample_technical.md",
+        "evals/sample_procedural.md"
+      ],
+      "expectations": [
+        "The agent classifies each file separately (book→conceptual, technical→conceptual, procedural→procedural)",
+        "The agent merges procedural extractions from procedural sources",
+        "The agent produces both conceptual and procedural output files",
+        "Each extracted concept/step carries a source backlink to its originating file"
+      ]
     }
   ]
 }
