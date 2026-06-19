@@ -1,3 +1,3 @@
 # AGENTS.md
 
-This is a skills repository — a library of Claude Code / OpenCode skills and the tooling to create and evaluate them.
+Reusable capabilities for AI agents to enhance agents access to procedural knowledge.
