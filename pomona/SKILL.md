@@ -55,7 +55,10 @@ Launch multiple sub-agents IN PARALLEL, each exploring a different discovery are
 
 - Identify linting rules that could be enabled or tightened for this project. Look at the project's language and existing config files (e.g., `.ruff.toml`, `.eslintrc`, `.golangci.yml`, `pyproject.toml`).
 - Find violations of rules that have auto-fixes available. These are P1/P2 because they're high-benefit (catch bugs) and easy to review (automated).
+- **Collapse all auto-fixable style violations into one backlog ticket per tool** (e.g., "Apply all ruff auto-fixes" instead of listing each `COM812`, `D209`, `I001` separately). The reviewer can batch-approve them as a single mechanical change.
+- **Triage markdown label references**: when ESLint reports `markdown/no-missing-label-refs`, quickly distinguish real broken links from intentional template placeholders (tags like `{install odoo}`, `{setup dev environment}`). Only backlog the real broken links.
 - Look for type checking strictness that can be increased.
+- **Flag the absence of tool configuration files** (missing `.ruff.toml`, `pyproject.toml`, `tsconfig.json`) as the single highest-leverage process finding — once a project has an agreed lint baseline, everything else becomes easier to implement and enforce.
 
 **Sub-agent 2 — TODO/dead code audit:**
 
@@ -70,6 +73,8 @@ Scan ALL languages present in the repository, not just the primary language. For
 - Identify dead code: unused imports, commented-out code blocks (>3 consecutive commented lines), unreachable code after early returns.
 - For each category, enumerate which languages/files were examined and what tool/command was used (e.g., `ruff check --select F401`, `grep -rn "TODO"`). Include the exact command and its output so findings are reproducible.
 - If a finding count is zero, confirm it by showing the command and its empty output — don't just assert "0 found."
+- **Include the exact git revision or tree hash** that was scanned so the result is anchored to a specific point in the project's history.
+- **Qualify "clean" results** with the methodology used: "No unused imports found via `ruff check --select F401`" is precise. "No unused imports found" is over-confident — it implies a level of semantic analysis the tool doesn't perform.
 
 **Sub-agent 3 — Test coverage gaps and code structure:**
 
@@ -77,6 +82,8 @@ Scan ALL languages present in the repository, not just the primary language. For
 - Prioritize pure-logic modules without heavy data dependencies (easiest to test) and modules with complex branching logic (highest value).
 - Check compliance with the repository's coding standards (agent config files, project conventions).
 - Find functions longer than 50 lines that could be decomposed.
+- **For each long function, propose a concrete extraction boundary** (e.g., "Pull chapter-heading detection into a pure function returning an enum" rather than just "decompose main()"). Specific proposals are reviewable; general ones are not.
+- **Report the current coverage percentage** if a tool like `coverage.py` is configured. If no coverage tool is configured, note that as a finding in itself.
 
 **Aggregate results:**
 
@@ -84,6 +91,12 @@ Scan ALL languages present in the repository, not just the primary language. For
 2. Assign each unique finding a priority (P1–P4) using the priority matrix above. Err on the side of lower priority (P2/P4) when the benefit is marginal.
 3. Convert each finding to the backlog format and append to the appropriate priority section of `pomona_backlog.md`.
 4. If a scan uncovered items outside the requested scope (e.g., package hygiene during a TODO audit), place them in a clearly labeled "Additional observations" section — never mix them into the priority backlog.
+5. **Include a "Measurement" block at the top of the backlog** with current baseline numbers:
+   - Total lint errors by tool (e.g., "ruff: 48 errors, ESLint: 102 errors")
+   - Current test coverage % (or "no coverage tool configured")
+   - Number of functions exceeding 50 lines
+   - Number of untested source modules
+   - These baselines make progress trackable across iterations.
 
 ### Step 3: Repair — Pick and Fix a Task
 
@@ -97,6 +110,8 @@ Select the first task from the highest non-empty priority category (P1 → P2 �
 2. The 10-line budget includes everything: code changes, formatting, comments. Only whitespace-only changes and file renames are free. If you're at 11+ lines, stop and find a narrower fix.
 3. After making changes, validate with the project's test and linting commands.
 4. If validation fails, fix the issues and re-validate.
+5. **Report after-state metrics** in the PR description: how many errors remain after the fix (e.g., "ruff — 48 → 42 errors"). This turns progress from narrative to quantitative.
+6. If the fix addresses a security issue, include the **CWE reference** and explain why the old code was unsafe — not just what changed, but why the old pattern is dangerous.
 
 **Update the backlog:**
 
