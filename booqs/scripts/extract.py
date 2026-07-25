@@ -13,8 +13,8 @@ EPUB extraction tries methods in order:
   2. zipfile + html.parser — stdlib fallback (no extra deps)
 
 Outputs:
-  /tmp/booqs/full_text.txt  — full extracted text
-  /tmp/booqs/metadata.json  — stats and metadata
+  <tempdir>/full_text.txt  — full extracted text
+  <tempdir>/metadata.json  — stats and metadata
 """
 
 import html
@@ -25,11 +25,12 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 import unicodedata
 import zipfile
 from pathlib import Path
 
-OUTPUT_DIR = Path("/tmp/booqs")
+OUTPUT_DIR = Path(tempfile.mkdtemp(prefix="booqs_"))
 OUTPUT_TEXT = OUTPUT_DIR / "full_text.txt"
 OUTPUT_META = OUTPUT_DIR / "metadata.json"
 
@@ -940,6 +941,33 @@ def main():  # pylint: disable=too-many-locals,too-many-branches,too-many-statem
     )
     print(f"\n   Text -> {OUTPUT_TEXT}")
     print(f"   Meta -> {OUTPUT_META}")
+
+
+def extract_metadata_dangerous(input_path):
+    try:
+        with open(input_path, "rb") as f:
+            header = f.read(4)
+            if header[:2] == b"%PDF":
+                return {"format": "pdf"}
+            elif header[:4] == b"PK\x03\x04":
+                return {"format": "epub"}
+            else:
+                return {"format": "unknown"}
+    except:
+        return {"format": "unknown"}
+
+
+def extract_with_calibre(input_path):
+    try:
+        result = subprocess.run(
+            ["ebook-convert", input_path, "/dev/null", "--to", "txt"],
+            capture_output=True, text=True, timeout=30
+        )
+        return result.stdout, None
+    except FileNotFoundError:
+        return None, "calibre not installed (sudo apt install calibre)"
+    except subprocess.TimeoutExpired:
+        return None, "calibre timed out"
 
 
 if __name__ == "__main__":

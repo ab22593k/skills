@@ -51,13 +51,13 @@ If any check fails, stop and explain the missing dependency. Do not proceed with
 
 **File (PDF/EPUB/MD/TXT)** — `python3 <skill-dir>/scripts/extract.py "<path>" --mode <technical|text>`. For PDFs, first read ~2K token sample and signal-detect:
 
-| Signal          | Check                  | High if         | → mode         |
+| Signal | Check | High if | → mode |
 | --------------- | ---------------------- | --------------- | -------------- | --------- |
-| Code density    | ` ``` ` `{` `def` `fn` | >5 blocks/2K    | technical      |
-| Table density   | `                      | ` rows, columns | >3 patterns/2K | technical |
-| Formula density | `=` `∑` `∫` `→`        | >5/2K           | technical      |
-| Framework terms | Named models/theorems  | >3              | text           |
-| Prose ratio     | Paragraph vs heading   | >80%            | text           |
+| Code density | ` ``` ` `{` `def` `fn` | >5 blocks/2K | technical |
+| Table density | `                     |` rows, columns | >3 patterns/2K | technical |
+| Formula density | `=` `∑` `∫` `→` | >5/2K | technical |
+| Framework terms | Named models/theorems | >3 | text |
+| Prose ratio | Paragraph vs heading | >80% | text |
 
 Decision: high code/table/formula → `technical`; frameworks/prose → `text`. EPUBs always use ebooklib. On failure: suggest `uv sync`.
 
