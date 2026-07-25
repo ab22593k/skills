@@ -20,7 +20,9 @@ All tasks are categorized into four priority levels:
 
 Examples of what IS high benefit: security issues (unsafe temp directories, missing input validation), test gaps in core logic modules, dead code that could mislead maintainers, complex functions that are hard to reason about, commented-out code that has accumulated.
 
-Examples of what IS NOT high benefit: missing language specifiers on fenced code blocks (cosmetic, no semantic impact), missing label references in markdown that are internal references (often intentional), empty keys in auto-generated lock files, heading hierarchy skips in documentation. These are purely mechanical and should be P2/P4.
+Examples of what IS high benefit for P1 specifically (the items to do first): fixing failing tests, adding a project-level lint configuration (ruff.toml, coverage config) so residuals become enforceable, fixing known test gaps in critical extraction backends. These unblock all downstream work.
+
+Examples of what IS NOT high benefit: missing language specifiers on fenced code blocks (cosmetic, no semantic impact), missing label references in markdown that are internal references (often intentional), empty keys in auto-generated lock files, heading hierarchy skips in documentation, micro-simplifications like SIM103 (needless `if...return True/else return False`). These are purely mechanical and should be P2/P4.
 
 **Easy to review** means: fully automated (auto-fix, formatting); mechanical and repetitive (reviewer can scan quickly); small in scope (single file or single rule); and does not introduce behavioural changes (pure refactoring).
 
@@ -57,6 +59,7 @@ Launch multiple sub-agents IN PARALLEL, each exploring a different discovery are
 
 - Identify linting rules that could be enabled or tightened for this project. Look at the project's language and existing config files (e.g., `.ruff.toml`, `.eslintrc`, `.golangci.yml`, `pyproject.toml`).
 - Find violations of rules that have auto-fixes available. These are P1/P2 because they're high-benefit (catch bugs) and easy to review (automated).
+- **When reporting ruff residuals, report under both the currently enabled rule set and the broader suggested rule set.** "0 errors under default rules but 100+ under SIM/E501/PTH" is honest; "0 errors" alone is misleading when the user should enable more rules.
 - **Collapse all auto-fixable style violations into one backlog ticket per tool** (e.g., "Apply all ruff auto-fixes" instead of listing each `COM812`, `D209`, `I001` separately). The reviewer can batch-approve them as a single mechanical change.
 - **Triage markdown label references**: when ESLint reports `markdown/no-missing-label-refs`, quickly distinguish real broken links from intentional template placeholders (tags like `{install odoo}`, `{setup dev environment}`). Only backlog the real broken links.
 - Look for type checking strictness that can be increased.
@@ -78,6 +81,7 @@ Scan ALL languages present in the repository, not just the primary language. For
 - If a finding count is zero, confirm it by showing the command and its empty output — don't just assert "0 found."
 - **Include the exact git revision or tree hash** that was scanned so the result is anchored to a specific point in the project's history.
 - **Qualify "clean" results** with the methodology used: "No unused imports found via `ruff check --select F401`" is precise. "No unused imports found" is over-confident — it implies a level of semantic analysis the tool doesn't perform.
+- **State what was NOT checked** explicitly — e.g., "Unused functions/methods not assessed (ruff F841 only covers local variables, not function definitions)." This prevents readers from over-interpreting a narrow negative result.
 
 **Sub-agent 3 — Test coverage gaps and code structure:**
 
@@ -86,7 +90,7 @@ Scan ALL languages present in the repository, not just the primary language. For
 - Check compliance with the repository's coding standards (agent config files, project conventions).
 - Find functions longer than 50 lines that could be decomposed.
 - **For each long function, propose a concrete extraction boundary** (e.g., "Pull chapter-heading detection into a pure function returning an enum" rather than just "decompose main()"). Specific proposals are reviewable; general ones are not.
-- **Report the current coverage percentage** if a tool like `coverage.py` is configured. If no coverage tool is configured, note that as a finding in itself.
+- **Report function-level coverage**, not just module presence. "All modules have test files" is not the same as "extraction backends are tested." Count specifically which functions lack tests (e.g., "extract_with_pymupdf: untested, extract_with_ebooklib: untested, _handle_pdf_extraction: untested, main(): untested").
 
 **Aggregate results:**
 
