@@ -47,6 +47,8 @@ Store the backlog at the repository root as `pomona_backlog.md` put it into .git
 
 Check if `pomona_backlog.md` exists in the repository root. If it doesn't, or if high-priority tasks (P1 and P2) are empty, run the **Scanning** workflow first (Step 2), then return here.
 
+**Important:** When running the full cycle (scan + repair), ALWAYS perform a fresh scan (Step 2) even if the backlog already exists. The scan discovers the current state of the project — without it, the cycle drifts into fixing stale or low-value items while missing newly introduced issues. A backlog without a matching scan is just a wishlist.
+
 ### Step 2: Scanning — Discover Code Quality Tasks
 
 Launch multiple sub-agents IN PARALLEL, each exploring a different discovery area:
@@ -70,7 +72,8 @@ Scan ALL languages present in the repository, not just the primary language. For
   - Fixes requiring further domain investigation → P3
   - Aspirational comments → P4
 - Search for comments that contradict the surrounding code.
-- Identify dead code: unused imports, commented-out code blocks (>3 consecutive commented lines), unreachable code after early returns.
+- Identify dead code: unused imports, commented-out code blocks (>3 consecutive commented lines), unreachable code after early returns, unused variables and functions.
+- For unused variable/function detection, use a **semantic tool** (e.g., `ruff check --select F841` for Python, `vulture` for deeper analysis) in addition to grep-based heuristics. String searches alone miss unused functions, dead conditional branches, and code behind `if TYPE_CHECKING` or `if False:` guards.
 - For each category, enumerate which languages/files were examined and what tool/command was used (e.g., `ruff check --select F401`, `grep -rn "TODO"`). Include the exact command and its output so findings are reproducible.
 - If a finding count is zero, confirm it by showing the command and its empty output — don't just assert "0 found."
 - **Include the exact git revision or tree hash** that was scanned so the result is anchored to a specific point in the project's history.
@@ -91,8 +94,11 @@ Scan ALL languages present in the repository, not just the primary language. For
 2. Assign each unique finding a priority (P1–P4) using the priority matrix above. Err on the side of lower priority (P2/P4) when the benefit is marginal.
 3. Convert each finding to the backlog format and append to the appropriate priority section of `pomona_backlog.md`.
 4. If a scan uncovered items outside the requested scope (e.g., package hygiene during a TODO audit), place them in a clearly labeled "Additional observations" section — never mix them into the priority backlog.
-5. **Include a "Measurement" block at the top of the backlog** with current baseline numbers:
+5. **Collapse repeated items of the same rule/tool into a single ticket** — both within and across priority levels. For example, 22 fenced-code-language violations across different files should be one P2 ticket, not 22 separate ones. If they span multiple priority levels, put them all at the lower priority.
+6. **For each P1 and P2 item, include a measurable acceptance criterion** (e.g., "Reduce ESLint errors from 117 to <50" or "Add tests for 3 untrusted extraction backends"). Without criteria, the loop has no stopping condition.
+7. **Include a "Measurement" block at the top of the backlog** with current baseline numbers and scanned surface:
    - Total lint errors by tool (e.g., "ruff: 48 errors, ESLint: 102 errors")
+   - Files and lines of code scanned (e.g., "4 Python files, ~1.5 kLOC")
    - Current test coverage % (or "no coverage tool configured")
    - Number of functions exceeding 50 lines
    - Number of untested source modules
