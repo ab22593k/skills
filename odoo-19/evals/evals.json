@@ -1,0 +1,73 @@
+{
+  "skill_name": "odoo-19",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I'm migrating an Odoo module to Odoo 19. My model class is called 'TrainingCourse' and I want to define it without explicitly specifying _name since Odoo 19 can auto-derive it. Write me the complete model class with:\n- A fields.Char for 'title' (required)\n- A fields.Selection for 'difficulty' with values 'beginner', 'intermediate', 'advanced'\n- A fields.Many2one for 'instructor_id' pointing to 'res.partner'\n- A fields.One2many for 'session_ids' pointing to 'training.session'\n- A fields.Date for 'start_date'\n- A model-level SQL constraint using models.Constraint to prevent empty titles\n- A models.Index on the start_date field\n- A computed field 'session_count' that counts the sessions\nUse Odoo 19 conventions throughout.",
+      "expected_output": "A complete Odoo 19 Python model class demonstrating auto-derived _name, modern field definitions, models.Constraint, models.Index, and computed fields.",
+      "files": [],
+      "expectations": [
+        "Model class uses auto-derived _name (no explicit _name or _name is commented out)",
+        "Uses models.Constraint instead of _sql_constraints for the constraint",
+        "Uses models.Index for the database index",
+        "Computed field session_count does NOT use len(record.session_ids) which causes N+1 — uses _read_group or batch aggregation instead",
+        "Selection field defines choices correctly",
+        "All field definitions use proper Odoo 19 field syntax"
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "I need to update my Odoo module's views from Odoo 18 to 19. Write me a complete list view XML record for a model called 'training.course' with fields: name, instructor_id, duration_days (integer), start_date, and state (selection: draft/confirmed/done). Requirements:\n- Use the new Odoo 19 <list> tag (not <tree>)\n- Make the list editable at the bottom\n- Set limit to 50\n- Add a decoration-danger on the <list> row when the course is overdue (start_date < today and state != 'done')\n- Use the new direct attribute syntax instead of attrs for invisible on instructor_id when state is 'draft'\nAlso write a corresponding form view with a notebook with two pages: one for course details, one for sessions.",
+      "expected_output": "Complete Odoo 19 XML view definitions with list (not tree), editable bottom, row-level decorations, and form with notebook.",
+      "files": [],
+      "expectations": [
+        "List view uses <list> tag instead of <tree>",
+        "Uses editable=\"bottom\" on the list view",
+        "Uses decoration-danger on the <list> element (row-level, not on individual fields)",
+        "Uses 'today' context variable (not today(), datetime.date.today(), or current_date) for date comparison",
+        "Uses direct invisible attribute instead of attrs dict",
+        "Form view includes <notebook> with at least two <page> elements"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I have a model 'training.course' with fields: name (Char), state (Selection: draft/confirmed/done), and instructor_id (Many2one to res.partner). The model has methods:\n- action_confirm(self): sets state to 'confirmed', requires name to be set\n- action_reset(self): resets state to 'draft'\n- action_done(self): sets state to 'done', requires instructor to be set\n\nWrite me a complete TransactionCase test class for this model in Odoo 19 style. Include:\n- A test for the full workflow (draft → confirm → done)\n- A test that verifies action_confirm raises an error when name is empty\n- A test for action_reset after confirmation\n- Use proper Odoo 19 test conventions (TransactionCase, tagged, etc.)\n- Include setUp method that creates test records\n- setUp must use proper signature (def setUp(self):) without passing *args/**kwargs",
+      "expected_output": "A complete Odoo 19 TransactionCase test class with setUp, test methods for the workflow, error handling, and proper tagging.",
+      "files": [],
+      "expectations": [
+        "Test class inherits from TransactionCase",
+        "Includes setUp method that creates base test data using def setUp(self): signature (NOT accepting *args or **kwargs)",
+        "Test method for full workflow (draft→confirm→done)",
+        "Test method verifies error is raised when name is empty on confirm",
+        "Test method for reset from confirmed to draft",
+        "Uses @tagged decorator or proper Odoo 19 test markers"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I noticed my Odoo 19 module is making too many database queries when displaying a list of training courses. The view shows:\n- Course name\n- Instructor name (from instructor_id)\n- Number of sessions (from session_ids)\n- Total session hours (computed from session_ids.duration)\n\nCurrently I'm using a computed field that loops through each course's sessions individually. Show me how to fix this using proper Odoo 19 batch performance techniques. Write:\n1. The optimized computed field(s) using self._read_group or search\n2. An explanation of how this avoids N+1\n3. How to use the Profiler to verify the improvement\nUse Odoo 19 performance best practices.\n\nIMPORTANT: _read_group returns a list of tuples, not dicts — make sure your code example correctly unpacks them.",
+      "expected_output": "Optimized Odoo 19 code using batch operations, _read_group with correct tuple unpacking, and proper performance patterns.",
+      "files": [],
+      "expectations": [
+        "Uses _read_group or batch search for computing aggregate values",
+        "_read_group result is unpacked as tuples (e.g., 'for course, count, total in stats_data:'), NOT accessed via dict-style keys",
+        "Avoids per-record looping for database queries",
+        "Includes Profiler usage example",
+        "Explains N+1 problem and how the solution addresses it"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I need to set up security for my 'training.course' model in Odoo 19. The app is called 'Training Management'. The model's instructor_id is a Many2one to res.partner. Write me:\n1. The XML security file with:\n   - A privilege record (res.groups.privilege) since Odoo 19 uses privileges, not categories directly\n   - Two groups: 'Training / User' (employee) and 'Training / Manager' (training manager)\n   - An ir.model.access.csv giving read-only to User, full CRUD to Manager\n   - A record rule so Users can only see courses where they are the instructor (use correct domain syntax comparing against the partner, not the user ID)\n2. Briefly explain what changed from Odoo 18 regarding category_id vs privilege_id\n\nIMPORTANT: The instructor_id is Many2one to res.partner, not res.users. Make sure your record rule domain uses the correct field path.",
+      "expected_output": "Complete Odoo 19 security setup with privilege, groups, ACL CSV, record rules with correct domain paths, and migration explanation.",
+      "files": [],
+      "expectations": [
+        "Uses res.groups.privilege (not category_id directly on groups)",
+        "Privilege record has proper category_id reference",
+        "CSV defines read access for User group and full CRUD for Manager group",
+        "Record rule uses user.partner_id.id (NOT user.id) to compare against a res.partner Many2one field",
+        "Includes migration explanation about category_id → privilege_id change"
+      ]
+    }
+  ]
+}
