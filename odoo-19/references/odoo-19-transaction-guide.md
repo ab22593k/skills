@@ -3,6 +3,7 @@
 Guide for handling database transactions in Odoo 19: errors, savepoints, and serialization failures.
 
 ## Table of Contents
+
 - [Transaction Overview](#transaction-overview)
 - [Database Errors](#database-errors)
 - [Savepoints](#savepoints)
@@ -18,12 +19,12 @@ Odoo uses database transactions to ensure data consistency.
 
 ### Transaction Properties
 
-| Property | Description |
-|-----------|-------------|
-| **Atomicity** | All or nothing |
-| **Consistency** | Data remains valid |
-| **Isolation** | Concurrent transactions don't interfere |
-| **Durability** | Committed data persists |
+| Property        | Description                             |
+| --------------- | --------------------------------------- |
+| **Atomicity**   | All or nothing                          |
+| **Consistency** | Data remains valid                      |
+| **Isolation**   | Concurrent transactions don't interfere |
+| **Durability**  | Committed data persists                 |
 
 ### Transaction Flow
 
@@ -40,13 +41,13 @@ Begin Transaction
 
 ### Common Errors
 
-| Error | When |
-|-------|------|
-| `UniqueViolation` | Duplicate unique constraint |
-| `NotNullViolation` | NULL in NOT NULL column |
-| `ForeignKeyViolation` | Invalid foreign key |
-| `CheckViolation` | CHECK constraint failed |
-| `SerializationFailure` | Concurrent modification |
+| Error                  | When                        |
+| ---------------------- | --------------------------- |
+| `UniqueViolation`      | Duplicate unique constraint |
+| `NotNullViolation`     | NULL in NOT NULL column     |
+| `ForeignKeyViolation`  | Invalid foreign key         |
+| `CheckViolation`       | CHECK constraint failed     |
+| `SerializationFailure` | Concurrent modification     |
 
 ### Catch Database Errors
 

@@ -3,6 +3,7 @@
 Guide for migrating modules from Odoo 17/18 to Odoo 19.
 
 ## Table of Contents
+
 - [Migration Overview](#migration-overview)
 - [Key Changes](#key-changes)
 - [Migration Scripts](#migration-scripts)
@@ -34,22 +35,22 @@ Guide for migrating modules from Odoo 17/18 to Odoo 19.
 
 ### Odoo 19 Key Changes
 
-| Area | Change |
-|------|--------|
-| **List view** | Use `<list>` instead of `<tree>` |
-| **Dynamic attributes** | Use direct attributes instead of `attrs` |
-| **Delete validation** | Use `@api.ondelete` instead of overriding `unlink()` |
-| **Field aggregation** | Use `aggregator=` instead of `group_operator=` |
-| **SQL queries** | Use `odoo.tools.SQL` class |
-| **Batch create** | Use list of dicts instead of single dict |
+| Area                   | Change                                               |
+| ---------------------- | ---------------------------------------------------- |
+| **List view**          | Use `<list>` instead of `<tree>`                     |
+| **Dynamic attributes** | Use direct attributes instead of `attrs`             |
+| **Delete validation**  | Use `@api.ondelete` instead of overriding `unlink()` |
+| **Field aggregation**  | Use `aggregator=` instead of `group_operator=`       |
+| **SQL queries**        | Use `odoo.tools.SQL` class                           |
+| **Batch create**       | Use list of dicts instead of single dict             |
 
 ### Odoo 18 Key Changes
 
-| Area | Change |
-|------|--------|
-| **Views** | Use `<list>` instead of `<tree>` |
-| **attrs** | Deprecated, use direct attributes |
-| **ondelete** | New `@api.ondelete` decorator |
+| Area         | Change                            |
+| ------------ | --------------------------------- |
+| **Views**    | Use `<list>` instead of `<tree>`  |
+| **attrs**    | Deprecated, use direct attributes |
+| **ondelete** | New `@api.ondelete` decorator     |
 
 ---
 
@@ -68,11 +69,11 @@ my_module/
 
 ### Migration Script Naming
 
-| Script | When it runs |
-|--------|--------------|
-| `pre-migration.py` | Before module update |
-| `post-migration.py` | After module update |
-| `end-migration.py` | After all migrations |
+| Script              | When it runs         |
+| ------------------- | -------------------- |
+| `pre-migration.py`  | Before module update |
+| `post-migration.py` | After module update  |
+| `end-migration.py`  | After all migrations |
 
 ### Migration Script Template
 

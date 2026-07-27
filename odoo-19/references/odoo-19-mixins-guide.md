@@ -3,6 +3,7 @@
 Guide for using Odoo 19 mixins: mail.thread, activities, email aliases, and other useful mixins.
 
 ## Table of Contents
+
 - [Messaging Features](#messaging-features)
 - [Activities](#activities)
 - [Email Aliases](#email-aliases)
@@ -40,12 +41,12 @@ Add chatter to form view:
 
 ### Chatter Options
 
-| Option | Description |
-|--------|-------------|
-| `open_attachments` | Shows attachment section expanded |
-| `reload_on_attachment` | Reload form on attachment change |
-| `reload_on_follower` | Reload form on follower update |
-| `reload_on_post` | Reload form on message post |
+| Option                 | Description                       |
+| ---------------------- | --------------------------------- |
+| `open_attachments`     | Shows attachment section expanded |
+| `reload_on_attachment` | Reload form on attachment change  |
+| `reload_on_follower`   | Reload form on follower update    |
+| `reload_on_post`       | Reload form on message post       |
 
 ---
 
@@ -65,6 +66,7 @@ record.message_post(
 ```
 
 **Parameters**:
+
 - `body` (str | Markup): Message body (escaped if str, use Markup for HTML)
 - `subject` (str): Message subject
 - `message_type` (str): `notification`, `comment`, `email`

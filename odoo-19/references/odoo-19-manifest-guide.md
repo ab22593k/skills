@@ -3,6 +3,7 @@
 Guide for configuring `__manifest__.py` in Odoo 19 modules.
 
 ## Table of Contents
+
 - [Manifest File](#manifest-file)
 - [Required Fields](#required-fields)
 - [Module Information](#module-information)
@@ -95,6 +96,7 @@ Website URL for the module author.
 Distribution license.
 
 Possible values:
+
 - `GPL-2`
 - `GPL-2 or any later version`
 - `GPL-3`

@@ -3,6 +3,7 @@
 Guide for developing Odoo 19 modules: creating modules, manifest, structure, and common patterns.
 
 ## Table of Contents
+
 - [Module Structure](#module-structure)
 - [Creating a Module](#creating-a-module)
 - [Manifest File](#manifest-file)
@@ -71,7 +72,7 @@ mkdir -p my_module/security
 mkdir -p my_module/static/src/js
 ```
 
-### Step 2: Create __init__.py
+### Step 2: Create **init**.py
 
 ```python
 # __init__.py

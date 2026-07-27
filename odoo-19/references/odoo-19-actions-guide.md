@@ -3,6 +3,7 @@
 Guide for working with Odoo 19 actions (`ir.actions.*`), scheduled jobs (cron), and action bindings.
 
 ## Table of Contents
+
 - [Action Types](#action-types)
 - [Window Actions](#window-actions)
 - [Server Actions](#server-actions)
@@ -20,12 +21,13 @@ Actions define the behavior of the system in response to user actions: login, ac
 
 Actions can be stored in the database or returned directly as dictionaries. All actions share two mandatory attributes:
 
-| Attribute | Type | Description |
-|-----------|------|-------------|
-| `type` | string | The category of the current action |
-| `name` | string | Short user-readable description |
+| Attribute | Type   | Description                        |
+| --------- | ------ | ---------------------------------- |
+| `type`    | string | The category of the current action |
+| `name`    | string | Short user-readable description    |
 
 A client can get actions in 4 forms:
+
 - `False` - closes any open action dialog
 - A string - client action tag or number
 - A number - database identifier or external ID
@@ -39,16 +41,16 @@ A client can get actions in 4 forms:
 
 ### Key Attributes
 
-| Attribute | Type | Description |
-|-----------|------|-------------|
-| `res_model` | string | Model to present views for |
-| `views` | list | List of `(view_id, view_type)` pairs |
-| `res_id` | int | If default view is `form`, specifies the record to load |
-| `search_view_id` | tuple | `(id, name)` pair for specific search view |
-| `target` | string | `current`, `fullscreen`, `new`, or `main` |
-| `context` | dict | Additional context data |
-| `domain` | list | Filtering domain |
-| `limit` | int | Number of records to display (default: 80) |
+| Attribute        | Type   | Description                                             |
+| ---------------- | ------ | ------------------------------------------------------- |
+| `res_model`      | string | Model to present views for                              |
+| `views`          | list   | List of `(view_id, view_type)` pairs                    |
+| `res_id`         | int    | If default view is `form`, specifies the record to load |
+| `search_view_id` | tuple  | `(id, name)` pair for specific search view              |
+| `target`         | string | `current`, `fullscreen`, `new`, or `main`               |
+| `context`        | dict   | Additional context data                                 |
+| `domain`         | list   | Filtering domain                                        |
+| `limit`          | int    | Number of records to display (default: 80)              |
 
 ### Example: Opening customers
 
@@ -77,11 +79,11 @@ A client can get actions in 4 forms:
 
 When defining actions from XML data files:
 
-| Attribute | Description |
-|-----------|-------------|
+| Attribute   | Description                                            |
+| ----------- | ------------------------------------------------------ |
 | `view_mode` | Comma-separated list of view types (e.g., `list,form`) |
-| `view_ids` | Many2many to view objects |
-| `view_id` | Specific view to add to views list |
+| `view_ids`  | Many2many to view objects                              |
+| `view_id`   | Specific view to add to views list                     |
 
 ### Using ir.actions.act_window.view
 
@@ -102,12 +104,12 @@ When defining actions from XML data files:
 
 ### Key Attributes
 
-| Attribute | Type | Description |
-|-----------|------|-------------|
-| `id` | int | In-database identifier |
-| `model_id` | ref | Odoo model linked to the action |
-| `state` | string | Type of action: `code`, `object_create`, `object_write`, `multi` |
-| `code` | string | Python code to execute |
+| Attribute  | Type   | Description                                                      |
+| ---------- | ------ | ---------------------------------------------------------------- |
+| `id`       | int    | In-database identifier                                           |
+| `model_id` | ref    | Odoo model linked to the action                                  |
+| `state`    | string | Type of action: `code`, `object_create`, `object_write`, `multi` |
+| `code`     | string | Python code to execute                                           |
 
 ### State: code
 
@@ -143,11 +145,11 @@ When defining actions from XML data files:
 
 ### State: object_create
 
-| Attribute | Description |
-|-----------|-------------|
-| `crud_model_id` | Model in which to create a new record |
+| Attribute       | Description                                         |
+| --------------- | --------------------------------------------------- |
+| `crud_model_id` | Model in which to create a new record               |
 | `link_field_id` | Many2one field on which to set newly created record |
-| `fields_lines` | Fields to override when creating |
+| `fields_lines`  | Fields to override when creating                    |
 
 ### State: object_write
 
@@ -160,6 +162,7 @@ Executes several actions given through `child_ids`.
 ### Evaluation Context
 
 Available variables in server actions:
+
 - `model` - Model object linked to the action
 - `record`/`records` - Record/recordset on which the action is triggered
 - `env` - Odoo Environment
@@ -175,18 +178,18 @@ Available variables in server actions:
 
 ### Key Attributes
 
-| Attribute | Type | Description |
-|-----------|------|-------------|
-| `name` | string | Used as file name if `print_report_name` not specified |
-| `model` | string | Model your report will be about |
-| `report_type` | string | `qweb-pdf` or `qweb-html` |
-| `report_name` | string | External ID of the qweb template |
-| `print_report_name` | string | Python expression for report name |
-| `groups_id` | Many2many | Groups allowed to view/use the report |
-| `multi` | boolean | If True, not displayed on form view |
-| `paperformat_id` | Many2one | Paper format to use |
-| `attachment_use` | boolean | Generate once, then reprint from stored report |
-| `attachment` | string | Python expression for attachment name |
+| Attribute           | Type      | Description                                            |
+| ------------------- | --------- | ------------------------------------------------------ |
+| `name`              | string    | Used as file name if `print_report_name` not specified |
+| `model`             | string    | Model your report will be about                        |
+| `report_type`       | string    | `qweb-pdf` or `qweb-html`                              |
+| `report_name`       | string    | External ID of the qweb template                       |
+| `print_report_name` | string    | Python expression for report name                      |
+| `groups_id`         | Many2many | Groups allowed to view/use the report                  |
+| `multi`             | boolean   | If True, not displayed on form view                    |
+| `paperformat_id`    | Many2one  | Paper format to use                                    |
+| `attachment_use`    | boolean   | Generate once, then reprint from stored report         |
+| `attachment`        | string    | Python expression for attachment name                  |
 
 ### Print Menu Integration
 
@@ -210,11 +213,11 @@ If you define your report through a `<record>` and want it in the Print menu:
 
 ### Key Attributes
 
-| Attribute | Type | Description |
-|-----------|------|-------------|
-| `tag` | string | Client-side identifier of the action |
-| `params` | dict | Additional data to send to the client |
-| `target` | string | `current`, `fullscreen`, or `new` |
+| Attribute | Type   | Description                           |
+| --------- | ------ | ------------------------------------- |
+| `tag`     | string | Client-side identifier of the action  |
+| `params`  | dict   | Additional data to send to the client |
+| `target`  | string | `current`, `fullscreen`, or `new`     |
 
 ```python
 {
@@ -233,10 +236,10 @@ Tells the client to start the Point of Sale interface.
 
 ### Key Attributes
 
-| Attribute | Type | Description |
-|-----------|------|-------------|
-| `url` | string | The address to open |
-| `target` | string | `new`, `self`, or `download` |
+| Attribute | Type   | Description                  |
+| --------- | ------ | ---------------------------- |
+| `url`     | string | The address to open          |
+| `target`  | string | `new`, `self`, or `download` |
 
 ```python
 {
@@ -254,15 +257,15 @@ Tells the client to start the Point of Sale interface.
 
 ### Key Attributes
 
-| Attribute | Type | Description |
-|-----------|------|-------------|
-| `name` | string | Name of the scheduled action |
-| `interval_number` | int | Number of interval_type units between executions |
-| `interval_type` | string | `minutes`, `hours`, `days`, `weeks`, `months` |
-| `model_id` | ref | Model on which this action will be called |
-| `code` | string | Code content of the action |
-| `nextcall` | datetime | Next planned execution date |
-| `priority` | int | Priority when executing multiple actions |
+| Attribute         | Type     | Description                                      |
+| ----------------- | -------- | ------------------------------------------------ |
+| `name`            | string   | Name of the scheduled action                     |
+| `interval_number` | int      | Number of interval_type units between executions |
+| `interval_type`   | string   | `minutes`, `hours`, `days`, `weeks`, `months`    |
+| `model_id`        | ref      | Model on which this action will be called        |
+| `code`            | string   | Code content of the action                       |
+| `nextcall`        | datetime | Next planned execution date                      |
+| `priority`        | int      | Priority when executing multiple actions         |
 
 ### Writing cron functions
 
@@ -303,6 +306,7 @@ def _cron_do_something(self):
 ### Running cron functions
 
 Do not call cron functions directly. Use:
+
 - `IrCron.method_direct_trigger()` - for testing
 - `IrCron._trigger()` - for scheduled execution
 
@@ -320,11 +324,11 @@ Actions can be bound to models to appear in contextual menus.
 
 ### Binding Attributes
 
-| Attribute | Type | Description |
-|-----------|------|-------------|
-| `binding_model_id` | Many2one | Model the action is bound to (use `model_id` for Server Actions) |
-| `binding_type` | string | `action` (default) or `report` |
-| `binding_view_types` | string | Comma-separated list: `list`, `form`, or `list,form` (default) |
+| Attribute            | Type     | Description                                                      |
+| -------------------- | -------- | ---------------------------------------------------------------- |
+| `binding_model_id`   | Many2one | Model the action is bound to (use `model_id` for Server Actions) |
+| `binding_type`       | string   | `action` (default) or `report`                                   |
+| `binding_view_types` | string   | Comma-separated list: `list`, `form`, or `list,form` (default)   |
 
 ### Binding Type: action
 

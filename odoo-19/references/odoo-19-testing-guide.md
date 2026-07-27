@@ -3,6 +3,7 @@
 Guide for testing Odoo 19: Python unit tests, JS tests, and tours (integration tests).
 
 ## Table of Contents
+
 - [Test Types](#test-types)
 - [Python Tests](#python-tests)
 - [Test Classes](#test-classes)
@@ -18,11 +19,11 @@ Guide for testing Odoo 19: Python unit tests, JS tests, and tours (integration t
 
 Odoo has three kinds of tests:
 
-| Type | Purpose |
-|------|---------|
-| **Python unit tests** | Test model business logic |
-| **JS unit tests** | Test JavaScript code in isolation |
-| **Tours** | Integration testing (Python + JS together) |
+| Type                  | Purpose                                    |
+| --------------------- | ------------------------------------------ |
+| **Python unit tests** | Test model business logic                  |
+| **JS unit tests**     | Test JavaScript code in isolation          |
+| **Tours**             | Integration testing (Python + JS together) |
 
 ---
 
@@ -182,13 +183,13 @@ odoo-bin --test-tags /account:TestAccount.test_supplier_invoice
 [-][tag][/module][:class][.method]
 ```
 
-| Prefix | Meaning |
-|--------|---------|
-| `-` | Deselect/remove tag |
-| `+` | Select/add tag (implicit, optional) |
-| `/module` | Specific module |
-| `:class` | Specific class |
-| `.method` | Specific method |
+| Prefix    | Meaning                             |
+| --------- | ----------------------------------- |
+| `-`       | Deselect/remove tag                 |
+| `+`       | Select/add tag (implicit, optional) |
+| `/module` | Specific module                     |
+| `:class`  | Specific class                      |
+| `.method` | Specific method                     |
 
 ---
 
@@ -244,21 +245,25 @@ your_module/
 ```
 
 ```javascript
-import { start } from '@mail/utils/test_utils';
+import { start } from "@mail/utils/test_utils";
 
-QUnit.module('My Module', {
+QUnit.module(
+  "My Module",
+  {
     beforeEach() {
-        this.data = {
-            records: {
-                'my.model': [{id: 1, name: 'Test'}],
-            },
-        };
+      this.data = {
+        records: {
+          "my.model": [{ id: 1, name: "Test" }],
+        },
+      };
     },
-}, function () {
-    QUnit.test('my test', async function (assert) {
-        // Test code here
+  },
+  function () {
+    QUnit.test("my test", async function (assert) {
+      // Test code here
     });
-});
+  },
+);
 ```
 
 ---
@@ -284,31 +289,35 @@ your_module/
 ### Register Tour (JavaScript)
 
 ```javascript
-import tour from 'web_tour.tour';
+import tour from "web_tour.tour";
 
-tour.register('my_tour', {
-    url: '/web',
-}, [
+tour.register(
+  "my_tour",
+  {
+    url: "/web",
+  },
+  [
     // Step 1: Show apps menu
     tour.stepUtils.showAppsMenuItem(),
     // Step 2: Click on app
     {
-        trigger: '.o_app[data-menu-xmlid="my_module.menu_root"]',
-        run: "click",
+      trigger: '.o_app[data-menu-xmlid="my_module.menu_root"]',
+      run: "click",
     },
     // Step 3: Fill form
     {
-        trigger: 'input[name="name"]',
-        run: "text",
+      trigger: 'input[name="name"]',
+      run: "text",
     },
     // Step 4: Verify
     {
-        trigger: '.o_data_row:first',
-        run: function () {
-            // Assertions here
-        },
+      trigger: ".o_data_row:first",
+      run: function () {
+        // Assertions here
+      },
     },
-]);
+  ],
+);
 ```
 
 ### Add to Manifest
@@ -333,34 +342,34 @@ class TestMyTour(HttpCase):
 
 ### Tour Step Options
 
-| Option | Description |
-|--------|-------------|
-| `trigger` | Selector/element to run action on |
-| `run` | Action to perform (see helpers below) |
-| `isActive` | Array of conditions (mobile, enterprise, auto/manual) |
-| `content` | Tooltip content |
-| `tooltipPosition` | `top`, `right`, `bottom`, or `left` |
-| `timeout` | Wait time in ms (default: 10000) |
+| Option            | Description                                           |
+| ----------------- | ----------------------------------------------------- |
+| `trigger`         | Selector/element to run action on                     |
+| `run`             | Action to perform (see helpers below)                 |
+| `isActive`        | Array of conditions (mobile, enterprise, auto/manual) |
+| `content`         | Tooltip content                                       |
+| `tooltipPosition` | `top`, `right`, `bottom`, or `left`                   |
+| `timeout`         | Wait time in ms (default: 10000)                      |
 
 ### Run Actions
 
-| Action | Description |
-|--------|-------------|
-| `click` | Clicks the element |
-| `dblclick` | Double-clicks the element |
-| `drag_and_drop {target}` | Drags to target |
-| `edit {content}` | Clears and fills |
-| `editor {content}` | WYSIWYG editor fill |
-| `fill {content}` | Fills the element |
-| `hover` | Hovers over element |
-| `press {content}` | Keyboard input |
-| `range {content}` | Range slider value |
-| `select {value}` | Select by value |
-| `selectByIndex {index}` | Select by index |
-| `selectByLabel {label}` | Select by label |
-| `check` | Checks checkbox |
-| `uncheck` | Unchecks checkbox |
-| `clear` | Clears input |
+| Action                   | Description               |
+| ------------------------ | ------------------------- |
+| `click`                  | Clicks the element        |
+| `dblclick`               | Double-clicks the element |
+| `drag_and_drop {target}` | Drags to target           |
+| `edit {content}`         | Clears and fills          |
+| `editor {content}`       | WYSIWYG editor fill       |
+| `fill {content}`         | Fills the element         |
+| `hover`                  | Hovers over element       |
+| `press {content}`        | Keyboard input            |
+| `range {content}`        | Range slider value        |
+| `select {value}`         | Select by value           |
+| `selectByIndex {index}`  | Select by index           |
+| `selectByLabel {label}`  | Select by label           |
+| `check`                  | Checks checkbox           |
+| `uncheck`                | Unchecks checkbox         |
+| `clear`                  | Clears input              |
 
 ### Run Tour from Browser
 
@@ -466,13 +475,13 @@ odoo-bin --screencasts /tmp/screencasts
 
 ## Special Tags Reference
 
-| Tag | Description |
-|-----|-------------|
-| `standard` | Default tag for BaseCase subclasses |
-| `at_install` | Run after module installation (default) |
-| `post_install` | Run after all modules installed |
-| `-standard` | Remove from default |
-| `-at_install` | Don't run at install (use with `post_install`) |
+| Tag            | Description                                    |
+| -------------- | ---------------------------------------------- |
+| `standard`     | Default tag for BaseCase subclasses            |
+| `at_install`   | Run after module installation (default)        |
+| `post_install` | Run after all modules installed                |
+| `-standard`    | Remove from default                            |
+| `-at_install`  | Don't run at install (use with `post_install`) |
 
 ---
 

@@ -98,8 +98,9 @@ Decorations can be placed on individual `<field>` elements (colours just that co
 | `decoration-it`      | Italic font   |
 
 **Context variables available in decoration (and `invisible`/`readonly`/`required`) expressions:**
+
 - `today` — current date as string (`YYYY-MM-DD`)
-- `uid` — current user ID  
+- `uid` — current user ID
 - `current_date` — alias for `today`
 - `user` — current `res.users` record
 - Record fields by their field name

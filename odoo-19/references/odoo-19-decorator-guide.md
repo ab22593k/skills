@@ -395,6 +395,7 @@ class SaleOrder(models.Model):
 ```
 
 **Common usage in Odoo base**:
+
 ```python
 # Many methods use @api.returns
 @api.returns('mail.message', lambda value: value.id)

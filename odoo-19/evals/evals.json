@@ -68,6 +68,66 @@
         "Record rule uses user.partner_id.id (NOT user.id) to compare against a res.partner Many2one field",
         "Includes migration explanation about category_id → privilege_id change"
       ]
+    },
+    {
+      "id": 5,
+      "eval_name": "reverse-engineer-search-method",
+      "prompt": "I need to understand EXACTLY what happens when I call `self.env['res.partner'].search([('name', 'ilike', 'abc')], limit=10)`. Don't just describe the high-level — I need you to reverse-engineer the actual call chain by reading `odoo/models.py`. Find:\n1. The `search` method on `BaseModel` — what line does it start on, what does it do first?\n2. What other methods does `search` call internally?\n3. How does it handle the `limit` parameter — where in the chain does it get applied (Python-level vs SQL-level)?\n4. What does the `_where_clause` method do and where does it get generated?\n5. How does the result get turned back into a recordset?\n\nShow the actual method signatures and key code snippets from the file with line numbers.",
+      "expected_output": "A detailed trace of the Odoo ORM search call chain through odoo/models.py with method names, signatures, line numbers, and how each step transforms the input.",
+      "files": [],
+      "expectations": [
+        "References actual method names and signatures from odoo/models.py",
+        "Shows the search method entry point and what it delegates to",
+        "Explains how limit is applied (SQL LIMIT in _search -> _where_clause -> _query)",
+        "Mentions _search or _where_clause as internal methods",
+        "Explains recordset creation from DB results (browse or similar)",
+        "Uses source-code reading to ground the explanation (not just general ORM knowledge)",
+        "Includes line numbers or specific code references from the file"
+      ]
+    },
+    {
+      "id": 6,
+      "eval_name": "reverse-engineer-api-private",
+      "prompt": "I see Odoo 19 has `@api.private` but I want to understand exactly what it does under the hood. Read the actual implementation in `odoo/api.py` to understand the mechanism. Then search `addons/` for real-world usage examples. Answer:\n1. What does the `private` decorator function actually set on the method? (read the source)\n2. How does the framework prevent RPC calls to @api.private methods? Which file and method performs this check?\n3. Find at least 3 real examples from different addons that use @api.private and explain what they're protecting.\n4. Can a @api.private method still be called from another Python method in the same model? Why or why not (reference the code)?",
+      "expected_output": "A deep source-code grounded explanation of @api.private with the decorator implementation, the RPC check mechanism, and real-world examples from Odoo addons.",
+      "files": [],
+      "expectations": [
+        "Reads the actual @api.private decorator implementation in odoo/api.py",
+        "Explains what attribute/flag the decorator sets on the method",
+        "Finds the RPC dispatch code that checks this flag (in odoo/service/model.py or similar)",
+        "Provides at least 3 real examples from addons/ with file paths",
+        "Explains whether internal Python calls are affected (they aren't — the flag only applies to RPC dispatch)",
+        "References specific line numbers or code from the files"
+      ]
+    },
+    {
+      "id": 7,
+      "eval_name": "reverse-engineer-read-group-pattern",
+      "prompt": "Go read the `sale.order` and `sale.order.line` models' source code in `addons/sale/models/` and find ALL uses of `_read_group` or `formatted_read_group`. For each occurrence:\n1. What is it computing? (what aggregate, grouped by what)\n2. How does it unpack the result tuples?\n3. Why did the Odoo developers use _read_group here instead of looping?\n4. Is there a `@api.depends` that references the aggregated field? If so, what does it depend on?\n5. Are there any non-obvious patterns (e.g., grouping by a Many2one field where the group value is a recordset)?\n\nThis will help me understand the _read_group API contract so I can use it correctly in my modules.",
+      "expected_output": "A comprehensive analysis of every _read_group/formatted_read_group call in the sale module, with the aggregation pattern, tuple unpacking, and design rationale for each.",
+      "files": [],
+      "expectations": [
+        "Reads actual source files from addons/sale/models/",
+        "Identifies all _read_group calls with their file names and line numbers",
+        "Explains how result tuples are unpacked for each call",
+        "Explains why _read_group was chosen over per-record computation (N+1 avoidance)",
+        "Notes any subtle patterns (Many2one groupby values being recordsets)",
+        "References the actual field definitions being aggregated"
+      ]
+    },
+    {
+      "id": 8,
+      "eval_name": "reverse-engineer-unknown-feature",
+      "prompt": "I heard Odoo 19 has a way to define 'computed writable' fields — fields that are computed by default but can be overridden by the user. I need to implement this pattern but I can't find it in the reference guides. Search Odoo's source code and addons to find out:\n1. Is there a standard Odoo mechanism for \"computed but user-overridable\" fields? (look for `compute` combined with `readonly=False` or `inverse`, or a way to detect if a field was manually set)\n2. Look at how Odoo's own modules handle 'manual override' of computed values — search for patterns like `_compute` paired with `@api.depends` where the user can still write to the field\n3. What's the 'recompute' pattern — how does Odoo track whether a field was manually set vs. computed?\n\nRead the framework code and real addon examples to answer this — don't just guess based on general ORM knowledge.",
+      "expected_output": "A reverse-engineered explanation of Odoo's computed-but-overridable field pattern, with framework code references and real addon examples.",
+      "files": [],
+      "expectations": [
+        "Searches Odoo source code (not just reference guides) for the pattern",
+        "Finds real addon examples where computed fields can be overridden",
+        "Explains the mechanism (inverse method, readonly=False combined with compute, or other approach)",
+        "References specific files and line numbers from the source code",
+        "Distinguishes between different approaches and recommends the best one"
+      ]
     }
   ]
 }

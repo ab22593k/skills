@@ -3,6 +3,7 @@
 Guide for defining fields in Odoo 19: field types, parameters, computed fields, and relational fields.
 
 ## Table of Contents
+
 - [Field Types](#field-types)
 - [Basic Fields](#basic-fields)
 - [Advanced Fields](#advanced-fields)
@@ -18,13 +19,13 @@ Guide for defining fields in Odoo 19: field types, parameters, computed fields, 
 
 ### Type Summary
 
-| Category | Types |
-|----------|-------|
-| **Basic** | Boolean, Char, Float, Integer |
-| **Advanced** | Binary, Html, Image, Monetary, Selection, Text |
-| **Date** | Date, Datetime |
-| **Relational** | Many2one, One2many, Many2many |
-| **Pseudo** | Reference, Many2oneReference |
+| Category       | Types                                          |
+| -------------- | ---------------------------------------------- |
+| **Basic**      | Boolean, Char, Float, Integer                  |
+| **Advanced**   | Binary, Html, Image, Monetary, Selection, Text |
+| **Date**       | Date, Datetime                                 |
+| **Relational** | Many2one, One2many, Many2many                  |
+| **Pseudo**     | Reference, Many2oneReference                   |
 
 ---
 
@@ -237,16 +238,16 @@ user_id = fields.Many2one('res.users', 'User', default=lambda self: self.env.use
 
 #### Parameters
 
-| Parameter | Description |
-|-----------|-------------|
-| `comodel_name` | Related model name |
-| `string` | Field label |
-| `required` | Whether required |
-| `ondelete` | What to do when related record is deleted (`cascade`, `set null`, `restrict`) |
-| `domain` | Domain filter |
-| `context` | Context for operations |
-| `default` | Default value |
-| `index` | Add database index |
+| Parameter      | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| `comodel_name` | Related model name                                                            |
+| `string`       | Field label                                                                   |
+| `required`     | Whether required                                                              |
+| `ondelete`     | What to do when related record is deleted (`cascade`, `set null`, `restrict`) |
+| `domain`       | Domain filter                                                                 |
+| `context`      | Context for operations                                                        |
+| `default`      | Default value                                                                 |
+| `index`        | Add database index                                                            |
 
 ```python
 partner_id = fields.Many2one(
@@ -269,11 +270,11 @@ line_ids = fields.One2many('sale.order.line', 'order_id', string="Order Lines")
 
 #### Parameters
 
-| Parameter | Description |
-|-----------|-------------|
-| `comodel_name` | Related model name |
+| Parameter      | Description            |
+| -------------- | ---------------------- |
+| `comodel_name` | Related model name     |
 | `inverse_name` | Inverse Many2one field |
-| `string` | Field label |
+| `string`       | Field label            |
 
 ```python
 order_id = fields.Many2one('sale.order', 'Order')
@@ -295,13 +296,13 @@ category_ids = fields.Many2many('product.category', 'product_category_rel', 'pro
 
 #### Parameters
 
-| Parameter | Description |
-|-----------|-------------|
-| `comodel_name` | Related model name |
-| `relation` | Relation table name (auto if not specified) |
-| `column1` | Column for this model |
-| `column2` | Column for related model |
-| `string` | Field label |
+| Parameter      | Description                                 |
+| -------------- | ------------------------------------------- |
+| `comodel_name` | Related model name                          |
+| `relation`     | Relation table name (auto if not specified) |
+| `column1`      | Column for this model                       |
+| `column2`      | Column for related model                    |
+| `string`       | Field label                                 |
 
 ```python
 # Simple (auto relation table)
@@ -460,16 +461,16 @@ partner_name = fields.Char(
 
 ### Common Parameters
 
-| Parameter | Description |
-|-----------|-------------|
-| `string` | Field label |
-| `required` | Whether required (create/write) |
-| `readonly` | Whether read-only |
-| `index` | Add database index |
-| `default` | Default value or callable |
-| `help` | Tooltip text |
-| `groups` | Comma-separated group IDs |
-| `copy` | Copy on duplicate (default: True) |
+| Parameter         | Description                                              |
+| ----------------- | -------------------------------------------------------- |
+| `string`          | Field label                                              |
+| `required`        | Whether required (create/write)                          |
+| `readonly`        | Whether read-only                                        |
+| `index`           | Add database index                                       |
+| `default`         | Default value or callable                                |
+| `help`            | Tooltip text                                             |
+| `groups`          | Comma-separated group IDs                                |
+| `copy`            | Copy on duplicate (default: True)                        |
 | `track_visibilty` | Track changes in chatter (`always`, `onchange`, `never`) |
 
 ### Examples
@@ -490,17 +491,17 @@ name = fields.Char(
 
 ## Reserved Field Names
 
-| Name | Purpose |
-|------|---------|
-| `id` | Record identifier |
-| `display_name` | Display name |
-| `create_date`, `create_uid`, `write_date`, `write_uid` | Access log fields |
-| `name` | Default `rec_name` |
-| `active` | Global visibility toggle |
-| `state` | Lifecycle stages |
-| `parent_id` | Tree structure parent |
-| `parent_path` | Tree structure path |
-| `company_id` | Multi-company field |
+| Name                                                   | Purpose                  |
+| ------------------------------------------------------ | ------------------------ |
+| `id`                                                   | Record identifier        |
+| `display_name`                                         | Display name             |
+| `create_date`, `create_uid`, `write_date`, `write_uid` | Access log fields        |
+| `name`                                                 | Default `rec_name`       |
+| `active`                                               | Global visibility toggle |
+| `state`                                                | Lifecycle stages         |
+| `parent_id`                                            | Tree structure parent    |
+| `parent_path`                                          | Tree structure path      |
+| `company_id`                                           | Multi-company field      |
 
 ---
 
