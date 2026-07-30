@@ -1,0 +1,535 @@
+{
+  "meta": {
+    "source": "sales_database_export",
+    "exported_at": "2026-07-29T06:00:00Z",
+    "version": "3.1.0"
+  },
+  "summary": {
+    "total_revenue": 1584290.5,
+    "total_orders": 1250,
+    "avg_order_value": 1267.43,
+    "top_category": "Electronics",
+    "category_breakdown": {
+      "Electronics": {
+        "revenue": 625000.0,
+        "orders": 420,
+        "avg": 1488.1
+      },
+      "Clothing": {
+        "revenue": 312000.0,
+        "orders": 380,
+        "avg": 821.05
+      },
+      "Home & Garden": {
+        "revenue": 198500.75,
+        "orders": 180,
+        "avg": 1102.78
+      },
+      "Books": {
+        "revenue": 156789.25,
+        "orders": 150,
+        "avg": 1045.26
+      },
+      "Sports": {
+        "revenue": 142000.5,
+        "orders": 120,
+        "avg": 1183.34
+      }
+    },
+    "monthly_trend": {
+      "2026-01": {
+        "revenue": 120000.0,
+        "orders": 95
+      },
+      "2026-02": {
+        "revenue": 115000.0,
+        "orders": 88
+      },
+      "2026-03": {
+        "revenue": 132000.0,
+        "orders": 105
+      },
+      "2026-04": {
+        "revenue": 141000.0,
+        "orders": 112
+      },
+      "2026-05": {
+        "revenue": 138000.0,
+        "orders": 110
+      },
+      "2026-06": {
+        "revenue": 155000.0,
+        "orders": 125
+      },
+      "2026-07": {
+        "revenue": 162000.0,
+        "orders": 130
+      }
+    }
+  },
+  "regions": [
+    {
+      "name": "North America",
+      "revenue": 685000.0,
+      "orders": 520,
+      "growth": 0.12
+    },
+    {
+      "name": "Europe",
+      "revenue": 425000.0,
+      "orders": 340,
+      "growth": 0.08
+    },
+    {
+      "name": "Asia Pacific",
+      "revenue": 298000.0,
+      "orders": 230,
+      "growth": 0.22
+    },
+    {
+      "name": "Latin America",
+      "revenue": 98500.0,
+      "orders": 85,
+      "growth": 0.18
+    },
+    {
+      "name": "Middle East & Africa",
+      "revenue": 76790.5,
+      "orders": 75,
+      "growth": 0.15
+    }
+  ],
+  "top_products": [
+    {
+      "id": "PROD-001",
+      "name": "Wireless Headphones Pro",
+      "category": "Electronics",
+      "revenue": 89500.0,
+      "units_sold": 358
+    },
+    {
+      "id": "PROD-002",
+      "name": "Organic Cotton T-Shirt",
+      "category": "Clothing",
+      "revenue": 42500.0,
+      "units_sold": 850
+    },
+    {
+      "id": "PROD-003",
+      "name": "Smart Home Hub",
+      "category": "Electronics",
+      "revenue": 78000.0,
+      "units_sold": 260
+    },
+    {
+      "id": "PROD-004",
+      "name": "Ergonomic Office Chair",
+      "category": "Home & Garden",
+      "revenue": 62000.0,
+      "units_sold": 124
+    },
+    {
+      "id": "PROD-005",
+      "name": "Fitness Tracker V2",
+      "category": "Sports",
+      "revenue": 54000.0,
+      "units_sold": 360
+    },
+    {
+      "id": "PROD-006",
+      "name": "Cookbook Collection",
+      "category": "Books",
+      "revenue": 38500.0,
+      "units_sold": 770
+    },
+    {
+      "id": "PROD-007",
+      "name": "Noise-Canceling Earbuds",
+      "category": "Electronics",
+      "revenue": 71500.0,
+      "units_sold": 330
+    },
+    {
+      "id": "PROD-008",
+      "name": "Product 8",
+      "category": "Clothing",
+      "revenue": 37744.19,
+      "units_sold": 260
+    },
+    {
+      "id": "PROD-009",
+      "name": "Product 9",
+      "category": "Clothing",
+      "revenue": 12089.91,
+      "units_sold": 122
+    },
+    {
+      "id": "PROD-010",
+      "name": "Product 10",
+      "category": "Books",
+      "revenue": 14937.54,
+      "units_sold": 295
+    },
+    {
+      "id": "PROD-011",
+      "name": "Product 11",
+      "category": "Books",
+      "revenue": 12080.27,
+      "units_sold": 269
+    },
+    {
+      "id": "PROD-012",
+      "name": "Product 12",
+      "category": "Clothing",
+      "revenue": 29564.31,
+      "units_sold": 458
+    },
+    {
+      "id": "PROD-013",
+      "name": "Product 13",
+      "category": "Books",
+      "revenue": 43695.17,
+      "units_sold": 302
+    },
+    {
+      "id": "PROD-014",
+      "name": "Product 14",
+      "category": "Electronics",
+      "revenue": 32363.45,
+      "units_sold": 195
+    },
+    {
+      "id": "PROD-015",
+      "name": "Product 15",
+      "category": "Books",
+      "revenue": 30398.01,
+      "units_sold": 250
+    },
+    {
+      "id": "PROD-016",
+      "name": "Product 16",
+      "category": "Books",
+      "revenue": 37766.15,
+      "units_sold": 260
+    },
+    {
+      "id": "PROD-017",
+      "name": "Product 17",
+      "category": "Electronics",
+      "revenue": 44516.35,
+      "units_sold": 123
+    },
+    {
+      "id": "PROD-018",
+      "name": "Product 18",
+      "category": "Books",
+      "revenue": 20977.39,
+      "units_sold": 425
+    },
+    {
+      "id": "PROD-019",
+      "name": "Product 19",
+      "category": "Books",
+      "revenue": 27354.71,
+      "units_sold": 434
+    },
+    {
+      "id": "PROD-020",
+      "name": "Product 20",
+      "category": "Electronics",
+      "revenue": 9813.28,
+      "units_sold": 56
+    },
+    {
+      "id": "PROD-021",
+      "name": "Product 21",
+      "category": "Books",
+      "revenue": 38226.24,
+      "units_sold": 169
+    },
+    {
+      "id": "PROD-022",
+      "name": "Product 22",
+      "category": "Electronics",
+      "revenue": 33047.06,
+      "units_sold": 398
+    },
+    {
+      "id": "PROD-023",
+      "name": "Product 23",
+      "category": "Electronics",
+      "revenue": 22365.93,
+      "units_sold": 84
+    },
+    {
+      "id": "PROD-024",
+      "name": "Product 24",
+      "category": "Books",
+      "revenue": 5057.39,
+      "units_sold": 493
+    },
+    {
+      "id": "PROD-025",
+      "name": "Product 25",
+      "category": "Clothing",
+      "revenue": 41429.86,
+      "units_sold": 180
+    },
+    {
+      "id": "PROD-026",
+      "name": "Product 26",
+      "category": "Books",
+      "revenue": 48587.8,
+      "units_sold": 198
+    },
+    {
+      "id": "PROD-027",
+      "name": "Product 27",
+      "category": "Books",
+      "revenue": 8211.4,
+      "units_sold": 221
+    },
+    {
+      "id": "PROD-028",
+      "name": "Product 28",
+      "category": "Books",
+      "revenue": 7838.15,
+      "units_sold": 177
+    },
+    {
+      "id": "PROD-029",
+      "name": "Product 29",
+      "category": "Electronics",
+      "revenue": 22490.0,
+      "units_sold": 381
+    },
+    {
+      "id": "PROD-030",
+      "name": "Product 30",
+      "category": "Clothing",
+      "revenue": 39925.57,
+      "units_sold": 278
+    },
+    {
+      "id": "PROD-031",
+      "name": "Product 31",
+      "category": "Clothing",
+      "revenue": 9265.58,
+      "units_sold": 234
+    },
+    {
+      "id": "PROD-032",
+      "name": "Product 32",
+      "category": "Clothing",
+      "revenue": 43158.39,
+      "units_sold": 328
+    },
+    {
+      "id": "PROD-033",
+      "name": "Product 33",
+      "category": "Books",
+      "revenue": 42155.48,
+      "units_sold": 310
+    },
+    {
+      "id": "PROD-034",
+      "name": "Product 34",
+      "category": "Books",
+      "revenue": 25740.5,
+      "units_sold": 262
+    },
+    {
+      "id": "PROD-035",
+      "name": "Product 35",
+      "category": "Clothing",
+      "revenue": 23425.22,
+      "units_sold": 75
+    },
+    {
+      "id": "PROD-036",
+      "name": "Product 36",
+      "category": "Electronics",
+      "revenue": 42397.45,
+      "units_sold": 99
+    },
+    {
+      "id": "PROD-037",
+      "name": "Product 37",
+      "category": "Books",
+      "revenue": 28418.31,
+      "units_sold": 212
+    },
+    {
+      "id": "PROD-038",
+      "name": "Product 38",
+      "category": "Clothing",
+      "revenue": 45166.45,
+      "units_sold": 406
+    },
+    {
+      "id": "PROD-039",
+      "name": "Product 39",
+      "category": "Clothing",
+      "revenue": 34430.67,
+      "units_sold": 464
+    },
+    {
+      "id": "PROD-040",
+      "name": "Product 40",
+      "category": "Electronics",
+      "revenue": 17474.84,
+      "units_sold": 234
+    },
+    {
+      "id": "PROD-041",
+      "name": "Product 41",
+      "category": "Electronics",
+      "revenue": 44244.95,
+      "units_sold": 296
+    },
+    {
+      "id": "PROD-042",
+      "name": "Product 42",
+      "category": "Books",
+      "revenue": 39347.4,
+      "units_sold": 191
+    },
+    {
+      "id": "PROD-043",
+      "name": "Product 43",
+      "category": "Clothing",
+      "revenue": 19669.93,
+      "units_sold": 57
+    },
+    {
+      "id": "PROD-044",
+      "name": "Product 44",
+      "category": "Clothing",
+      "revenue": 9789.41,
+      "units_sold": 237
+    },
+    {
+      "id": "PROD-045",
+      "name": "Product 45",
+      "category": "Electronics",
+      "revenue": 26816.19,
+      "units_sold": 360
+    },
+    {
+      "id": "PROD-046",
+      "name": "Product 46",
+      "category": "Electronics",
+      "revenue": 47261.53,
+      "units_sold": 481
+    },
+    {
+      "id": "PROD-047",
+      "name": "Product 47",
+      "category": "Clothing",
+      "revenue": 18783.22,
+      "units_sold": 468
+    },
+    {
+      "id": "PROD-048",
+      "name": "Product 48",
+      "category": "Electronics",
+      "revenue": 30904.62,
+      "units_sold": 276
+    },
+    {
+      "id": "PROD-049",
+      "name": "Product 49",
+      "category": "Clothing",
+      "revenue": 24797.12,
+      "units_sold": 156
+    },
+    {
+      "id": "PROD-050",
+      "name": "Product 50",
+      "category": "Electronics",
+      "revenue": 34801.64,
+      "units_sold": 169
+    },
+    {
+      "id": "PROD-051",
+      "name": "Product 51",
+      "category": "Electronics",
+      "revenue": 11268.09,
+      "units_sold": 453
+    }
+  ],
+  "customer_segments": {
+    "new": {
+      "count": 320,
+      "avg_order": 890.0,
+      "repeat_rate": 0.35
+    },
+    "returning": {
+      "count": 580,
+      "avg_order": 1250.0,
+      "repeat_rate": 0.72
+    },
+    "vip": {
+      "count": 95,
+      "avg_order": 3200.0,
+      "repeat_rate": 0.95
+    },
+    "churned": {
+      "count": 180,
+      "avg_order": 0,
+      "repeat_rate": 0
+    }
+  },
+  "channels": [
+    {
+      "name": "Direct",
+      "revenue": 475290.15,
+      "orders": 375,
+      "conversion": 0.042
+    },
+    {
+      "name": "Organic Search",
+      "revenue": 396072.63,
+      "orders": 312,
+      "conversion": 0.038
+    },
+    {
+      "name": "Paid Ads",
+      "revenue": 356145.11,
+      "orders": 280,
+      "conversion": 0.025
+    },
+    {
+      "name": "Social Media",
+      "revenue": 237643.58,
+      "orders": 188,
+      "conversion": 0.018
+    },
+    {
+      "name": "Email Marketing",
+      "revenue": 119139.03,
+      "orders": 95,
+      "conversion": 0.056
+    }
+  ],
+  "inventory_alerts": [
+    {
+      "product": "Wireless Headphones Pro",
+      "sku": "WH-001",
+      "stock": 12,
+      "reorder_point": 25
+    },
+    {
+      "product": "Ergonomic Office Chair",
+      "sku": "CH-002",
+      "stock": 8,
+      "reorder_point": 15
+    },
+    {
+      "product": "Fitness Tracker V2",
+      "sku": "FT-005",
+      "stock": 45,
+      "reorder_point": 50
+    }
+  ]
+}

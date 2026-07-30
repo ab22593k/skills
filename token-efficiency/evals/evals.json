@@ -1,0 +1,26 @@
+{
+  "skill_name": "token-efficiency",
+  "evals": [
+    {
+      "id": 0,
+      "name": "large-log-debugging",
+      "prompt": "Our production server is having issues. I need you to look at the log file at evals/files/app.log and tell me:\n1. How many ERROR lines are there?\n2. How many WARN lines are there?\n3. What are the three most critical issues and why?",
+      "expected_output": "Concise analysis with exact counts for ERROR/WARN lines and three most critical issues",
+      "files": ["evals/files/app.log"]
+    },
+    {
+      "id": 1,
+      "name": "json-data-inspection",
+      "prompt": "I have this sales data file at evals/files/data.json. Can you tell me:\n1. What's the total revenue?\n2. Which category performed best?\n3. Which products are low on stock and need reordering?\n4. Which region had the highest growth rate?",
+      "expected_output": "Exactly 4 answers, no extra content",
+      "files": ["evals/files/data.json"]
+    },
+    {
+      "id": 2,
+      "name": "codebase-auth-exploration",
+      "prompt": "I need to understand how authentication works in this project at evals/files/sample-project/. Can you explain:\n1. How token creation and verification work?\n2. How permissions are managed?\n3. How the auth middleware integrates with the API routes?",
+      "expected_output": "Concise explanation of exactly 3 things, with scope statement",
+      "files": ["evals/files/sample-project/"]
+    }
+  ]
+}
