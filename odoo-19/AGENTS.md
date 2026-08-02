@@ -25,6 +25,61 @@ Configure once in Cursor settings:
 
 ---
 
+## Odoo MCP Server (odoomcp)
+
+This skill is designed around the **odoomcp** MCP server
+(`https://gitmcp.io/odoo/odoo`, serving the **`19.0`** branch). It gives
+agents narrow, purpose-built source-access tools — so answers can be grounded
+in Odoo's real 19.0 source **without a local checkout and without raw
+database/grep queries**.
+
+### OpenCode / Claude Code config
+
+Add to `~/.config/opencode/opencode.json` (or your project `opencode.json`):
+
+```json
+{
+  "mcp": {
+    "odoomcp": {
+      "type": "local",
+      "command": ["npx", "mcp-remote", "https://gitmcp.io/odoo/odoo"]
+    }
+  }
+}
+```
+
+### Claude Desktop config
+
+```json
+{
+  "mcpServers": {
+    "odoomcp": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://gitmcp.io/odoo/odoo"]
+    }
+  }
+}
+```
+
+### What it exposes
+
+| Tool                               | Purpose                                                                                                         |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `search_odoo_code(query, page)`    | Exact-match code search over odoo/odoo@19.0; returns file paths + URLs (paginated). **Core tool.**              |
+| `fetch_odoo_documentation()`       | llms.txt index of the repo `doc/` folder (mostly legal CLA files on 19.0 — rarely useful for dev).              |
+| `search_odoo_documentation(query)` | Semantic search over those docs (same CLA limitation).                                                          |
+| `fetch_generic_url_content(url)`   | Generic URL fetcher — note it currently fails on `github.com` / `raw.githubusercontent.com` / `api.github.com`. |
+
+`search_odoo_code` returns paths, not contents. To read a file, fetch
+`https://raw.githubusercontent.com/odoo/odoo/19.0/<path>` with your own
+`webfetch`/`curl`.
+
+See `SKILL.md` → "Odoo Source Access via odoomcp (MCP)" and
+`references/odoo-19-mcp-guide.md` for the full workflow, query pattern bank,
+and troubleshooting.
+
+---
+
 ## Documentation Structure
 
 ```
@@ -38,6 +93,7 @@ skills/odoo-19.0/
 │   ├── odoo-19-development-guide.md # Manifest, wizards (overview)
 │   ├── odoo-19-field-guide.md       # Field types, parameters
 │   ├── odoo-19-manifest-guide.md    # __manifest__.py reference
+│   ├── odoo-19-mcp-guide.md         # odoomcp MCP source-access workflow
 │   ├── odoo-19-mixins-guide.md      # mail.thread, activities, etc.
 │   ├── odoo-19-model-guide.md       # ORM, CRUD, search, domain
 │   ├── odoo-19-migration-guide.md   # Migration scripts, hooks

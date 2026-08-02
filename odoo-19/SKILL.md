@@ -1,11 +1,14 @@
 ---
 name: odoo-19
 description: >-
-  Odoo 19 development knowledge base with 18 specialized guides and a
-  systematic methodology for reverse-engineering Odoo's core codebase
-  directly. Covers all Odoo 19 API patterns — Actions (ir.actions.*, cron
-  jobs, server actions), Controllers (HTTP routing, endpoints, auth types),
-  Data files (XML/CSV records, shortcuts, noupdate), API Decorators
+  Odoo 19 development knowledge base with 18 specialized guides, a systematic
+  methodology for reverse-engineering Odoo's core codebase, and odoomcp — the
+  Odoo MCP server (https://gitmcp.io/odoo/odoo, serving the 19.0 branch) that
+  gives agents narrow, purpose-built source-access tools (search_odoo_code,
+  fetch_odoo_documentation, search_odoo_documentation) instead of exposing raw
+  database queries. Covers all Odoo 19 API patterns — Actions (ir.actions.*,
+  cron jobs, server actions), Controllers (HTTP routing, endpoints, auth
+  types), Data files (XML/CSV records, shortcuts, noupdate), API Decorators
   (@api.depends, @api.constrains, @api.ondelete, @api.onchange, @api.model,
   @api.private), SQL Constraints (models.Constraint replacing
   _sql_constraints), Database Indexes (models.Index), Module development
@@ -24,10 +27,11 @@ description: >-
   templates, xpath inheritance, QWeb templates). Use whenever writing,
   reviewing, or debugging any Odoo 19 Python or XML code, creating or
   modifying modules, fixing performance issues, looking up API patterns, OR
-  when you need to understand undocumented behavior by digging into Odoo's own
-  framework source code and core addons. ALWAYS prefer reading Odoo's actual
-  source code over guessing — the framework code in odoo/models.py,
-  odoo/fields.py, odoo/api.py, and the addons/ directory are the ground truth.
+  when you need to verify behavior against Odoo's real 19.0 source. ALWAYS
+  prefer the actual source over guessing — reach it via the odoomcp MCP server
+  (search_odoo_code) when available, else fetch raw files from the 19.0 branch.
+  Framework code lives in odoo/orm/models.py, odoo/orm/fields.py,
+  odoo/orm/decorators.py, odoo/addons/base/, and the addons/ directory.
 ---
 
 # Odoo 19 Skill - Master Index
@@ -56,6 +60,49 @@ Master index for all Odoo 19 development guides. Read the appropriate guide from
 | Transactions   | `references/odoo-19-transaction-guide.md` | Handling database errors, savepoints, UniqueViolation   |
 | Translation    | `references/odoo-19-translation-guide.md` | Adding translations, localization, i18n                 |
 | Views & XML    | `references/odoo-19-view-guide.md`        | Writing XML views, actions, menus, QWeb templates       |
+| odoomcp        | `references/odoo-19-mcp-guide.md`         | Source-grounding with the Odoo MCP server               |
+
+## Odoo Source Access via odoomcp (MCP)
+
+Ground every non-trivial answer in Odoo's **actual 19.0 source**. The curated
+guides are summaries; the source is ground truth. The **odoomcp** MCP server
+(`https://gitmcp.io/odoo/odoo`, served from the `19.0` branch) exposes narrow,
+purpose-built tools so you can find and read Odoo's code without a local
+checkout and without running raw grep/SQL-style queries.
+
+### Tool map
+
+| Tool                               | What it does                                                                                                                     | Use it for                                                                                                                                                                      |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `search_odoo_code(query, page)`    | GitHub **exact-match** code search across odoo/odoo@19.0. Returns repo-relative file paths + URLs + a score; paginated (`page`). | **Finding where something is implemented.** The core tool — use it before writing new code or when a guide feels incomplete.                                                    |
+| `fetch_odoo_documentation()`       | Returns an llms.txt index of the repo `doc/` folder.                                                                             | Rarely — on 19.0 it indexes only `doc/cla/*` legal files, not developer docs.                                                                                                   |
+| `search_odoo_documentation(query)` | Semantic search over the fetched docs.                                                                                           | Same caveat: only CLA content. Don't rely on it for dev questions.                                                                                                              |
+| `fetch_generic_url_content(url)`   | Generic URL fetcher.                                                                                                             | Known limitation: fails on `github.com`, `raw.githubusercontent.com`, `api.github.com`. To read a file's content, use your environment's own fetch tool (`webfetch`) or `curl`. |
+
+### The 3-step workflow: Find → Fetch → Trace
+
+1. **Find** — `search_odoo_code(query="<exact symbol or string>")`. GitHub code
+   search is literal, so use the precise symbol: `models.Constraint`,
+   `def _read_group`, `class SaleOrder(models.Model)`, `@api.private`. Skim the
+   returned **paths** — results rank by score, not relevance, and the first hit
+   is often an `_inherit` extension rather than the base definition.
+2. **Fetch** — read the file at
+   `https://raw.githubusercontent.com/odoo/odoo/19.0/<repo-relative-path>` with
+   your environment's fetch tool or `curl -s ...`. This yields the real
+   implementation, signatures, and line numbers.
+3. **Trace** — search again for the method name (`_read_group(`), a caller
+   (`search_fetch(`), or a class (`class SaleOrder(models.Model)`) to map call
+   chains and real usage, then fetch each file to read it.
+
+Full query pattern bank, local-checkout fallback patterns, and
+troubleshooting: `references/odoo-19-mcp-guide.md`.
+
+### When odoomcp is unavailable
+
+If the odoomcp tools aren't exposed in your session, don't guess — fetch raw
+source files directly (same URL pattern above; the navigation map below tells
+you where things live), or if you have a local checkout, use the grep patterns
+in `references/odoo-19-mcp-guide.md`.
 
 ## File Structure
 
@@ -70,6 +117,7 @@ skills/odoo-19.0/
     ├── odoo-19-development-guide.md
     ├── odoo-19-field-guide.md
     ├── odoo-19-manifest-guide.md
+    ├── odoo-19-mcp-guide.md
     ├── odoo-19-migration-guide.md
     ├── odoo-19-mixins-guide.md
     ├── odoo-19-model-guide.md
@@ -85,15 +133,18 @@ skills/odoo-19.0/
 
 ## Base Code Reference (Odoo 19)
 
-All guides are based on analysis of Odoo 19 source code:
+All guides are based on analysis of Odoo 19 source code (verified against the `19.0` branch):
 
-- `odoo/models.py` - ORM implementation
-- `odoo/fields.py` - Field types
-- `odoo/api.py` - Decorators
+- `odoo/orm/models.py` - ORM implementation (BaseModel, Model, search/create/write, _read_group)
+- `odoo/orm/fields.py` - Field types
+- `odoo/orm/decorators.py` - API decorators (@api.*) — moved from `odoo/api.py`
+- `odoo/orm/commands.py` - Command helpers for x2many fields
+- `odoo/orm/domains.py` - Domain class and operators
 - `odoo/http.py` - HTTP layer
 - `odoo/exceptions.py` - Exception types
+- `odoo/tools/sql.py` - SQL class for safe query building
 - `odoo/tools/translate.py` - Translation system
-- `odoo/addons/base/models/res_lang.py` - Language model
+- `odoo/addons/base/models/` - base framework models (ir_model.py, ir_ui_view.py, ir_actions.py, res_partner.py, res_lang.py, ir_cron.py) — the `base` addon moved inside the `odoo` package in 19.0
 - `addons/web/static/src/core/l10n/translation.js` - JS translations
 
 ## Common Odoo 19 Pitfalls
@@ -125,22 +176,32 @@ This means **reading and tracing code is more important than writing it**. You'l
 
 When you face an unknown behavior, an undocumented parameter, or a pattern not covered in any guide:
 
-1. **Search first** — grep Odoo's own source before reaching for docs or guessing
-2. **Read framework code** — `odoo/models.py`, `odoo/fields.py`, `odoo/api.py` contain the real implementations
+1. **Search first** — use `search_odoo_code` on Odoo's own source before reaching for docs or guessing
+2. **Read framework code** — `odoo/orm/models.py`, `odoo/orm/fields.py`, `odoo/orm/decorators.py` contain the real implementations
 3. **Find real examples** — Odoo's core addons (`sale`, `account`, `stock`, `purchase`, `project`) are the best documentation
 4. **Trace the call chain** — search for where a method is defined, then where it's called, to understand its contract
 5. **Trust the source, not assumptions** — Odoo's internals are complex and often have subtle edge cases the docs don't mention
 
 ### Source Code Navigation Map
 
+Odoo 19 restructured the framework — the ORM moved under `odoo/orm/` and the
+`base` addon moved inside the `odoo` package. Use these paths (all verifiable
+on the `19.0` branch):
+
 ```
 odoo/                          # Framework core — the source of truth for API behavior
-├── models.py                  # ORM: BaseModel, search, create, write, unlink, browse,
-│                              #   fields_view_get, _read_group, _auto_init, init, etc.
-├── fields.py                  # All field class implementations: Char.__init__, Many2one,
-│                              #   One2many, Command class, Domain class, Date, Datetime
-├── api.py                     # Decorator implementations: depends, constrains, ondelete,
-│                              #   onchange, model, model_create_multi, private, returns
+├── orm/                       # ORM package (was odoo/models.py, fields.py, api.py)
+│   ├── models.py              # BaseModel, Model, search/create/write/unlink/browse,
+│   │                          #   _read_group, formatted_read_group, _search, Query, etc.
+│   ├── fields.py              # All field class implementations: Char.__init__, Many2one,
+│   │                          #   One2many, Command class, Date, Datetime, properties
+│   ├── decorators.py          # @api decorators: depends, constrains, ondelete, onchange,
+│   │                          #   model, model_create_multi, private, returns
+│   ├── commands.py            # Command helpers for x2many fields
+│   ├── domains.py             # Domain class and operators
+│   ├── environments.py        # Environment
+│   ├── registry.py            # Registry / pool
+│   └── utils.py               # check_object_name, parse_field_expr, SUPERUSER_ID, READ_GROUP_*
 ├── http.py                    # HTTP layer: Controller base, route decorator, request,
 │                              #   response, authentication, session
 ├── osv/
@@ -148,17 +209,19 @@ odoo/                          # Framework core — the source of truth for API 
 ├── tools/
 │   ├── sql.py                 # SQL class for safe query building
 │   ├── translate.py           # Translation machinery (i18n)
-│   ├── render.py              # QWeb template rendering engine
 │   ├── profiler.py            # Profiler class for SQL/trace collection
 │   └── float_utils.py         # Float precision utilities
 ├── exceptions.py              # All exception types: UserError, ValidationError,
 │                              #   AccessError, AccessDenied, RedirectWarning
-├── conf.py                    # Configuration handling
+├── addons/
+│   └── base/                  # BASE ADDON MOVED HERE in 19.0 (was addons/base/)
+│       ├── models/            # ir_model.py, ir_ui_view.py, ir_actions.py, ir_ui_menu.py,
+│       │                      #   res_partner.py, res_lang.py, ir_cron.py
+│       ├── security/          # ir.model.access.csv, ir.rule
+│       └── data/              # ir_cron_data.xml, ir_module_category_data.xml
 └── release.py                 # Version info (major/minor/micro)
 
 addons/                        ~400+ modules — real-world usage of every framework feature
-├── base/                      # Framework models (res.users, res.partner, ir.model,
-│                              #   ir.ui.view, ir.actions.*, res.groups, res.lang)
 ├── sale/                      # Sales: Many2one/One2many/Many2many patterns, state machines
 ├── account/                   # Accounting: complex computed fields, constraints,
 │                              #   ondelete validation, multi-company, performance patterns
@@ -168,6 +231,7 @@ addons/                        ~400+ modules — real-world usage of every frame
 ├── project/                   # Project: task workflows, hierarchy, collaboration mixins
 ├── hr/                        # HR: hierarchical org structures, reporting lines
 ├── web/                       # Web client (OWL framework), JS services, view components
+│   └── models/                # e.g. ir_model.py, ir_ui_view.py — _inherit EXTENSIONS, not definitions
 ├── mail/                      # Messaging: mail.thread, mail.activity.mixin, email gateways
 ├── product/                   # Product catalog: variant management, attribute system
 ├── mrp/                       # Manufacturing: complex state machines, BOM structures
@@ -176,95 +240,36 @@ addons/                        ~400+ modules — real-world usage of every frame
 
 ### Search Patterns for Codebase Discovery
 
-Use these grep patterns to find **real usage** of every Odoo feature. This is faster and more reliable than reading the reference guides for edge cases.
+Use **odoomcp** to find **real usage** of every Odoo feature — faster and more
+reliable than reading reference guides for edge cases, and no local checkout
+needed. `search_odoo_code` is exact-match, so search for the precise symbol:
 
-```bash
-# --- Model / ORM patterns ---
+| Goal                          | `search_odoo_code` query        |
+| ----------------------------- | ------------------------------- |
+| Find a model class definition | `class SaleOrder(models.Model)` |
+| SQL constraints (Odoo 19)     | `models.Constraint`             |
+| Database indexes (Odoo 19)    | `models.Index`                  |
+| Delete validation             | `@api.ondelete`                 |
+| Private (non-RPC) methods     | `@api.private`                  |
+| Batch aggregation             | `def _read_group`               |
+| Public read-group API         | `formatted_read_group`          |
+| Safe SQL queries              | `from odoo.tools import SQL`    |
+| Query-count tests             | `assertQueryCount`              |
+| x2many command helpers        | `Command.create(`               |
+| Privilege groups (19)         | `res.groups.privilege`          |
+| Record rules                  | `domain_force`                  |
+| List view decorations         | `decoration-danger`             |
+| Migration hooks               | `def migrate(`                  |
+| Any error string you saw      | `"<error text>"`                |
 
-# Find models using auto-derived _name (Odoo 19)
-grep -rn "^class.*\(models.Model\)" addons/ --include="*.py" | head -30
+Then **fetch** each matching file via
+`https://raw.githubusercontent.com/odoo/odoo/19.0/<path>` (webfetch/curl) to
+read the implementation. Note: for framework models (e.g. `ir.model`,
+`ir.ui.view`) prefer hits under `odoo/addons/base/` — results ranked higher are
+often `_inherit` extensions in `addons/web`, `addons/mail`, etc.
 
-# Find models.Constraint usage in real modules
-grep -rn "models.Constraint" addons/ --include="*.py" | head -30
-
-# Find models.Index usage across the codebase
-grep -rn "models.Index" addons/ --include="*.py" | head -20
-
-# Find computed fields with search method
-grep -rn "search=" addons/ --include="*.py" | head -20
-
-# Find computed fields with inverse method
-grep -rn "inverse=" addons/ --include="*.py" | head -15
-
-# --- Decorator patterns ---
-
-# Find @api.ondelete examples (delete validation)
-grep -rn "@api.ondelete" addons/ --include="*.py" | head -20
-
-# Find @api.private usage (Odoo 19 non-RPC methods)
-grep -rn "@api.private" addons/ --include="*.py" | head -15
-
-# Find @api.autovacuum usage
-grep -rn "@api.autovacuum" addons/ --include="*.py" | head -10
-
-# Find @api.model_create_multi examples
-grep -rn "@api.model_create_multi" addons/ --include="*.py" | head -10
-
-# --- Performance / query patterns ---
-
-# Find _read_group usage (batch aggregation)
-grep -rn "_read_group" addons/ --include="*.py" | head -30
-
-# Find formatted_read_group usage (public API)
-grep -rn "formatted_read_group" addons/ --include="*.py" | head -10
-
-# Find SQL class usage for safe queries
-grep -rn "from odoo.tools import SQL" addons/ --include="*.py" | head -10
-
-# Find assertQueryCount in tests
-grep -rn "assertQueryCount" addons/ --include="*.py" | head -20
-
-# --- Field patterns ---
-
-# Find fields with aggregator parameter
-grep -rn "aggregator=" addons/ --include="*.py" | head -20
-
-# Find Image fields with dimension constraints
-grep -rn "max_width\|max_height" addons/ --include="*.py" | head -10
-
-# Find Monetary fields with custom currency_field
-grep -rn "currency_field=" addons/ --include="*.py" | head -15
-
-# --- Relational field commands ---
-
-# Find Command.create usage
-grep -rn "Command.create(" addons/ --include="*.py" | head -20
-
-# Find Command.set usage (replace all)
-grep -rn "Command.set(" addons/ --include="*.py" | head -15
-
-# --- Security patterns (Odoo 19 privilege system) ---
-
-# Find res.groups.privilege records in XML
-grep -rn "res.groups.privilege" addons/ --include="*.xml" | head -20
-
-# Find ir.rule with non-standard domains
-grep -rn "domain_force" addons/ --include="*.xml" | head -30
-
-# --- View patterns ---
-
-# Find list view with decoration-danger expressions
-grep -rn "decoration-danger" addons/ --include="*.xml" | head -20
-
-# Find views using invisible with direct expressions
-grep -rn "invisible=" addons/ --include="*.xml" | head -30 | grep -v "attrs="
-
-# --- Migration patterns ---
-
-# Find pre/post migration hooks
-grep -rn "def migrate\|pre-migration\|post-migration" addons/ --include="*.py" \
-  | grep "migrations" | head -15
-```
+The full pattern bank including local-checkout `grep` fallbacks for every
+major feature: `references/odoo-19-mcp-guide.md`.
 
 ### Reverse Engineering Workflow
 
@@ -277,11 +282,11 @@ Follow this systematic process when you need to understand something the guides 
 - What a field parameter actually does
 - How Odoo renders a specific view type
 
-**Step 2: Locate the implementation in the framework**
+**Step 2: Locate the implementation in the framework** — via odoomcp (`search_odoo_code` then fetch the file):
 
-- Python decorators → `odoo/api.py` (search for the decorator function)
-- ORM methods → `odoo/models.py` (search for the method name)
-- Field types → `odoo/fields.py` (search for the field class)
+- Python decorators → `odoo/orm/decorators.py` (search for the decorator function)
+- ORM methods → `odoo/orm/models.py` (search for the method name)
+- Field types → `odoo/orm/fields.py` (search for the field class)
 - HTTP/routing → `odoo/http.py`
 - View rendering → `odoo/addons/base/models/ir_ui_view.py`
 - Exception types → `odoo/exceptions.py`
@@ -295,22 +300,21 @@ Follow this systematic process when you need to understand something the guides 
 
 **Step 4: Find real callers in core addons**
 
-- Grep for the method name in `addons/` to see how Odoo's own modules use it
-- Look at 3-5 different callers to understand the range of usage patterns
+- `search_odoo_code(query="<method_name>(")` then fetch 3-5 different callers to understand the range of usage patterns
 - Pay attention to how they handle edge cases
 
 **Step 5: Find the test coverage**
 
-- Look for test files that exercise the feature: `addons/*/tests/test_*.py`
+- Look for test files that exercise the feature: `addons/*/tests/test_*.py` (or `search_odoo_code` filtered to `*/tests/*` paths)
 - Tests reveal expected behavior, edge cases, and error conditions
 - Search for asserts related to the feature name
 
 **Example — Understanding a new decorator:**
 
 ```
-1. Read odoo/api.py → find the decorator implementation
+1. search_odoo_code("@<decorator_name>") → fetch odoo/orm/decorators.py to read the implementation
 2. Note what it does to the method (wraps it, sets attributes, etc.)
-3. Grep addons/ for @<decorator_name> to see real usage
+3. search_odoo_code("@<decorator_name>") → read real usage in addons/
 4. Read the method it decorates in context — what parameters does it expect?
 5. Check tests in addons/*/tests/ that exercise the decorator
 ```
@@ -354,7 +358,7 @@ When you need to understand _exactly_ what an ORM method does (not just the docu
 
 ```python
 # Example: understanding what _read_group returns
-# Step 1: read the implementation signature in odoo/models.py
+# Step 1: read the implementation signature in odoo/orm/models.py (via search_odoo_code + fetch)
 def _read_group(self, domain, fields, groupby, offset=0, limit=None,
                 orderby=False, lazy=True):
     """..."""
@@ -364,7 +368,7 @@ def _read_group(self, domain, fields, groupby, offset=0, limit=None,
 # For Many2one groupby values: the group value is a singleton recordset
 # For regular fields: the raw field value
 
-# Step 3: grep for callers to see how they unpack
+# Step 3: search_odoo_code("_read_group(") → fetch callers to see how they unpack
 # account/models/account_move.py:
 #   for journal, move_count in self._read_group(...):
 #       ...
@@ -374,12 +378,12 @@ This approach works for ANY method in Odoo — the source code is always the def
 
 ### What to Do When the Skill's Reference Guides Fall Short
 
-1. **Feature not in any guide?** → Grep `odoo/` for the class/function name to find its definition
-2. **Parameter not documented?** → Read the field class `__init__` in `odoo/fields.py`
-3. **View attribute not working?** → Check `ir_ui_view.py` in `addons/base/models/` for how it's processed
-4. **Decorator behavior unclear?** → Read `odoo/api.py` for the actual implementation
-5. **Error message confusing?** → Search Odoo's source for the error string
+1. **Feature not in any guide?** → `search_odoo_code("<feature/symbol>")` to find its definition, then fetch the file
+2. **Parameter not documented?** → Read the field class `__init__` in `odoo/orm/fields.py`
+3. **View attribute not working?** → Check `odoo/addons/base/models/ir_ui_view.py` for how it's processed
+4. **Decorator behavior unclear?** → Read `odoo/orm/decorators.py` for the actual implementation
+5. **Error message confusing?** → `search_odoo_code("<error string>")` in Odoo's source
 6. **Testing a new pattern?** → Find similar patterns in `addons/*/tests/`
-7. **Migration concern?** → Check `addons/base/migrations/` for framework migration helpers
+7. **Migration concern?** → Check `odoo/addons/base/migrations/` for framework migration helpers
 
 ## External Documentation
