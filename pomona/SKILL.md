@@ -30,7 +30,9 @@ Examples of what IS NOT high benefit: missing language specifiers on fenced code
 
 ## Backlog Format
 
-Store the backlog at the repository root as `pomona_backlog.md` put it into .gitignore if not existed there. Each entry follows this format:
+Store the backlog at the repository root as `pomona.md`; put it into .gitignore if not existed there.
+
+Each entry follows this format:
 
 ```markdown
 ## P1 — Do First
@@ -47,7 +49,7 @@ Store the backlog at the repository root as `pomona_backlog.md` put it into .git
 
 ### Step 1: Check or Initialize the Backlog
 
-Check if `pomona_backlog.md` exists in the repository root. If it doesn't, or if high-priority tasks (P1 and P2) are empty, run the **Scanning** workflow first (Step 2), then return here.
+Check if `pomona.md` exists in the repository root. If it doesn't, or if high-priority tasks (P1 and P2) are empty, run the **Scanning** workflow first (Step 2), then return here.
 
 **Important:** When running the full cycle (scan + repair), ALWAYS perform a fresh scan (Step 2) even if the backlog already exists. The scan discovers the current state of the project — without it, the cycle drifts into fixing stale or low-value items while missing newly introduced issues. A backlog without a matching scan is just a wishlist.
 
@@ -90,13 +92,13 @@ Scan ALL languages present in the repository, not just the primary language. For
 - Check compliance with the repository's coding standards (agent config files, project conventions).
 - Find functions longer than 50 lines that could be decomposed.
 - **For each long function, propose a concrete extraction boundary** (e.g., "Pull chapter-heading detection into a pure function returning an enum" rather than just "decompose main()"). Specific proposals are reviewable; general ones are not.
-- **Report function-level coverage**, not just module presence. "All modules have test files" is not the same as "extraction backends are tested." Count specifically which functions lack tests (e.g., "extract_with_pymupdf: untested, extract_with_ebooklib: untested, _handle_pdf_extraction: untested, main(): untested").
+- **Report function-level coverage**, not just module presence. "All modules have test files" is not the same as "extraction backends are tested." Count specifically which functions lack tests (e.g., "extract_with_pymupdf: untested, extract_with_ebooklib: untested, \_handle_pdf_extraction: untested, main(): untested").
 
 **Aggregate results:**
 
 1. Concatenate all findings and remove duplicates.
 2. Assign each unique finding a priority (P1–P4) using the priority matrix above. Err on the side of lower priority (P2/P4) when the benefit is marginal.
-3. Convert each finding to the backlog format and append to the appropriate priority section of `pomona_backlog.md`.
+3. Convert each finding to the backlog format and append to the appropriate priority section of `pomona.md`.
 4. If a scan uncovered items outside the requested scope (e.g., package hygiene during a TODO audit), place them in a clearly labeled "Additional observations" section — never mix them into the priority backlog.
 5. **Collapse repeated items of the same rule/tool into a single ticket** — both within and across priority levels. For example, 22 fenced-code-language violations across different files should be one P2 ticket, not 22 separate ones. If they span multiple priority levels, put them all at the lower priority.
 6. **For each P1 and P2 item, include a measurable acceptance criterion** (e.g., "Reduce ESLint errors from 117 to <50" or "Add tests for 3 untrusted extraction backends"). Without criteria, the loop has no stopping condition.
@@ -112,7 +114,7 @@ Scan ALL languages present in the repository, not just the primary language. For
 
 Select the first task from the highest non-empty priority category (P1 → P2 → P3 → P4). If a task has sub-tasks, pick the first sub-task.
 
-**Critical: verify the task exists in the backlog before starting.** If the selected task is not already an entry in `pomona_backlog.md`, add it first. The backlog must accurately reflect what is being worked on at all times — this is the core of the continuous improvement cycle. Never fix an issue that isn't tracked.
+**Critical: verify the task exists in the backlog before starting.** If the selected task is not already an entry in `pomona.md`, add it first. The backlog must accurately reflect what is being worked on at all times — this is the core of the continuous improvement cycle. Never fix an issue that isn't tracked.
 
 **Implement the fix:**
 
