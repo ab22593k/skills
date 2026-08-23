@@ -1,8 +1,9 @@
 # Team Working Agreement (TWA) — Starter Template
 
-*Based on Appendix A of "Looks Good to Me" by Adrienne Braganza*
+_Based on Appendix A of "Looks Good to Me" by Adrienne Braganza_
 
 ## Purpose
+
 A TWA defines shared expectations for how this team conducts code reviews. It prevents mismatched assumptions, reduces friction, and creates a predictable review experience for everyone.
 
 ---
@@ -25,6 +26,7 @@ A TWA defines shared expectations for how this team conducts code reviews. It pr
 ## Section 3: Review Focus Areas
 
 The team agrees to review for (rank or check all that apply):
+
 - [ ] Correctness — does the code do what it claims?
 - [ ] Security — are there vulnerabilities?
 - [ ] Maintainability — is the code readable and well-structured?
@@ -57,7 +59,7 @@ The team agrees to review for (rank or check all that apply):
 - **Assume good intent** — Authors aren't trying to write bad code
 - **Be specific** — "Line 42 doesn't handle null" not "This is wrong"
 - **Be timely** — Respect the author's need to move forward
-- **Share knowledge** — Explain *why* as much as *what*
+- **Share knowledge** — Explain _why_ as much as _what_
 
 ---
 

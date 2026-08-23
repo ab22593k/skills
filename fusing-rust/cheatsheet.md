@@ -44,14 +44,14 @@ Default: `i32` for integers, `f64` for floats.
 
 ## Concurrency Decision Table
 
-| Need                                  | Solution                                |
+| Need | Solution |
 | ------------------------------------- | --------------------------------------- | --- | --------- |
 | One-way communication between threads | `mpsc::channel()` + `sender.send(data)` |
-| Shared mutable state across threads   | `Arc<Mutex<T>>` — lock before access    |
-| Read-only shared data across threads  | `Arc<T>` — no mutex needed              |
-| Wait for thread to finish             | `handle.join()`                         |
-| Spawn thread with owned data          | `thread::spawn(move                     |     | { ... })` |
-| Async I/O (hundreds of connections)   | Tokio: `tokio::spawn` + `.await`        |
+| Shared mutable state across threads | `Arc<Mutex<T>>` — lock before access |
+| Read-only shared data across threads | `Arc<T>` — no mutex needed |
+| Wait for thread to finish | `handle.join()` |
+| Spawn thread with owned data | `thread::spawn(move                     |     | { ... })` |
+| Async I/O (hundreds of connections) | Tokio: `tokio::spawn` + `.await` |
 
 ## Build Profile Quick Reference
 

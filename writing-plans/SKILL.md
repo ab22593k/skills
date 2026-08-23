@@ -114,10 +114,11 @@ Check npm, Maven, PyPI, SaaS APIs, or whatever registry the tech stack uses for 
 - [ ] **Step 2: Document decisions**
 
 Save a dependency decision table:
-| Need | Library/Solution Considered | Chosen? | Rationale |
-|---|---|---|---|
-| Auth | supabase-js, next-auth, custom | next-auth | Lightweight, fits Next.js App Router |
-| State | Zustand, Redux, Jotai | Zustand | Minimal boilerplate, sufficient for this case |
+
+| Need  | Library/Solution Considered    | Chosen?   | Rationale                                     |
+| ----- | ------------------------------ | --------- | --------------------------------------------- |
+| Auth  | supabase-js, next-auth, custom | next-auth | Lightweight, fits Next.js App Router          |
+| State | Zustand, Redux, Jotai          | Zustand   | Minimal boilerplate, sufficient for this case |
 ```
 
 Custom code is justified only for: specific domain logic, performance-critical paths, security-sensitive code, or when no suitable library exists after thorough evaluation.

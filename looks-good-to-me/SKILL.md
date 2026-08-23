@@ -7,7 +7,7 @@ description: Applies Adrienne Braganza's Constructive Code Reviews framework to 
 
 ## Overview
 
-This skill implements the human-centered code review framework from Adrienne Braganza's *Looks Good to Me: Constructive Code Reviews*. It transforms code review from a dreaded chore into an effective, empathetic team practice.
+This skill implements the human-centered code review framework from Adrienne Braganza's _Looks Good to Me: Constructive Code Reviews_. It transforms code review from a dreaded chore into an effective, empathetic team practice.
 
 Use this skill whenever you need to: conduct a code review, review a PR/MR, set up a team review process, write review comments, resolve review bottlenecks, handle review disagreements, create a Team Working Agreement, or automate review checks. Also use when the user mentions code review pain points, LGTM culture, review delays, process loopholes, or improving team review practices — even if they don't explicitly ask for a "framework."
 
@@ -37,7 +37,7 @@ Think of these as phases, not rigid steps. Apply them fluidly based on context. 
 
 Verify the basics before diving deep:
 
-- **PR hygiene** — Title describes *what*, description explains *why*, labels match change type, CI has passed
+- **PR hygiene** — Title describes _what_, description explains _why_, labels match change type, CI has passed
 - **PR size** — Flag anything >400 lines as needing justification or splitting. A 1200-line PR is unreviewable.
 - **Tests present** — For non-trivial changes, tests should exist. Flag if missing.
 
@@ -80,6 +80,7 @@ Output policy flags with `[POLICY]` referencing the specific rule.
 Produce two things:
 
 **Summary (top of review):**
+
 ```
 **Overall**: approve with suggestions / changes requested / comment
 
@@ -89,11 +90,13 @@ Produce two things:
 ```
 
 **Line comments** following this format:
+
 ```
 [TYPE] Observation → Impact → Suggestion
 ```
 
 Tag every comment:
+
 - `[BLOCKING]` — Must fix, blocks approval. Use sparingly.
 - `[REQUIRED]` — Important, should fix before merge.
 - `[SUGGESTION]` — Improvement idea, non-blocking.
@@ -102,6 +105,7 @@ Tag every comment:
 - `[PRAISE]` — Something well done. Use freely.
 
 Rules:
+
 - One concern per comment — don't bundle issues
 - Be specific — reference exact lines and behaviors
 - Be specific about why it matters — impact is the most skipped part
@@ -141,6 +145,7 @@ When the author pushes back on your feedback:
 4. **Know when to escalate** — After 2-3 rounds, suggest a sync or involve a third party.
 
 When the author is a senior dev with strong opinions:
+
 - Recognize that their refactor may have legitimate technical motivations you haven't seen
 - Separate "does this break process" from "is this technically better" — address both
 - Propose compromise: ship the minimum for now with a tracking issue for follow-up evaluation

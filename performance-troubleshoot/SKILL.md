@@ -103,13 +103,13 @@ chrt -f -p 99 $PID  # FIFO at priority 99
 
 ### What to Measure
 
-| Metric      | Command                        | Target           |
+| Metric | Command | Target |
 | ----------- | ------------------------------ | ---------------- | ------------------ |
-| Utilization | `free -h`, `cat /proc/meminfo` | < 80% used       |
-| Available   | `free -h`                      | > 20% available  |
-| Swap usage  | `swapon -s`, `vmstat 1`        | Minimal (near 0) |
-| Page faults | `vmstat 1` (fault column)      | Varies by app    |
-| OOM events  | `dmesg                         | grep -i oom`     | Zero in production |
+| Utilization | `free -h`, `cat /proc/meminfo` | < 80% used |
+| Available | `free -h` | > 20% available |
+| Swap usage | `swapon -s`, `vmstat 1` | Minimal (near 0) |
+| Page faults | `vmstat 1` (fault column) | Varies by app |
+| OOM events | `dmesg                         | grep -i oom` | Zero in production |
 
 ### Memory Leak Detection
 
