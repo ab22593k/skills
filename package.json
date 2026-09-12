@@ -1,4 +1,5 @@
 {
+  "$schema": "https://www.schemastore.org/semantic-release.json",
   "license": "MIT",
   "devDependencies": {
     "@eslint/css": "^1.3.0",

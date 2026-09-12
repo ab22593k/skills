@@ -13,13 +13,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 The planning process is split into three phases — work through them in order.
 
-**Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
-
-**Save plans to:** `.agents/plans/MM-DD-<feature-name>.md`
-
-- (User preferences for plan location override this default)
-
----
+**Save plans to:** `.organiqlabs/plans/`
 
 ## Phase 1: Deep Comprehension
 
@@ -259,18 +253,6 @@ The plan should guide implementers toward token-efficient execution. Embed these
 
 After saving the plan, offer execution choice:
 
-**"Plan complete and saved to `.agents/plans/<filename>.md`. Two execution options:**
+**"Plan complete and saved to `.organiqlabs/plans/`. Two execution options:**
 
-**1. Subagent-Driven (recommended)** — I dispatch a fresh subagent per task, review between tasks, fast iteration
-
-**2. Inline Execution** — Execute tasks in this session using executing-plans, batch execution with checkpoints
-
-**Which approach?"**
-
-**If Subagent-Driven chosen:**
-
-- **REQUIRED SUB-SKILL:** Load skill → `skill:subagent-driven-development` with Fresh subagent per task + two-stage review
-
-**If Inline Execution chosen:**
-
-- **REQUIRED SUB-SKILL:** Load skill → `skill:executing-plans` and Batch execution with checkpoints for review
+**1. Subagent-Driven** — I dispatch a fresh subagent per task, review between tasks, fast iteration. Load skill → `skill:subagent-driven-development` with Fresh subagent per task that load skill → `skill:executing-plans` + one-stage review using `file:plan-reviewer.md` template.
