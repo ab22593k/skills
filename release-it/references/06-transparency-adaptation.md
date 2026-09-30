@@ -44,11 +44,11 @@ Black-box (outside, ops can add later; help by making observable) vs white-box
   fail = ERROR; NPE != auto-ERROR), catalog with codes via Externalize Strings
   (`(FulfillmentClient.2) Timeout...` + Messages.getString prepending key; runbook
   lookup; accurate ops<->dev comms), human factors (columnar, level letter I/W/A
-  + code, scannable; WebLogic default and j.u.l 2-line formats defeat eye+grep),
-  txn IDs on every line, log state transitions even if also SNMP/JMX (post-mortem
-  gold). No DEBUG in prod (build strips it; one commit leaks noise burying real).
-  Voodoo ops warning: ambiguous "Reset required" debug left on caused 6mo of
-  weekly peak-hour DB failovers from pure temporal coincidence — wording matters.
+  - code, scannable; WebLogic default and j.u.l 2-line formats defeat eye+grep),
+    txn IDs on every line, log state transitions even if also SNMP/JMX (post-mortem
+    gold). No DEBUG in prod (build strips it; one commit leaks noise burying real).
+    Voodoo ops warning: ambiguous "Reset required" debug left on caused 6mo of
+    weekly peak-hour DB failovers from pure temporal coincidence — wording matters.
 - Monitoring (black-box, dead procs log nothing): agents (OS stats, procs, log
   regex, ports, syslog/eventlog) + heartbeat (agent death vs net death) + reliable
   transport on separate VLAN (prod worm shouldn't kill monitoring; contains host/
@@ -75,19 +75,19 @@ Black-box (outside, ops can add later; help by making observable) vs white-box
   monitoring (behavior+status well, history/future gap until EAM matures), OpsDB
   (history/future/status well).
 - OpsDB (complementary, single pane + correlation): Apps (status vars, business
-  + internal metrics) + Servers (perf/util) + Batch (start/end/abort/status/count)
-  -> OpsDB -> capacity planning, dashboard, reports. Model: Feature (business
-  function SLA/capacity unit, spans hosts/apps/firewalls/switches/SAN) — needs —
-  Node (host/app/job, unique ID blocks per team, optional depends-on for cascade
-  tracing) — reports — Observation (Measurement periodic kept / Status transition
-  last-is-dashboard + history for flapping; + ObservationType defining universe).
-  Feed via simple client API + CLI for scripts (record total vs processed vs abort;
-  Java generic sampling MBean + notification listener). Use: Expectation per
-  ObservationType (range/window/allowed status -> monitoring alerts), seeded from
-  history to avoid false positives (Chiles alarm-fatigue story; pager 3x/night =
-  normal is broken), tightening over time (80% -> 50% -> envelope/step fn by hour).
-  Don't forget Steady State: condense minute samples >1wk or OpsDB becomes capacity
-  risk.
+  - internal metrics) + Servers (perf/util) + Batch (start/end/abort/status/count)
+    -> OpsDB -> capacity planning, dashboard, reports. Model: Feature (business
+    function SLA/capacity unit, spans hosts/apps/firewalls/switches/SAN) — needs —
+    Node (host/app/job, unique ID blocks per team, optional depends-on for cascade
+    tracing) — reports — Observation (Measurement periodic kept / Status transition
+    last-is-dashboard + history for flapping; + ObservationType defining universe).
+    Feed via simple client API + CLI for scripts (record total vs processed vs abort;
+    Java generic sampling MBean + notification listener). Use: Expectation per
+    ObservationType (range/window/allowed status -> monitoring alerts), seeded from
+    history to avoid false positives (Chiles alarm-fatigue story; pager 3x/night =
+    normal is broken), tightening over time (80% -> 50% -> envelope/step fn by hour).
+    Don't forget Steady State: condense minute samples >1wk or OpsDB becomes capacity
+    risk.
 - Supporting processes (data without loop = Outlook auto-delete report): OODA
   (Observe-Orient-Decide-Act, Boyd; orientation unbiased, no spin; each loop
   updates map + world, reinforcing -> speed inside enemy cycle = agility argument)
@@ -107,15 +107,15 @@ Form follows failure (Petroski): paperclip/fork evolve by fixing flaws; each
 release fills gaps/files bumps if exoeconomic (returns > activation energy).
 
 - Software: DI via interfaces (Pico/Spring/Avalon; Fowler's term; loose coupling
-  + testability + rewiring; don't confuse with framework IoC), object design
-  (loose coupling = few shared method-subsets across callers; tight cohesion =
-  methods touch same state; extract hidden objects; small crystals = malleable,
-  palace where every object touches all = dead, tiptoe; one object in many patterns
-  = Gordian knot; minimize cross-crystal ties), XP (refactoring + unit tests twins;
-  TDD+YAGNI -> adaptable; test forces DI + small context; Customer+persistence
-  split shrinks crystal), agile DBs (behavior vs data false dichotomy; rigid schema
-  -> semantic pollution in CLOBs/enums; ORM + version row + fail-fast on mismatch +
-  Rails Migrations; bump version on semantic change too).
+  - testability + rewiring; don't confuse with framework IoC), object design
+    (loose coupling = few shared method-subsets across callers; tight cohesion =
+    methods touch same state; extract hidden objects; small crystals = malleable,
+    palace where every object touches all = dead, tiptoe; one object in many patterns
+    = Gordian knot; minimize cross-crystal ties), XP (refactoring + unit tests twins;
+    TDD+YAGNI -> adaptable; test forces DI + small context; Customer+persistence
+    split shrinks crystal), agile DBs (behavior vs data false dichotomy; rigid schema
+    -> semantic pollution in CLOBs/enums; ORM + version row + fail-fast on mismatch +
+    Rails Migrations; bump version on semantic change too).
 - Enterprise: top-down Colossus/Zachman/TOGAF assumes finishable + freezable —
   both false; stasis = death; version-locked ESB change = deploy-everything-at-once
   risk -> ossify/subvert (like static schema). Prefer ecosystem (niches, symbionts,

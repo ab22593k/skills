@@ -13,6 +13,7 @@ Chain of failure = coupled steps where each failure raises next-failure odds.
 ## 1. Integration Points (No.1 killer)
 
 Every socket/pipe/RPC/DB call can hang, refuse, dribble, or lie.
+
 - Socket: fast fail (refused/reset in ms) vs slow fail (listen-queue full,
   firewall idle-drop, half-open conn). Slow ties up caller thread for
   minutes (OS TCP timeout 10-30min; Java blocks forever by default).
@@ -24,8 +25,9 @@ Every socket/pipe/RPC/DB call can hang, refuse, dribble, or lie.
   pre-Java5, no socket access. Use Apache HttpClient with conn+read timeouts.
 - Vendor SDKs: hidden pools, hidden sync, no timeouts. Decompile, load-test
   to 20x parallelism, look for throughput cliff.
-Defend: Timeouts + Circuit Breaker + Decoupling Middleware + Handshaking
-+ Test Harness that simulates refused/slow/dribble/garbage/reset.
+  Defend: Timeouts + Circuit Breaker + Decoupling Middleware + Handshaking
+
+* Test Harness that simulates refused/slow/dribble/garbage/reset.
 
 ## 2. Chain Reactions — one node dies, rest follow
 
@@ -82,7 +84,8 @@ code going viral, Xbox preorder at fixed time, lock-manager hotspot (one
 RepositoryItem write-lock serializes 100s of servers). Shared-nothing or
 horizontally scalable shared resource + fallback (pessimistic->optimistic).
 For promos: dedicated Bulkhead pool + Fail Fast when dark + static landing
-+ throttle % + no session IDs in URLs. Keep marketing <-> eng comms open.
+
+- throttle % + no session IDs in URLs. Keep marketing <-> eng comms open.
 
 ## 7. Scaling Effects — O(n^2) bites in prod only
 

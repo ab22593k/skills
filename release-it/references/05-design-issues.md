@@ -7,6 +7,7 @@ now or debug them at 3am.
 ## 11. Networking
 
 ### Multihomed servers (prod has 4 NICs, dev has 1)
+
 Prod host: 2 prod nets (HA to different switches) + backup net (bursty, isolated
 VLAN) + admin net (SSH only, highly secured). Host has multiple names/IPs;
 getLocalHost() returns arbitrary one. Default bind-all-interfaces is wrong:
@@ -16,12 +17,14 @@ backlog, InetAddress.getByName(config))` — only 1 of 4 ctors binds specificall
 Bonding/teaming (shared IP over 2 NICs) needs switch config or routing loops.
 
 ### Routing
+
 App with front VLAN (web) + back VLAN (DB) must choose interface per dest.
 Distant services (spam cannon via VPN, not Internet) need explicit routes.
 Keep spreadsheet/DB: dest name, address, desired route, firewall rule. Needed
 for firewall tickets anyway. Wrong route = outage or customer-data exposure.
 
 ### Virtual IPs (two flavors: migrating address vs service address)
+
 Cluster managers (Veritas, HP ServiceGuard, MS Cluster) ensure package runs
 once: shutdown on A, mount FS, start on B, migrate VIP + gratuitous ARP.
 Clients use VIP DNS only, never node hostnames. In-memory state lost
@@ -33,12 +36,14 @@ Expect next packet to hit different NIC after migration.
 ## 12. Security (arch x ops intersection only)
 
 ### Least privilege
+
 Never run as root/Administrator. Only need: bind <1024 (avoid via LB on any
 port; Apache drops privs after opening 80). Each app own user (apache !=
 websphere). Root vuln = reformat whole cluster. Windows-GUI-as-service that
 must stay logged in as Admin = not data-center-ready.
 
 ### Configured passwords
+
 Must live in files (no interactive entry). Minimum: separate file outside install
 dir (install zips get sent to dev; restores overwrite), owner-read-only (or
 root-owned if app drops privs after reading), no core dumps (UNIX core / Win
@@ -49,12 +54,14 @@ control; never in source control readable by all.
 ## 13. Availability (want divorced from cost = fantasy)
 
 ### Gathering: frame as money
+
 "How available?" -> "100%" or "five nines" is unpriced want. Price it: 98%
 =864min/mo downtime. At $1500/hr peak, worst loss $21.6k/mo. 99.99% =4min
 ($108). If lifecycle cost to add 9s is $98.7k for +$1.29M saved over 5yr, do it.
 Each 9 costs ~10x to build, ~2x/yr to operate.
 
 ### Documenting: vague SLA = future fight
+
 Not "system 99.9%." Define per-feature/process (locator vs reservation vs
 loyalty — different value, different deps; beware SLA Inversion: can't beat
 worst dep). For each: synthetic probe device(s), frequency, locations, max
@@ -62,6 +69,7 @@ latency per step, success/failure patterns, storage, formula (time vs samples).
 Paper is thin shield but focuses on data not blame.
 
 ### Load balancing
+
 - DNS round-robin (layer 7 at resolve): N IPs for one name. Cheap, but servers
   routable (attack surface), no health awareness (sends to toast), uneven (conns
   != load), Java caches first IP forever (kills balancing), Apache rewrite
@@ -76,7 +84,9 @@ Paper is thin shield but focuses on data not blame.
   keep L7 services, but LB becomes CPU bottleneck, against Moore's law) vs
   passthrough to webs (smart switch only, lose L7). $$$$ ($50k pair low, 6 figs high);
   Apache mod_proxy_balancer 2.2 is credible cheaper start (proportional weights).
+
 ### Clustering
+
 Farm (LB, no inter-node chatter, near-linear) vs cluster (nodes collaborate,
 heartbeat + state sync overhead, sublinear, size limit). Active/active = scale;
 active/passive = redundancy only. Built-in (WebSphere/WebLogic/Oracle/MSSQL
@@ -91,6 +101,7 @@ Dev+users love change; admins see risk + work + new unknowns. Assume positive
 intent both ways. Easy-to-admin = uptime + help; hard = neglect + sabotage.
 
 ### Does QA match prod? (the gimme that costs hours)
+
 Config diff is easy to ask, expensive to answer (hostnames always differ; HW-
 specific patch bundles). Real culprit is usually topology (graph of nodes+arcs):
 shared hosts in QA vs separate in prod (hidden dir-sync assumption; last-minute
@@ -101,6 +112,7 @@ deploy tests), buy same-vendor LB/firewall for QA (not top model), practice with
 firewalls from day one (rules = integration points = prod config params).
 
 ### Configuration files
+
 Failure: plumbing (Spring beans.xml 5000 lines) mixed with env (1 password) —
 admin edits minefield, breaks associations wearing guts outside. Fix: separate
 files, prod config outside install dir (upgrades/backups/copies overwrite),
@@ -111,6 +123,7 @@ control configs (secure repo, linked to change reason, auto-deploy, audit drift;
 or BMC/BladeLogic/Opsware). Treat props as UI: prevent unforced errors.
 
 ### Startup / shutdown
+
 Dev sees failure; prod midnight reboot needs self-announcement (log + monitor).
 Startup: ordered, verified, pre-fill pools (Fail Fast self-test: no DB = failed
 state, not silent), bind but don't accept until master switch ready (store not
@@ -119,6 +132,7 @@ Shutdown: drain — stop accepting new, finish in-flight with timeout, then exit
 (don't lock doors with customers inside).
 
 ### Admin interfaces
+
 Spiffy Java GUI demos well, operates terribly: unscriptable clicks x N servers,
 minutes per server eats change window (6-server OMS shutdown never done right),
 X/HTTP over SSH tunnels painful -> kill -9 instead. Best: CLI (scriptable

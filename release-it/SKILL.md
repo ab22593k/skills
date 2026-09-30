@@ -155,14 +155,23 @@ ALWAYS structure a review as:
 
 ```markdown
 ## Production-readiness verdict: [SHIP / SHIP WITH FIXES / DO NOT SHIP]
+
 ## Top 3 risks (chain of failure for each)
+
 1. [Crack] -> [propagation] -> [business impact + $/hr if known]
+
 ## Stability findings
+
 - [Antipattern]: evidence, affected integration/thread-pool, fix -> Pattern
+
 ## Capacity findings
+
 - [Constraint + evidence]: headroom, what breaks at 2x, fix
+
 ## Design / Transparency / Adaptation gaps
+
 - [Gap]: cheapest fix that holds
+
 ## Suggested diff order (smallest safe first)
 ```
 

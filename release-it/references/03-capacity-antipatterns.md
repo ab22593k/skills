@@ -60,6 +60,7 @@ timeouts except for security; cart must survive 24 + work interruption.
 200KB->150KB saves 10s on dialup + CPU to generate + RAM/bandwidth at every
 hop (app NIC -> switch -> firewall -> web RAM -> firewall -> router) + holds
 web conns open (finite!) blocking revenue txns.
+
 - Whitespace: 100 JSP includes -> 600KB page, 1/3 newlines. Cost real
   ($15k/yr bandwidth alone). Filter via interceptor if cheaper than RAM/bw.
 - Spacer GIFs: 53B `<img>` -> 5B `&nbsp;` or CSS. 48B x12 x1M =576MB/day +
