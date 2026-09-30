@@ -1,0 +1,35 @@
+{
+  "skill_name": "gpuix-apps",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "hey, i want to build a small desktop app for viewing application logs. i want to write it in react with typescript since my team knows that well. no electron though - it's heavy and the apps feel like web pages in a trench coat. what are my real options here and can you scaffold it? eventually i need to hand a binary to a few people who don't have node installed",
+      "expected_output": "Should identify GPUIX (React over GPUI, Zed's GPU framework) as the fit and explain why. Should scaffold correctly: bunx @gpuix/cli new, tsconfig with jsxImportSource: '@gpuix/react' (called out as REQUIRED, not optional), an entry file ending in render(), run with `bun --hot` (not plain bun), and `bun build --compile` for a standalone binary. Should pin @gpuix/react and @gpuix/native to the same exact version. Should note that text needs an explicit color.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "i set up a gpuix counter app following the docs. window opens fine, the clickable box shows up, hover works, but ALL of my text is invisible. background is dark grey #1a1a1a. i have a color set on the parent div already. driving me nuts, is this a rendering bug?",
+      "expected_output": "Should diagnose as the classic GPUIX gotcha, not a rendering bug: GPUI does not inherit `color` from a parent, so <text> with no color paints black and disappears on a dark surface. Should show the fix (explicit color on every <text>) in code. Should be fast and confident, not a debugging spiral.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "my gpuix log viewer has a page-level scroll container and inside it a filtered result list that also needs its own scrolling. problem: the inner list doesn't scroll, it just drags the whole page instead. and separately, with about 5000 rows in it, everything is janky and frame times are awful. how should i structure this?",
+      "expected_output": "Should name nested scrolling as unsupported - GPUI gives both hitboxes the same wheel event so the inner scroller steals the gesture. Should offer the fix: collapse long inner content behind an expandable, or keep it in the parent; do NOT nest scrollers. Should also recommend <virtual-list> for the 5000 rows since plain overflow:scroll builds every child. Should mention frame-time overlay as the way to verify.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "i'm building this gpuix app and i want my coding agent to be able to click around the ui and take screenshots so it can verify its own work when i ask it to. right now every time the agent launches the app to poke at it, the window grabs focus from my editor and i lose my place. what's the right setup for this",
+      "expected_output": "Should recommend focus: false (or GPUIX_BACKGROUND env pattern) so the window opens without taking focus, and should note it's ignored on Linux. Should prefer createTestRoot() from @gpuix/react/testing when possible since it opens no window at all, and use launch() from @gpuix/react/automation when a real window is needed. Should make clear automation does NOT require focus - click() and screenshot() work behind the editor.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "the gpuix app works locally on my mac. now i need to actually ship it - mac, windows and linux. it needs a real dock/taskbar icon (not a generic one), and i want it to auto-update from github releases so users don't have to reinstall manually. what does the packaging look like",
+      "expected_output": "Should walk the cargo-packager path: generate .icns (packager rejects a raw 1024 PNG with 'No matching IconType'), packager.json config, run per-OS since it only builds the host OS, and note --release is the packager profile not cargo build --release. Should cover auto-update as a separate checkUpdate() call from @gpuix/native (packaging does NOT enable it), needing a public repo or GitHub API 404s, the .app.tar.gz vs .app vs dmg distinction for macOS, Linux/Windows artifacts using the binary stem not productName, and that downloadAndInstall() does not relaunch.",
+      "files": []
+    }
+  ]
+}
