@@ -1,0 +1,29 @@
+{
+  "skill_name": "cordis",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "hey, i'm building a koishi-style chat bot with a plugin system (node side project, plugins live under ./plugins). i've got a logging plugin that registers a message middleware, opens a sqlite handle, and subscribes to the bot's 'ready' event. i want to be able to disable that plugin at runtime from an admin command WITHOUT restarting the bot or dropping other plugins' connections. right now disabling just deletes the require cache entry and everything breaks. how should i restructure this?",
+      "expected_output": "Should identify this as a temporal-composability problem and apply the revertible-effect pattern: every context-mediated change (middleware registration, db handle, event subscription) must yield an inverse held by the runtime, applied LIFO on removal. Should warn that require-cache deletion is not a revert. Should give the disable flow: deactivate → apply accumulated inverses → verify no residue. Should flag anything outside the mediated context (e.g., an already-sent message, process-level state) as non-revertible.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "my agent harness loads tools dynamically — there's a web-search tool plugin that should only be active when the network capability is present, and a vector-db tool that needs the embeddings service. last week the embeddings container restarted and the vector tool kept running with a dead client, throwing errors for 20 minutes until someone noticed. how do i declare these needs so the runtime handles it instead of me writing healthcheck spaghetti?",
+      "expected_output": "Should apply the reactive-coeffect pattern: declare each tool's needs as a dependency spec over context keys; classify context changes as activating (all required keys available), deactivating (a satisfied requirement withdrawn), or neutral. Should state the embeddings-restart case is a deactivating change and the tool must deactivate (then run its inverses) until the service reappears. Should mention provider-withdraws-after-dependents ordering.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "we run about 40 plugins from a single plugins.yaml (name, version, config each). deploys are scary: someone edits one plugin's config, we restart the whole bot, and half the time an unrelated plugin fails to come back because startup order changed. i want to edit one entry and hot-apply just that without touching the rest. what's the reconciliation flow?",
+      "expected_output": "Should apply the declarative-loader pattern: desired (yaml) vs. running state diffed; mismatches reported with a resolution; only affected components reactivate; hot replacement preserves unrelated state (caches, live connections); a plugin whose dependency is unavailable stays inactive until it appears. Should warn against full-restart deploys and give the hot-apply sequence.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "quick question on the same bot: one of my plugins sends a discord notification on startup and bumps a global in-memory counter used by another plugin for rate limiting. if i disable the plugin, can the framework roll those back for me?",
+      "expected_output": "Should correctly refuse: an already-sent message and shared mutable state outside the mediated context are NOT revertible — recovery restores interface-observable behavior, not physical identity. Should explain the boundary (only context-mediated interactions are covered), suggest designs that keep effects inside the context (e.g., own the counter behind a context key with commuting operations), and offer the outbox-style alternative for the notification. Must NOT claim arbitrary rollback works.",
+      "files": []
+    }
+  ]
+}
