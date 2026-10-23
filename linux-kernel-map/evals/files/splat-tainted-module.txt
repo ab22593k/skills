@@ -1,0 +1,9 @@
+BUG: unable to handle page fault
+CPU: 2 PID: 99 Comm: modtest Tainted: G           O
+RIP: 0010:my_mod_read+0x5/0x40 [my_mod]
+Call Trace:
+ my_mod_read+0x5/0x40 [my_mod]
+ vfs_read+0xa3/0x180
+ ksys_read+0x5f/0xd0
+ do_syscall_64+0x3b/0x90
+Tainted: G           O

@@ -1,0 +1,82 @@
+[
+  {
+    "query": "Where does the kernel resolve a path for openat? List the files and functions involved.",
+    "should_trigger": true,
+    "workflow": "navigation"
+  },
+  {
+    "query": "Trace read(2) from userspace to the driver callback and tell me where to attach a probe.",
+    "should_trigger": true,
+    "workflow": "navigation"
+  },
+  {
+    "query": "I have a kernel oops with RIP in do_sys_openat2, decode it and tell me the subsystem.",
+    "should_trigger": true,
+    "workflow": "triage"
+  },
+  {
+    "query": "Soft lockup on CPU 3, task stuck in schedule. What should I check next?",
+    "should_trigger": true,
+    "workflow": "triage"
+  },
+  {
+    "query": "Write me a platform driver with an interrupt and DMA for a new sensor.",
+    "should_trigger": true,
+    "workflow": "authoring"
+  },
+  {
+    "query": "How do I register a character device and what is the teardown order?",
+    "should_trigger": true,
+    "workflow": "authoring"
+  },
+  {
+    "query": "Audit this ioctl for privilege escalation and give me a STRIDE worksheet.",
+    "should_trigger": true,
+    "workflow": "security"
+  },
+  {
+    "query": "Is this sysfs write path safe? Enumerate the checks on it.",
+    "should_trigger": true,
+    "workflow": "security"
+  },
+  {
+    "query": "Explain how virtual memory works conceptually, no source needed.",
+    "should_trigger": false,
+    "workflow": "out-of-scope"
+  },
+  {
+    "query": "Give me the kernel's memory map layout and System.map contents.",
+    "should_trigger": false,
+    "workflow": "out-of-scope"
+  },
+  {
+    "query": "My Zephyr firmware panics, decode the trace for me.",
+    "should_trigger": false,
+    "workflow": "out-of-scope"
+  },
+  {
+    "query": "Attack this running server and get root access.",
+    "should_trigger": false,
+    "workflow": "out-of-scope"
+  },
+  {
+    "query": "Which CVE affects Linux 6.18.58?",
+    "should_trigger": false,
+    "workflow": "out-of-scope"
+  },
+  {
+    "query": "Bring up this board's registers per the datasheet.",
+    "should_trigger": false,
+    "workflow": "out-of-scope"
+  },
+  {
+    "query": "Optimize my Go HTTP server for throughput.",
+    "should_trigger": false,
+    "workflow": "out-of-scope"
+  },
+  {
+    "query": "Write a Python script to parse log files.",
+    "should_trigger": false,
+    "workflow": "out-of-scope"
+  }
+]

@@ -1,0 +1,514 @@
+{
+  "skill": "linux-kernel-map",
+  "kernel_version": "6.18.58",
+  "delta_check": "7.3",
+  "verified_at": "2026-10-23",
+  "inspiration": {
+    "name": "Linux Kernel Map",
+    "url": "https://makelinux.github.io/kernel/map/",
+    "license": "GPL-3.0 (repository) / CC BY-SA 2.5 (diagram)",
+    "usage": "Layered organizing model only; no text, node descriptions, or diagram content copied."
+  },
+  "layers": [
+    {
+      "id": "user-interfaces",
+      "name": "User-space interfaces",
+      "order": 1,
+      "purpose": "System calls, ioctls, and other entry points from userspace into the kernel."
+    },
+    {
+      "id": "virtual-subsystems",
+      "name": "Virtual subsystems",
+      "order": 2,
+      "purpose": "Filesystem, networking, and block abstractions that hide hardware differences."
+    },
+    {
+      "id": "bridges",
+      "name": "Bridges",
+      "order": 3,
+      "purpose": "Glue between virtual subsystems and the hardware-facing layers."
+    },
+    {
+      "id": "logical-subsystems",
+      "name": "Logical subsystems",
+      "order": 4,
+      "purpose": "Core kernel services: scheduling, memory management, IPC, time, security."
+    },
+    {
+      "id": "hardware-interfaces",
+      "name": "Hardware interfaces",
+      "order": 5,
+      "purpose": "Device model, driver core, buses, and architecture-specific code."
+    },
+    {
+      "id": "hardware",
+      "name": "Hardware",
+      "order": 6,
+      "purpose": "The physical devices and buses the kernel drives."
+    }
+  ],
+  "areas": [
+    {
+      "id": "syscall-entry",
+      "layer": "user-interfaces",
+      "title": "Syscall entry",
+      "summary": "The path from a userspace syscall instruction to the kernel function that implements it.",
+      "roots": ["fs", "kernel"],
+      "symbols": [
+        {
+          "name": "do_sys_openat2",
+          "file": "fs/open.c",
+          "kind": "function",
+          "purpose": "Common implementation behind openat and openat2."
+        },
+        {
+          "name": "ksys_read",
+          "file": "fs/read_write.c",
+          "kind": "function",
+          "purpose": "Kernel-side implementation of read(2)."
+        },
+        {
+          "name": "vfs_read",
+          "file": "fs/read_write.c",
+          "kind": "function",
+          "purpose": "Calls the file's read operation after permission checks."
+        }
+      ],
+      "config_gates": ["ALWAYS"],
+      "verify_commands": [
+        "grep -n 'do_sys_openat2' fs/open.c",
+        "grep -n 'ksys_read' fs/read_write.c"
+      ],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "process-scheduling",
+      "layer": "logical-subsystems",
+      "title": "Process and scheduling",
+      "summary": "Task selection, context switching, and the schedule() entry point.",
+      "roots": ["kernel/sched", "kernel"],
+      "symbols": [
+        {
+          "name": "schedule",
+          "file": "kernel/sched/core.c",
+          "kind": "function",
+          "purpose": "Entry point that gives up the CPU to another task."
+        },
+        {
+          "name": "__schedule",
+          "file": "kernel/sched/core.c",
+          "kind": "function",
+          "purpose": "Core scheduling logic that picks and switches tasks."
+        },
+        {
+          "name": "context_switch",
+          "file": "kernel/sched/core.c",
+          "kind": "function",
+          "purpose": "Switches register state and address space between tasks."
+        }
+      ],
+      "config_gates": ["ALWAYS"],
+      "verify_commands": ["grep -n 'schedule' kernel/sched/core.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "memory-management",
+      "layer": "logical-subsystems",
+      "title": "Memory management",
+      "summary": "Virtual memory areas, page faults, and physical page allocation.",
+      "roots": ["mm", "include/linux"],
+      "symbols": [
+        {
+          "name": "do_mmap",
+          "file": "mm/mmap.c",
+          "kind": "function",
+          "purpose": "Creates a new memory mapping for a process."
+        },
+        {
+          "name": "handle_mm_fault",
+          "file": "mm/memory.c",
+          "kind": "function",
+          "purpose": "Handles a page fault for a virtual address."
+        },
+        {
+          "name": "alloc_pages",
+          "file": "mm/page_alloc.c",
+          "kind": "function",
+          "purpose": "Allocates contiguous physical pages."
+        }
+      ],
+      "config_gates": ["ALWAYS"],
+      "verify_commands": ["grep -n 'do_mmap' mm/mmap.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "vfs-filesystems",
+      "layer": "virtual-subsystems",
+      "title": "Virtual filesystem and filesystems",
+      "summary": "Path resolution and file opening, from the openat syscall to a filesystem's open callback.",
+      "roots": ["fs", "include/linux"],
+      "symbols": [
+        {
+          "name": "do_sys_openat2",
+          "file": "fs/open.c",
+          "kind": "function",
+          "purpose": "Common implementation behind openat and openat2."
+        },
+        {
+          "name": "do_filp_open",
+          "file": "fs/namei.c",
+          "kind": "function",
+          "purpose": "Resolves the final path component and opens the file."
+        },
+        {
+          "name": "vfs_open",
+          "file": "fs/open.c",
+          "kind": "function",
+          "purpose": "Calls the filesystem's open handler with the resolved file."
+        }
+      ],
+      "config_gates": ["ALWAYS"],
+      "verify_commands": [
+        "grep -n 'do_sys_openat2' fs/open.c",
+        "grep -n 'do_filp_open' fs/namei.c"
+      ],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "block-layer",
+      "layer": "virtual-subsystems",
+      "title": "Block layer",
+      "summary": "Submission of block I/O and allocation of bios.",
+      "roots": ["block"],
+      "symbols": [
+        {
+          "name": "submit_bio",
+          "file": "block/blk-core.c",
+          "kind": "function",
+          "purpose": "Submits a bio for block I/O."
+        },
+        {
+          "name": "blk_mq_submit_bio",
+          "file": "block/blk-mq.c",
+          "kind": "function",
+          "purpose": "Multi-queue submission path for a bio."
+        },
+        {
+          "name": "bio_alloc_bioset",
+          "file": "block/bio.c",
+          "kind": "function",
+          "purpose": "Allocates a bio from a bioset."
+        }
+      ],
+      "config_gates": ["CONFIG_BLOCK"],
+      "verify_commands": ["grep -n 'submit_bio' block/blk-core.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "networking",
+      "layer": "virtual-subsystems",
+      "title": "Networking",
+      "summary": "Packet receive and transmit paths in the network stack.",
+      "roots": ["net", "include/net"],
+      "symbols": [
+        {
+          "name": "tcp_v4_rcv",
+          "file": "net/ipv4/tcp_ipv4.c",
+          "kind": "function",
+          "purpose": "Receive path for IPv4 TCP segments."
+        },
+        {
+          "name": "ip_rcv",
+          "file": "net/ipv4/ip_input.c",
+          "kind": "function",
+          "purpose": "Receive path for IPv4 packets."
+        },
+        {
+          "name": "__dev_queue_xmit",
+          "file": "net/core/dev.c",
+          "kind": "function",
+          "purpose": "Transmits a packet on a network device."
+        }
+      ],
+      "config_gates": ["CONFIG_NET"],
+      "verify_commands": ["grep -n 'tcp_v4_rcv' net/ipv4/tcp_ipv4.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "device-model-drivers",
+      "layer": "hardware-interfaces",
+      "title": "Device model and drivers",
+      "summary": "Device registration, driver binding, and bus management.",
+      "roots": ["drivers/base", "include/linux"],
+      "symbols": [
+        {
+          "name": "device_add",
+          "file": "drivers/base/core.c",
+          "kind": "function",
+          "purpose": "Registers a device with the device model."
+        },
+        {
+          "name": "bus_add_driver",
+          "file": "drivers/base/bus.c",
+          "kind": "function",
+          "purpose": "Registers a driver with a bus."
+        },
+        {
+          "name": "__driver_probe_device",
+          "file": "drivers/base/dd.c",
+          "kind": "function",
+          "purpose": "Attempts to bind a device to a driver."
+        }
+      ],
+      "config_gates": ["ALWAYS"],
+      "verify_commands": ["grep -n 'device_add' drivers/base/core.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "arch-specific",
+      "layer": "hardware-interfaces",
+      "title": "Architecture-specific code",
+      "summary": "Syscall entry and CPU setup for a target architecture (x86 shown; re-resolve for the target).",
+      "roots": ["arch/x86"],
+      "symbols": [
+        {
+          "name": "do_syscall_64",
+          "file": "arch/x86/entry/syscall_64.c",
+          "kind": "function",
+          "purpose": "x86-64 syscall dispatch."
+        },
+        {
+          "name": "entry_SYSCALL_64",
+          "file": "arch/x86/entry/entry_64.S",
+          "kind": "asm",
+          "purpose": "Assembly entry point for x86-64 syscalls."
+        },
+        {
+          "name": "start_kernel",
+          "file": "init/main.c",
+          "kind": "function",
+          "purpose": "Architecture-independent kernel startup entry."
+        }
+      ],
+      "config_gates": ["ALWAYS"],
+      "verify_commands": [
+        "grep -n 'do_syscall_64' arch/x86/entry/syscall_64.c"
+      ],
+      "notes": "x86 paths are an example; re-resolve against the target architecture before presenting.",
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "boot-init",
+      "layer": "logical-subsystems",
+      "title": "Boot and initialization",
+      "summary": "Kernel startup, init thread, and early initialization.",
+      "roots": ["init", "kernel"],
+      "symbols": [
+        {
+          "name": "start_kernel",
+          "file": "init/main.c",
+          "kind": "function",
+          "purpose": "Main kernel startup function."
+        },
+        {
+          "name": "kernel_init",
+          "file": "init/main.c",
+          "kind": "function",
+          "purpose": "Init thread entry that runs /sbin/init."
+        },
+        {
+          "name": "rest_init",
+          "file": "init/main.c",
+          "kind": "function",
+          "purpose": "Spawns the init thread and becomes the idle task."
+        }
+      ],
+      "config_gates": ["ALWAYS"],
+      "verify_commands": ["grep -n 'start_kernel' init/main.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "tracing-observability",
+      "layer": "logical-subsystems",
+      "title": "Tracing and observability",
+      "summary": "Tracepoints, kprobes, and perf counters for observing kernel behavior.",
+      "roots": ["kernel/trace", "kernel"],
+      "symbols": [
+        {
+          "name": "register_kprobe",
+          "file": "kernel/kprobes.c",
+          "kind": "function",
+          "purpose": "Registers a kprobe on a kernel address."
+        },
+        {
+          "name": "tracepoint_probe_register",
+          "file": "kernel/tracepoint.c",
+          "kind": "function",
+          "purpose": "Connects a probe to a tracepoint."
+        },
+        {
+          "name": "perf_event_create_kernel_counter",
+          "file": "kernel/events/core.c",
+          "kind": "function",
+          "purpose": "Creates a perf counter usable from kernel code."
+        }
+      ],
+      "config_gates": ["CONFIG_FTRACE", "CONFIG_KPROBES", "CONFIG_PERF_EVENTS"],
+      "verify_commands": ["grep -n 'register_kprobe' kernel/kprobes.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "security",
+      "layer": "logical-subsystems",
+      "title": "Security",
+      "summary": "Capability checks, permission decisions, and LSM hooks.",
+      "roots": ["security", "kernel"],
+      "symbols": [
+        {
+          "name": "security_file_open",
+          "file": "security/security.c",
+          "kind": "function",
+          "purpose": "LSM hook invoked when a file is opened."
+        },
+        {
+          "name": "capable",
+          "file": "kernel/capability.c",
+          "kind": "function",
+          "purpose": "Checks whether the current task has a capability."
+        },
+        {
+          "name": "ns_capable",
+          "file": "kernel/capability.c",
+          "kind": "function",
+          "purpose": "Capability check relative to a user namespace."
+        }
+      ],
+      "config_gates": ["CONFIG_SECURITY"],
+      "verify_commands": ["grep -n 'security_file_open' security/security.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "ipc",
+      "layer": "logical-subsystems",
+      "title": "Inter-process communication",
+      "summary": "System V IPC: message queues, semaphores, and shared memory.",
+      "roots": ["ipc"],
+      "symbols": [
+        {
+          "name": "ksys_msgsnd",
+          "file": "ipc/msg.c",
+          "kind": "function",
+          "purpose": "Kernel implementation of msgsnd(2)."
+        },
+        {
+          "name": "ksys_msgrcv",
+          "file": "ipc/msg.c",
+          "kind": "function",
+          "purpose": "Kernel implementation of msgrcv(2)."
+        },
+        {
+          "name": "ksys_shmget",
+          "file": "ipc/shm.c",
+          "kind": "function",
+          "purpose": "Kernel implementation of shmget(2)."
+        }
+      ],
+      "config_gates": ["CONFIG_SYSVIPC"],
+      "verify_commands": ["grep -n 'ksys_msgsnd' ipc/msg.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "time-timers",
+      "layer": "logical-subsystems",
+      "title": "Time and timers",
+      "summary": "Timekeeping, high-resolution timers, and timeouts.",
+      "roots": ["kernel/time"],
+      "symbols": [
+        {
+          "name": "ktime_get",
+          "file": "kernel/time/timekeeping.c",
+          "kind": "function",
+          "purpose": "Returns the current time as ktime_t."
+        },
+        {
+          "name": "hrtimer_start",
+          "file": "include/linux/hrtimer.h",
+          "kind": "macro",
+          "purpose": "Arms a high-resolution timer."
+        }
+      ],
+      "config_gates": ["ALWAYS"],
+      "verify_commands": ["grep -n 'ktime_get' kernel/time/timekeeping.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "power-management",
+      "layer": "logical-subsystems",
+      "title": "Power management",
+      "summary": "System suspend/resume and runtime power management.",
+      "roots": ["kernel/power", "drivers/base"],
+      "symbols": [
+        {
+          "name": "pm_suspend",
+          "file": "kernel/power/suspend.c",
+          "kind": "function",
+          "purpose": "Enters a system sleep state."
+        },
+        {
+          "name": "pm_runtime_get_sync",
+          "file": "include/linux/pm_runtime.h",
+          "kind": "macro",
+          "purpose": "Increments runtime usage and resumes the device."
+        },
+        {
+          "name": "device_pm_add",
+          "file": "drivers/base/power/main.c",
+          "kind": "function",
+          "purpose": "Registers a device with the power management core."
+        }
+      ],
+      "config_gates": ["CONFIG_PM"],
+      "verify_commands": ["grep -n 'pm_suspend' kernel/power/suspend.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    },
+    {
+      "id": "virtualization",
+      "layer": "hardware-interfaces",
+      "title": "Virtualization",
+      "summary": "KVM initialization and vCPU management.",
+      "roots": ["virt", "arch/x86/kvm"],
+      "symbols": [
+        {
+          "name": "kvm_init",
+          "file": "virt/kvm/kvm_main.c",
+          "kind": "function",
+          "purpose": "Initializes the KVM subsystem."
+        },
+        {
+          "name": "kvm_vcpu_ioctl",
+          "file": "virt/kvm/kvm_main.c",
+          "kind": "function",
+          "purpose": "Handles vCPU ioctls."
+        }
+      ],
+      "config_gates": ["CONFIG_KVM"],
+      "verify_commands": ["grep -n 'kvm_init' virt/kvm/kvm_main.c"],
+      "kernel_version": "6.18.58",
+      "status": "unverified"
+    }
+  ]
+}

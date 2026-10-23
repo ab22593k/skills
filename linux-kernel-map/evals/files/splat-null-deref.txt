@@ -1,0 +1,8 @@
+BUG: NULL pointer dereference in kernel mode
+CPU: 0 PID: 1234 Comm: test_open Tainted: G        W  O
+RIP: 0010:do_sys_openat2+0x10/0x200
+Call Trace:
+ do_sys_openat2+0x10/0x200
+ do_syscall_64+0x3b/0x90
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
+Code: ...

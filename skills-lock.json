@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "linux-kernel-map": {
+      "source": "./linux-kernel-map",
+      "sourceType": "local",
+      "computedHash": "65cf661e4533ea0a6ec5db2193f0eff9c094b992f77a84d5b679ce09541607a6"
+    }
+  }
+}

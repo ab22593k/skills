@@ -1,0 +1,8 @@
+openat(AT_FDCWD, "/etc/shadow", O_RDONLY) = -1 EACCES
+trace:
+  do_sys_openat2 (fs/open.c)
+  do_filp_open (fs/namei.c)
+  may_lookup (fs/namei.c)
+  inode_permission (fs/namei.c)
+  security_file_open (security/security.c)
+decision: inode_permission returns -EACCES

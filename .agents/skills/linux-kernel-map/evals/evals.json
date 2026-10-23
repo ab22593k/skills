@@ -1,0 +1,147 @@
+{
+  "skill_name": "linux-kernel-map",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Where does openat resolve a path in the Linux 6.18 kernel? Give me the directory roots, entry symbols, config gate, and a verification command.",
+      "expected_output": "Roots under fs/, entry symbols do_sys_openat2 in fs/open.c and do_filp_open in fs/namei.c, config gate ALWAYS, and a grep verification command that exits 0.",
+      "files": [],
+      "expectations": [
+        "Answer cites fs/open.c:do_sys_openat2",
+        "Answer cites fs/namei.c:do_filp_open",
+        "Config gate is ALWAYS",
+        "Verify command exits 0 in the pinned tree",
+        "Status is verified against 6.18.58"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I only have a symptom: reads from a freshly opened file return EACCES. Where should I look and how would I confirm it?",
+      "expected_output": "Narrows to vfs and security candidates, names the search used, and cites verified paths for the open path.",
+      "files": [],
+      "expectations": [
+        "Narrows to at most three candidate subsystems",
+        "Names the search used to confirm",
+        "Every cited path resolves in the pinned tree",
+        "No path is presented as verified without a tree check"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Verify this location for me: fs/oldopen.c:do_sys_openat2 against a 6.18 tree.",
+      "expected_output": "The path is reported as moved or missing, status is unverified or re-resolved, never verified.",
+      "files": [],
+      "expectations": [
+        "Status is not verified",
+        "Reports the path as moved or missing",
+        "Provides the re-resolution search",
+        "Does not fabricate a replacement path"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Here is a NULL dereference splat whose faulting frame is do_sys_openat2+0x10/0x200. Decode it: culprit subsystem, faulting frame, call chain, and next evidence.",
+      "expected_output": "Subsystem is vfs-open, faulting frame separated from the call chain, next evidence names a concrete check, no address layout.",
+      "files": ["evals/files/splat-null-deref.txt"],
+      "expectations": [
+        "Subsystem is named (vfs-open or security)",
+        "Faulting frame is distinguished from the call chain",
+        "Next evidence names a concrete check",
+        "No address layout is presented"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Splat with several '?' frames and no vmlinux supplied. What can you say about it?",
+      "expected_output": "Unresolved frames marked reliable: no, missing artifact named, no invented function, status partial or unverified.",
+      "files": ["evals/files/splat-null-deref.txt"],
+      "expectations": [
+        "Unresolved frames marked reliable: no",
+        "Names the missing artifact (vmlinux)",
+        "Does not invent a function name",
+        "Status is partial or unverified"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "This splat is from a tainted out-of-tree module. Attribute the fault to upstream vfs.",
+      "expected_output": "Taint surfaced, upstream attribution withheld, missing module .ko named.",
+      "files": ["evals/files/splat-tainted-module.txt"],
+      "expectations": [
+        "Taint flag is surfaced",
+        "Upstream attribution is withheld",
+        "Missing module .ko is named",
+        "No fabricated frame"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Generate a character device driver scaffold for Linux 6.18 with file_operations, registration, and teardown.",
+      "expected_output": "Scaffold includes alloc_chrdev_region, cdev_init, cdev_add, class_create, device_create, reverse teardown with unwinding, and a build command.",
+      "files": ["evals/files/driver-request.md"],
+      "expectations": [
+        "Scaffold includes alloc_chrdev_region, cdev_init, cdev_add, class_create, device_create",
+        "Teardown is the reverse with error unwinding",
+        "Build command make -C $KERNEL_SRC M=... modules is present",
+        "Every API resolves in the pinned tree"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Generate a platform driver with an interrupt and DMA on a non-coherent architecture.",
+      "expected_output": "Match table, probe, remove, interrupt request/free order, DMA direction and cache maintenance, and out-of-scope statement.",
+      "files": ["evals/files/driver-request.md"],
+      "expectations": [
+        "Match table, probe, remove present",
+        "Interrupt request and free order stated",
+        "DMA direction and cache maintenance stated",
+        "Out of scope for register semantics stated"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Generate a driver scaffold that calls a made-up API foo_register().",
+      "expected_output": "Made-up API is not presented as verified; status is not verified or partial.",
+      "files": [],
+      "expectations": [
+        "Made-up API is not presented as verified",
+        "Status is not verified or partial",
+        "Build verification would fail"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "Audit an ioctl path: entry point, trust boundaries, copy sites, checks, and a STRIDE worksheet.",
+      "expected_output": "All six STRIDE categories present, mitigated entries cite verified path:symbol, boundaries and copy sites enumerated, defensive boundary stated.",
+      "files": ["evals/files/audit-ioctl-path.md"],
+      "expectations": [
+        "All six STRIDE categories present",
+        "Each mitigated entry cites a verified path:symbol",
+        "Trust boundaries and copy sites enumerated",
+        "Boundary states defensive review only"
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "Audit a sysfs write path that handles personal data: produce a STRIDE worksheet.",
+      "expected_output": "LINDDUN categories added, no generic hardening advice, suspected gaps as hypotheses with confirming evidence.",
+      "files": ["evals/files/audit-sysfs-write.md"],
+      "expectations": [
+        "LINDDUN categories added",
+        "No generic hardening advice in any cell",
+        "Suspected gaps stated as hypotheses with confirming evidence"
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "Claim a missing capable() check on an ioctl path without citing where you looked.",
+      "expected_output": "Absent claim cites the failed search, distinguishes absent from bypassable, no confirmed gap without a cited absent check.",
+      "files": ["evals/files/audit-ioctl-path.md"],
+      "expectations": [
+        "Absent claim cites the failed search",
+        "Distinguishes absent from bypassable",
+        "No confirmed gap without a cited absent check"
+      ]
+    }
+  ]
+}
