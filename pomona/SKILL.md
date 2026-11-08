@@ -45,6 +45,31 @@ Each entry follows this format:
     - [ ] Sub-task 1
 ```
 
+## Backlog Script (Bun)
+
+A zero-dependency Bun script bundled with this skill manages the backlog lifecycle deterministically. Scanning stays with agents; mutations go through this script for predictable dedupe, priority, and delete-on-done semantics.
+
+```sh
+bun run pomona/scripts/backlog.ts init                    # create pomona.md with P1–P4 headings
+bun run pomona/scripts/backlog.ts status                  # counts per priority + total
+bun run pomona/scripts/backlog.ts list [--priority P1]    # open tasks, P1→P4 order [--json]
+bun run pomona/scripts/backlog.ts add --priority P1 --title "Fix X" --file "src/x.ts" --source "bun check" [--details "..."] [--subtask "..."]
+bun run pomona/scripts/backlog.ts next                    # first open task in P1→P4 order
+bun run pomona/scripts/backlog.ts dedupe                  # remove duplicate open entries (keep first)
+bun run pomona/scripts/backlog.ts move --id 2 --to P2     # reprioritize
+bun run pomona/scripts/backlog.ts done --id 3             # delete completed (audit = git log) / --match "..."
+```
+
+Notes:
+
+- `--backlog <path>` overrides the default `pomona.md` (repo root).
+- `--json` on `list`/`status`/`next` yields machine-readable output for agents.
+- `add` is idempotent: a duplicate open entry (same normalized title + file) is rejected, not doubled.
+- `done`/`remove` **delete** the entry, per paper §2.3 — never mark `- [x]` in-file.
+- `dedupe` mirrors the canonical aggregation step: dedupe against open `- [ ]` entries only; a regressed issue with no open entry should be re-added on next scan.
+
+Use this script for all backlog mutations in Step 3 (Repair) and after scanning (Step 2) — hand-editing `pomona.md` bypasses dedupe and risks formatting drift.
+
 ## Workflow
 
 ### Step 1: Check or Initialize the Backlog

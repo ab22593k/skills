@@ -43,6 +43,20 @@
         "The PR description leads with concrete outcomes for engineers",
         "The backlog was updated to reflect the completed task"
       ]
+    },
+    {
+      "id": 4,
+      "prompt": "Use the bundled pomona backlog script (`bun run pomona/scripts/backlog.ts`) to manage pomona.md: initialize it, add a P1 task 'Fix failing test in checkout' for src/checkout.ts with source 'bun test', add a P2 quick win for formatting, then show status and list. Attempt to add the P1 task again (should be rejected as a duplicate). Then mark the P1 task done (which must delete it, not mark it - [x]) and show that next now returns the P2 task. Don't run a full scan.",
+      "expected_output": "pomona.md managed entirely via the backlog script: init/add/list/status/dedupe semantics verified, done deletes the entry, next respects P1→P4 order",
+      "files": [],
+      "expectations": [
+        "pomona.md was initialized with P1–P4 headings via `init`",
+        "Two distinct tasks were added via `add` (one P1, one P2) with File/Source/Details fields",
+        "Duplicate `add` of the P1 task was rejected as idempotent (no second copy)",
+        "status/list output shows correct counts and P1 before P2",
+        "done deleted the P1 entry (file contains no - [x] marker, task gone on list)",
+        "next returns the remaining P2 task"
+      ]
     }
   ]
 }
