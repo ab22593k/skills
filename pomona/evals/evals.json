@@ -3,11 +3,11 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "I want to start improving code quality in this project. Please run a Pomona scan to find code quality issues — look at our code for linting rule violations, stale TODO/FIXME comments, dead code (unused imports, commented-out blocks), and test coverage gaps. Create a prioritized backlog file (pomona-backlog.md) at the project root with the findings categorized P1-P4 using the benefit x ease-of-review matrix. Don't make any code changes yet — just produce the backlog so I can review what you found and decide what to tackle first.",
-      "expected_output": "A pomona-backlog.md file with prioritized code quality tasks",
+      "prompt": "I want to start improving code quality in this project. Please run a Pomona scan to find code quality issues — look at our code for linting rule violations, stale TODO/FIXME comments, dead code (unused imports, commented-out blocks), and test coverage gaps. Create a prioritized backlog file (pomona.md) at the project root with the findings categorized P1-P4 using the benefit x ease-of-review matrix. Don't make any code changes yet — just produce the backlog so I can review what you found and decide what to tackle first.",
+      "expected_output": "A pomona.md file with prioritized code quality tasks",
       "files": [],
       "expectations": [
-        "The backlog file pomona-backlog.md was created at the project root",
+        "The backlog file pomona.md was created at the project root",
         "Tasks are categorized into at least 2 priority levels (P1-P4)",
         "At least one task from the static analysis category (linting rule violations or type checking)",
         "At least one task from the TODO/dead code audit category",
@@ -31,11 +31,11 @@
     },
     {
       "id": 3,
-      "prompt": "I'd like to try the full Pomona continuous improvement cycle on this project. Set up the pomona-backlog.md, run the scanning workflow to fill it with prioritized tasks, then pick the highest-priority P1 task and implement the fix. Make the change small (~10 lines of diff as Pomona recommends). After making the change, write the commit message and PR description as specified by Pomona so I can see what would be submitted. Save the PR description to pomona-pr-description.md at the project root. Validate your changes with the project's linting commands if available.",
-      "expected_output": "A pomona-backlog.md with scanned tasks, a small code fix, and a pomona-pr-description.md with the PR description",
+      "prompt": "I'd like to try the full Pomona continuous improvement cycle on this project. Set up the pomona.md, run the scanning workflow to fill it with prioritized tasks, then pick the highest-priority P1 task and implement the fix. Make the change small (~10 lines of diff as Pomona recommends). After making the change, write the commit message and PR description as specified by Pomona so I can see what would be submitted. Save the PR description to pomona-pr-description.md at the project root. Validate your changes with the project's linting commands if available.",
+      "expected_output": "A pomona.md with scanned tasks, a small code fix, and a pomona-pr-description.md with the PR description",
       "files": [],
       "expectations": [
-        "A pomona-backlog.md file exists with scanned tasks in at least 2 priority levels",
+        "A pomona.md file exists with scanned tasks in at least 2 priority levels",
         "A code change was made (diff is non-empty)",
         "The code change is small (roughly 10 lines of diff)",
         "A pomona-pr-description.md file was created with a PR title and description",

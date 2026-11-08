@@ -86,12 +86,12 @@ Do **not** perform a fresh scan when P1/P2 still contain open tasks; work throug
 
 Launch multiple sub-agents IN PARALLEL, each exploring a different discovery area:
 
-**Sub-agent 1 — Static analysis expansion:**
+**Sub-agent 1 — Static analysis expansion:** _(Language-agnostic pattern — ruff strings below are the Python worked example only. Substitute the stack equivalent: TS/JS → `eslint`/`Biome`, Rust → `cargo clippy`/`rustfmt`, Go → `golangci-lint`/`staticcheck`, etc. Do not apply ruff rule IDs or commands to non-Python stacks.)_
 
 - Identify linting rules that could be enabled or tightened for this project. Look at the project's language and existing config files (e.g., `.ruff.toml`, `.eslintrc`, `.cargo.toml`, `go.mod`).
 - Find violations of rules that have auto-fixes available. These are P1/P2 because they're high-benefit (catch bugs) and easy to review (automated).
-- **When reporting Static analysis residuals, report under both the currently enabled rule set and the broader suggested rule set.** "0 errors under default rules but 100+ under SIM/E501/PTH" is honest; "0 errors" alone is misleading when the user should enable more rules.
-- **Collapse all auto-fixable style violations into one backlog ticket per tool** (e.g., "Apply all ruff auto-fixes" instead of listing each `COM812`, `D209`, `I001` separately). The reviewer can batch-approve them as a single mechanical change.
+- **When reporting Static analysis residuals, report under both the currently enabled rule set and the broader suggested rule set.** "0 errors under default rules but 100+ under SIM/E501/PTH" is honest (Python/ruff worked example; equivalents: `eslint` default vs strict, `cargo clippy` default vs pedantic/nursery, `golangci-lint` default vs strict); "0 errors" alone is misleading when the user should enable more rules.
+- **Collapse all auto-fixable style violations into one backlog ticket per tool** (e.g., "Apply all ruff auto-fixes" instead of listing each `COM812`, `D209`, `I001` separately — Python/ruff worked example; equivalents: `eslint --fix`, `cargo clippy --fix`, `gofmt`/`golangci-lint --fix`). The reviewer can batch-approve them as a single mechanical change.
 - **Triage markdown label references**: when static analysis reports `markdown/no-missing-label-refs`, quickly distinguish real broken links from intentional template placeholders (tags like `{install odoo}`, `{setup dev environment}`). Only backlog the real broken links.
 - Look for type checking strictness that can be increased.
 - **Flag the absence of tool configuration files** (missing `.ruff.toml`, `go.mod`, `tsconfig.json`) as the single highest-leverage process finding — once a project has an agreed lint baseline, everything else becomes easier to implement and enforce.
@@ -107,12 +107,12 @@ Scan ALL languages present in the repository, not just the primary language. For
   - Aspirational comments → P4
 - Search for comments that contradict the surrounding code.
 - Identify dead code: unused imports, commented-out code blocks (>3 consecutive commented lines), unreachable code after early returns, unused variables and functions.
-- For unused variable/function detection, use a **semantic tool** (e.g., `ruff check --select F841` for Python, `vulture` for deeper analysis) in addition to grep-based heuristics. String searches alone miss unused functions, dead conditional branches, and code behind `if TYPE_CHECKING` or `if False:` guards.
-- For each category, enumerate which languages/files were examined and what tool/command was used (e.g., `ruff check --select F401`, `grep -rn "TODO"`). Include the exact command and its output so findings are reproducible.
+- For unused variable/function detection, use a **semantic tool** (e.g., `ruff check --select F841` for Python worked example; equivalents: `eslint --no-unused-vars`/`tsc --noUnusedLocals` for TS, `cargo clippy -W unused`/`cargo dead_code` analysis for Rust, `staticcheck`/`go vet` for Go, `vulture` for deeper Python analysis) in addition to grep-based heuristics. String searches alone miss unused functions, dead conditional branches, and code behind `if TYPE_CHECKING` or `if False:` guards (Python example).
+- For each category, enumerate which languages/files were examined and what tool/command was used (e.g., `ruff check --select F401` for Python worked example; equivalents: `eslint`, `cargo clippy`, `golangci-lint`, `grep -rn "TODO"`). Include the exact command and its output so findings are reproducible.
 - If a finding count is zero, confirm it by showing the command and its empty output — don't just assert "0 found."
 - **Include the exact git revision or tree hash** that was scanned so the result is anchored to a specific point in the project's history.
-- **Qualify "clean" results** with the methodology used: "No unused imports found via `ruff check --select F401`" is precise. "No unused imports found" is over-confident — it implies a level of semantic analysis the tool doesn't perform.
-- **State what was NOT checked** explicitly — e.g., "Unused functions/methods not assessed (ruff F841 only covers local variables, not function definitions)." This prevents readers from over-interpreting a narrow negative result.
+- **Qualify "clean" results** with the methodology used: "No unused imports found via `ruff check --select F401`" is precise (Python/ruff worked example; equivalents: `eslint`, `cargo clippy`, `staticcheck`). "No unused imports found" is over-confident — it implies a level of semantic analysis the tool doesn't perform.
+- **State what was NOT checked** explicitly — e.g., "Unused functions/methods not assessed (ruff F841 only covers local variables, not function definitions — Python/ruff worked example; state equivalent scope for `eslint`/`clippy`/`staticcheck`)." This prevents readers from over-interpreting a narrow negative result.
 
 **Sub-agent 3 — Test coverage gaps and code structure:**
 
