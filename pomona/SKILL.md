@@ -1,6 +1,6 @@
 ---
 name: pomona
-description: "Run the Pomona continuous code-quality improvement cycle: scan a project for lint violations, TODO/FIXME comments, dead code, test gaps, and long functions; prioritize findings into a P1-P4 backlog; then pick the top task and create a tiny (~10 line diff) PR. Use whenever the conversation involves: automated code maintenance, technical debt reduction, scanning a repo for quality issues, setting up a cleanup pipeline, making small incremental fixes (Kaizen-style), cleaning up TODOs or dead code, enabling stricter linter rules, or filing small focused PRs one at a time. Also trigger if the user mentions Pomona by name, asks for a 'backlog of code quality tasks', or describes a workflow where the agent repeatedly finds one small issue, fixes it."
+description: "Continuous code-quality cycle: scan for lint/TODO/dead-code/test gaps, prioritize as P1-P4 in pomona.md, fix the top task in a ~10-line PR. Use for automated maintenance, tech-debt cleanup, and small incremental fixes."
 ---
 
 # Pomona: Continuous Code Quality Improvement
@@ -11,7 +11,7 @@ Pomona system at Bloomberg implements a Kaizen-inspired cycle of automated disco
 
 All tasks are categorized into four priority levels:
 
-|                  | Easy to review      | Hard to review                       |
+| Benefit Level    | Easy to review      | Hard to review                       |
 | ---------------- | ------------------- | ------------------------------------ |
 | **High benefit** | **P1 — Do first**   | **P3 — Worth doing, plan the split** |
 | **Low benefit**  | **P2 — Quick wins** | **P4 — Parking lot (don't pick)**    |
@@ -30,7 +30,7 @@ Examples of what IS NOT high benefit: missing language specifiers on fenced code
 
 ## Backlog Format
 
-Store the backlog at the repository root as `pomona.md` (paper §2.3 stores it in the repository so `git log -- pomona.md` is the audit trail). Only add it to `.gitignore` if you explicitly want a local-only backlog — doing so opts out of the paper's git-history audit trail.
+Store the backlog at the repository root as `pomona.md`.
 
 Each entry follows this format:
 
@@ -65,38 +65,38 @@ Notes:
 - `--backlog <path>` overrides the default `pomona.md` (repo root).
 - `--json` on `list`/`status`/`next` yields machine-readable output for agents.
 - `add` is idempotent: a duplicate open entry (same normalized title + file) is rejected, not doubled.
-- `done`/`remove` **delete** the entry, per paper §2.3 — never mark `- [x]` in-file.
+- `done`/`remove` **delete** the entry, never mark `- [x]` in-file.
 - `dedupe` mirrors the canonical aggregation step: dedupe against open `- [ ]` entries only; a regressed issue with no open entry should be re-added on next scan.
 
-Use this script for all backlog mutations in Step 3 (Repair) and after scanning (Step 2) — hand-editing `pomona.md` bypasses dedupe and risks formatting drift.
+Use this script for all backlog mutations in **Step 3** (Repair) and after scanning **Step 2** — hand-editing `pomona.md` bypasses dedupe and risks formatting drift.
 
 ## Workflow
 
 ### Step 1: Check or Initialize the Backlog
 
-Check if `pomona.md` exists in the repository root. If it doesn't, or if high-priority tasks (P1 and P2) are empty, run the **Scanning** workflow first (Step 2), then return here. Per paper §2.2 + §2.3, scanning is an **on-demand refill** triggered as part of Repair only when the backlog runs low on high-priority tasks ("when the backlog runs low on high-priority tasks (P1 and P2 categories are empty)") — not on every cycle.
+Check if `pomona.md` exists in the repository root. If it doesn't, or if high-priority tasks (P1 and P2) are empty, run the **Scanning** workflow first (Step 2), then return here. Scanning is an **on-demand refill** triggered as part of Repair only when the backlog runs low on high-priority tasks ("when the backlog runs low on high-priority tasks (P1 and P2 categories are empty)") — not on every cycle.
 
 Do **not** perform a fresh scan when P1/P2 still contain open tasks; work through the existing prioritized backlog first. This lazy refill is intentional — it avoids redundant scanning. Only force a full rescan when explicitly requested by the user or when priorities have gone stale and need a refresh.
 
 ### Step 2: Scanning — Discover Code Quality Tasks
 
-**Canonical Pomona is language-agnostic** (paper §1, §2.2) — the framework applies to any language/stack. The paper's scanning + aggregation is only the 2-step concat+dedup → Table 1 priority described below.
+**Canonical Pomona is language-agnostic** The framework applies to any language/stack. The paper's scanning + aggregation is only the 2-step concat+dedup → Table 1 priority described below.
 
-> **Bloomberg example — Suggested extensions per §2.2 "our specific implementation" (not canonical Pomona):** The three sub-agents below are _one_ Bloomberg instantiation. Demoted from canonical — presented as suggested extensions. Adapt, replace, or omit per your language/stack; do not present as canonical Pomona.
+> **Bloomberg sample — Suggested extensions "our specific implementation" (not canonical Pomona):** The three sub-agents below are _one_ instantiation. Demoted from canonical — presented as suggested extensions. Adapt, replace, or omit per your language/stack.
 
-Launch multiple sub-agents IN PARALLEL, each exploring a different discovery area _(Bloomberg example)_:
+Launch multiple sub-agents IN PARALLEL, each exploring a different discovery area:
 
-**Sub-agent 1 — Static analysis expansion (Bloomberg example — suggested):**
+**Sub-agent 1 — Static analysis expansion:**
 
-- Identify linting rules that could be enabled or tightened for this project. Look at the project's language and existing config files (e.g., `.ruff.toml`, `.eslintrc`, `.golangci.yml`, `pyproject.toml`).
+- Identify linting rules that could be enabled or tightened for this project. Look at the project's language and existing config files (e.g., `.ruff.toml`, `.eslintrc`, `.cargo.toml`, `go.mod`).
 - Find violations of rules that have auto-fixes available. These are P1/P2 because they're high-benefit (catch bugs) and easy to review (automated).
-- **When reporting ruff residuals, report under both the currently enabled rule set and the broader suggested rule set.** "0 errors under default rules but 100+ under SIM/E501/PTH" is honest; "0 errors" alone is misleading when the user should enable more rules.
+- **When reporting Static analysis residuals, report under both the currently enabled rule set and the broader suggested rule set.** "0 errors under default rules but 100+ under SIM/E501/PTH" is honest; "0 errors" alone is misleading when the user should enable more rules.
 - **Collapse all auto-fixable style violations into one backlog ticket per tool** (e.g., "Apply all ruff auto-fixes" instead of listing each `COM812`, `D209`, `I001` separately). The reviewer can batch-approve them as a single mechanical change.
-- **Triage markdown label references**: when ESLint reports `markdown/no-missing-label-refs`, quickly distinguish real broken links from intentional template placeholders (tags like `{install odoo}`, `{setup dev environment}`). Only backlog the real broken links.
+- **Triage markdown label references**: when static analysis reports `markdown/no-missing-label-refs`, quickly distinguish real broken links from intentional template placeholders (tags like `{install odoo}`, `{setup dev environment}`). Only backlog the real broken links.
 - Look for type checking strictness that can be increased.
-- **Flag the absence of tool configuration files** (missing `.ruff.toml`, `pyproject.toml`, `tsconfig.json`) as the single highest-leverage process finding — once a project has an agreed lint baseline, everything else becomes easier to implement and enforce.
+- **Flag the absence of tool configuration files** (missing `.ruff.toml`, `go.mod`, `tsconfig.json`) as the single highest-leverage process finding — once a project has an agreed lint baseline, everything else becomes easier to implement and enforce.
 
-**Sub-agent 2 — TODO/dead code audit (Bloomberg example — suggested):**
+**Sub-agent 2 — TODO/dead code audit:**
 
 Scan ALL languages present in the repository, not just the primary language. For each language (Python, TypeScript, Rust, Go, Markdown, shell, config files), apply the appropriate search tools. _(Suggested extension — paper is language-agnostic; this breadth is Bloomberg's choice.)_
 
@@ -114,7 +114,7 @@ Scan ALL languages present in the repository, not just the primary language. For
 - **Qualify "clean" results** with the methodology used: "No unused imports found via `ruff check --select F401`" is precise. "No unused imports found" is over-confident — it implies a level of semantic analysis the tool doesn't perform.
 - **State what was NOT checked** explicitly — e.g., "Unused functions/methods not assessed (ruff F841 only covers local variables, not function definitions)." This prevents readers from over-interpreting a narrow negative result.
 
-**Sub-agent 3 — Test coverage gaps and code structure (Bloomberg example — suggested):**
+**Sub-agent 3 — Test coverage gaps and code structure:**
 
 - Compare source modules with test modules to find untested modules.
 - Prioritize pure-logic modules without heavy data dependencies (easiest to test) and modules with complex branching logic (highest value).
@@ -123,34 +123,33 @@ Scan ALL languages present in the repository, not just the primary language. For
 - **For each long function, propose a concrete extraction boundary** (e.g., "Pull chapter-heading detection into a pure function returning an enum" rather than just "decompose main()"). Specific proposals are reviewable; general ones are not.
 - **Report function-level coverage**, not just module presence. "All modules have test files" is not the same as "extraction backends are tested." Count specifically which functions lack tests (e.g., "extract_with_pymupdf: untested, extract_with_ebooklib: untested, \_handle_pdf_extraction: untested, main(): untested").
 
-> **I1–I9 demotion:** All detailed heuristics above (dual-rule reporting, collapse same-rule, markdown triage, missing-config flag, command enumeration + git-hash anchoring, clean-result qualification, NOT-checked disclosure, concrete extraction boundary, function-level coverage counting) are **Suggested extensions / Bloomberg example per §2.2 "our specific implementation" — not canonical Pomona**. Keep as optional examples; do not present as canonical aggregation.
+> **I1–I9 demotion:** All detailed heuristics above (dual-rule reporting, collapse same-rule, markdown triage, missing-config flag, command enumeration + git-hash anchoring, clean-result qualification, NOT-checked disclosure, concrete extraction boundary, function-level coverage counting) are **Suggested extensions**. Keep as optional samples; do not present as canonical aggregation.
 
-**Aggregate results (per paper §2.2 — 2 steps only):**
+**Aggregate results (2 steps only):**
 
-1. Concatenate all findings and remove duplicates — dedupe against each other and against current open `- [ ]` entries in `pomona.md`. Since completed tasks are deleted per §2.3 (audit = `git log`), do not dedupe against `- [x]` history; a regressed issue should legitimately be re-added on next scan.
+1. Concatenate all findings and remove duplicates — dedupe against each other and against current open `- [ ]` entries in `pomona.md`. Since completed tasks are deleted (audit = `git log`), do not dedupe against `- [x]` history; a regressed issue should legitimately be re-added on next scan.
 2. Assign each unique finding a priority (P1–P4) using the priority matrix (Table 1) above. Err on the side of lower priority (P2/P4) when the benefit is marginal.
 
-> **Skill extensions — not in paper §2.2:** Steps 3–7 below are skill additions. Paper stops at the 2 steps above; do not attribute these to §2.2. 3. Convert each finding to the backlog format (Fig. 2) and append to the appropriate priority section of `pomona.md` (open tasks only). 4. If a scan uncovered items outside the requested scope (e.g., package hygiene during a TODO audit), place them in a clearly labeled "Additional observations" section — never mix them into the priority backlog. 5. Collapse repeated items of the same rule/tool into a single ticket — both within and across priority levels (e.g., 22 fenced-code-language violations → one P2 ticket; if spanning priorities, use the lower). 6. For each P1 and P2 item, optionally include a measurable acceptance criterion (e.g., "Reduce ESLint errors from 117 to <50") — useful but not paper-required. 7. Optionally include a "Measurement" block at the top of the backlog with baseline numbers (lint errors by tool, files/LOC scanned, coverage %, functions >50 lines, untested modules) — skill polish, not paper.
+> **Skill extensions:** Steps 3–7 below are skill additions. Paper stops at the 2 steps above; do not attribute these to §2.2. 3. Convert each finding to the backlog format (Fig. 2) and append to the appropriate priority section of `pomona.md` (open tasks only). 4. If a scan uncovered items outside the requested scope (e.g., package hygiene during a TODO audit), place them in a clearly labeled "Additional observations" section — never mix them into the priority backlog. 5. Collapse repeated items of the same rule/tool into a single ticket — both within and across priority levels (e.g., 22 fenced-code-language violations → one P2 ticket; if spanning priorities, use the lower). 6. For each P1 and P2 item, optionally include a measurable acceptance criterion (e.g., "Reduce ESLint errors from 117 to <50") — useful but not paper-required. 7. Optionally include a "Measurement" block at the top of the backlog with baseline numbers (lint errors by tool, files/LOC scanned, coverage %, functions >50 lines, untested modules) — skill polish, not paper.
 
 ### Step 3: Repair — Pick and Fix a Task
 
 Select the first task from the highest non-empty priority category (P1 → P2 → P3 → P4). If a task has sub-tasks, pick the first sub-task.
 
-**Paper deduplication (missing detail added):** Before starting, check **open PRs** for an existing PR covering the same file/rule/task — paper §2.3 deduplicates against open PRs to avoid duplicate work. If a matching open PR exists, skip and pick the next task.
+**Deduplication:** Before starting, check **open PRs** for an existing PR covering the same file/rule/task — deduplicates against open PRs to avoid duplicate work. If a matching open PR exists, skip and pick the next task.
 
 **Critical: verify the task exists in the backlog before starting.** If the selected task is not already an entry in `pomona.md`, add it first. The backlog must accurately reflect what is being worked on at all times — this is the core of the continuous improvement cycle. Never fix an issue that isn't tracked.
 
 **Implement the fix:**
 
-1. Make the code change targeting **~10 lines of diff** (Abstract + §2.3: "targeting ~10 lines of diff" / "aim for roughly 10 lines") as an aspiration, not a hard cap — small diffs are the #1 factor for PR acceptance.
-2. Per Evaluation §3.1.1 this is aspirational: **median 16, mean 29.4, range 5–139** (max 139 merged in ~1h). If a coherent fix exceeds ~10, apply the paper's split strategy — e.g., _"enable rules / add tests for one directory at a time"_ — or slice the task and add follow-up backlog entries, rather than enforcing a hard "≤10, stop at 11+" budget. Do not apply invented counting rules (e.g., "whitespace/renames free") not in the paper.
+1. Make the code change targeting **~10 lines of diff** ("targeting ~10 lines of diff" / "aim for roughly 10 lines") as an aspiration, not a hard cap.
+2. **median 16, mean 29.4, range 5–139** (max 139 merged in ~1h). If a coherent fix exceeds ~10, apply the paper's split strategy — e.g., _"enable rules / add tests for one directory at a time"_ — or slice the task and add follow-up backlog entries, rather than enforcing a hard "≤10, stop at 11+" budget. Do not apply invented counting rules (e.g., "whitespace/renames free").
 3. After making changes, validate with the project's test and linting commands.
 4. If validation fails, fix the issues and re-validate.
-5. Create the PR via **MCP using the paper's PR template** with an **emoji-prefixed title** (paper §2.3/Fig. 3: e.g., `✨`, `🧹`, `🐛` prefix) — missing detail added; do not use plain titles.
-6. **Report after-state metrics** in the PR description: how many errors remain after the fix (e.g., "ruff — 48 → 42 errors"). This turns progress from narrative to quantitative. Include **backlog-excluded metrics** separately (paper §2.3: overall repo metrics not added to the P1–P4 backlog, reported only in the PR/description) — do not inject them into `pomona.md` priorities.
-7. If the fix addresses a security issue, include the **CWE reference** and explain why the old code was unsafe — not just what changed, but why the old pattern is dangerous.
+5. **Report after-state metrics** in the PR description: how many errors remain after the fix (e.g., "ruff — 48 → 42 errors"). This turns progress from narrative to quantitative. Include **backlog-excluded metrics** separately (paper §2.3: overall repo metrics not added to the P1–P4 backlog, reported only in the PR/description) — do not inject them into `pomona.md` priorities.
+6. If the fix addresses a security issue, include the **CWE reference** and explain why the old code was unsafe — not just what changed, but why the old pattern is dangerous.
 
-**Update the backlog (per §2.3):**
+**Backlog update:**
 
 - Delete the completed task entry from `pomona.md`.
 - Add any follow-up tasks discovered during the fix as new entries in the appropriate priority section.
