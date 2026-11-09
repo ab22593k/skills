@@ -11,7 +11,7 @@ import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const SCRIPT = new URL("./backlog.ts", import.meta.url).pathname;
+const SCRIPT = new URL("./roadmap.ts", import.meta.url).pathname;
 
 function run(cwd: string, ...args: string[]) {
   const proc = Bun.spawnSync(["bun", "run", SCRIPT, ...args], {

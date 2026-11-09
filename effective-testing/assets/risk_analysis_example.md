@@ -209,7 +209,7 @@
 5. **Mobile browser testing** across platforms
 6. **Usability testing** with real users
 
-### Backlog
+### Roadmap
 
 7. **Accessibility audit** and remediation
 8. **Documentation review** and knowledge sharing

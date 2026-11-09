@@ -1,24 +1,24 @@
 #!/usr/bin/env bun
 /**
- * Pomona backlog lifecycle manager (bunsh-native).
+ * Pomona roadmap lifecycle manager (bunsh-native).
  *
  * Manages `ROADMAP.md` at the repo root — create/list/add/complete/dedupe
  * prioritized entries (P1–P4) — without scanning. Scanning stays with
- * agents; this script is the deterministic backlog mutation layer.
+ * agents; this script is the deterministic roadmap mutation layer.
  *
  * Zero dependencies. Uses Bun APIs (Bun.file / Bun.write) so it runs
- * with `bun run pomona/scripts/backlog.ts` in any Bun project.
+ * with `bun run pomona/scripts/roadmap.ts` in any Bun project.
  *
  * Usage:
- *   bun run pomona/scripts/backlog.ts init [--backlog ROADMAP.md]
- *   bun run pomona/scripts/backlog.ts status [--backlog ROADMAP.md] [--json]
- *   bun run pomona/scripts/backlog.ts list [--priority P1] [--open|--all] [--json]
- *   bun run pomona/scripts/backlog.ts add --priority P1 --title "Fix X" --file "src/a.ts" --source "ruff F401" --details "..." [--subtask "..."]
- *   bun run pomona/scripts/backlog.ts done --id 3 | --match "substring"
- *   bun run pomona/scripts/backlog.ts remove --id 1 | --match "..."
- *   bun run pomona/scripts/backlog.ts dedupe
- *   bun run pomona/scripts/backlog.ts move --id 2 --to P2
- *   bun run pomona/scripts/backlog.ts next [--json]
+ *   bun run pomona/scripts/roadmap.ts init [--roadmap ROADMAP.md]
+ *   bun run pomona/scripts/roadmap.ts status [--roadmap ROADMAP.md] [--json]
+ *   bun run pomona/scripts/roadmap.ts list [--priority P1] [--open|--all] [--json]
+ *   bun run pomona/scripts/roadmap.ts add --priority P1 --title "Fix X" --file "src/a.ts" --source "ruff F401" --details "..." [--subtask "..."]
+ *   bun run pomona/scripts/roadmap.ts done --id 3 | --match "substring"
+ *   bun run pomona/scripts/roadmap.ts remove --id 1 | --match "..."
+ *   bun run pomona/scripts/roadmap.ts dedupe
+ *   bun run pomona/scripts/roadmap.ts move --id 2 --to P2
+ *   bun run pomona/scripts/roadmap.ts next [--json]
  *
  * Semantics follow pomona/SKILL.md + paper §2.3:
  * - Completed tasks are DELETED (audit = `git log -- ROADMAP.md`), never marked - [x].
@@ -180,15 +180,15 @@ export function renderTask(
   return out;
 }
 
-async function readLines(backlog: string): Promise<string[]> {
-  if (!existsSync(backlog)) return [];
-  const text = await Bun.file(backlog).text();
+async function readLines(roadmap: string): Promise<string[]> {
+  if (!existsSync(roadmap)) return [];
+  const text = await Bun.file(roadmap).text();
   // Normalize CRLF, keep trailing empty entries from final newline.
   return text.replace(/\r\n/g, "\n").split("\n");
 }
 
-async function writeLines(backlog: string, lines: string[]) {
-  await Bun.write(backlog, lines.join("\n"));
+async function writeLines(roadmap: string, lines: string[]) {
+  await Bun.write(roadmap, lines.join("\n"));
 }
 
 function ensureHeadings(lines: string[]): string[] {
@@ -271,10 +271,10 @@ function parseFlags(argv: string[]): {
 }
 
 function usage() {
-  console.log(`pomona backlog — lifecycle manager for ROADMAP.md (Bun, zero deps)
+  console.log(`pomona roadmap — lifecycle manager for ROADMAP.md (Bun, zero deps)
 
 Usage:
-  bun run pomona/scripts/backlog.ts <command> [options] [--backlog ROADMAP.md]
+  bun run pomona/scripts/roadmap.ts <command> [options] [--roadmap ROADMAP.md]
 
 Commands:
   init     Create ROADMAP.md with P1–P4 headings (no-op if exists)
@@ -288,7 +288,7 @@ Commands:
   next     First open task in P1→P4 order [--json]
 
 Flags:
-  --backlog <path>   Backlog file (default: ROADMAP.md)
+  --roadmap <path>   Roadmap file (default: ROADMAP.md)
   --json             Machine-readable output
   --help             This help
 `);
@@ -317,33 +317,33 @@ async function main() {
     process.exit(cmd ? 0 : 2);
   }
 
-  const backlog =
-    typeof flags.backlog === "string" ? flags.backlog : "ROADMAP.md";
+  const roadmap =
+    typeof flags.roadmap === "string" ? flags.roadmap : "ROADMAP.md";
   const asJson = flags.json === true;
 
   switch (cmd) {
     case "init": {
-      if (existsSync(backlog)) {
-        console.log(`exists: ${backlog} (no-op)`);
+      if (existsSync(roadmap)) {
+        console.log(`exists: ${roadmap} (no-op)`);
         return;
       }
-      await Bun.write(backlog, INIT_CONTENT);
-      console.log(`created: ${backlog}`);
+      await Bun.write(roadmap, INIT_CONTENT);
+      console.log(`created: ${roadmap}`);
       return;
     }
 
     case "status": {
-      if (!existsSync(backlog)) {
-        console.log(`missing: ${backlog} (run init)`);
+      if (!existsSync(roadmap)) {
+        console.log(`missing: ${roadmap} (run init)`);
         process.exit(1);
       }
-      const lines = await readLines(backlog);
+      const lines = await readLines(roadmap);
       const tasks = parseTasks(lines);
       const counts: Record<Priority, number> = { P1: 0, P2: 0, P3: 0, P4: 0 };
       for (const t of tasks) if (t.priority) counts[t.priority]++;
       if (asJson) {
         console.log(
-          JSON.stringify({ backlog, counts, total: tasks.length }, null, 2),
+          JSON.stringify({ roadmap, counts, total: tasks.length }, null, 2),
         );
       } else {
         for (const p of PRIORITY_ORDER) console.log(`${p}: ${counts[p]}`);
@@ -353,11 +353,11 @@ async function main() {
     }
 
     case "list": {
-      if (!existsSync(backlog)) {
-        console.log(`missing: ${backlog} (run init)`);
+      if (!existsSync(roadmap)) {
+        console.log(`missing: ${roadmap} (run init)`);
         process.exit(1);
       }
-      const lines = await readLines(backlog);
+      const lines = await readLines(roadmap);
       let tasks = parseTasks(lines);
       const want = normalizePriority(flags.priority ?? "");
       if (want) tasks = tasks.filter((t) => t.priority === want);
@@ -408,8 +408,8 @@ async function main() {
       const details = typeof flags.details === "string" ? flags.details : "";
       const subtasks = values.subtask ?? [];
 
-      let lines = await readLines(backlog);
-      if (!existsSync(backlog))
+      let lines = await readLines(roadmap);
+      if (!existsSync(roadmap))
         lines = INIT_CONTENT.replace(/\r\n/g, "\n").split("\n");
       lines = ensureHeadings(lines);
 
@@ -439,15 +439,15 @@ async function main() {
       // Keep one blank line between the new entry and a following heading.
       const after = insertAt + block.length;
       if (lines[after]?.startsWith("## ")) lines.splice(after, 0, "");
-      await writeLines(backlog, lines);
+      await writeLines(roadmap, lines);
       console.log(`added [${priority}] ${title}${file ? ` (${file})` : ""}`);
       return;
     }
 
     case "done":
     case "remove": {
-      if (!existsSync(backlog)) fail(`missing: ${backlog}`, 1);
-      const lines = await readLines(backlog);
+      if (!existsSync(roadmap)) fail(`missing: ${roadmap}`, 1);
+      const lines = await readLines(roadmap);
       const tasks = parseTasks(lines);
       let target: Task | undefined;
       if (typeof flags.id === "string") {
@@ -465,17 +465,17 @@ async function main() {
       let end = target.end;
       if (lines[end]?.trim() === "" && end + 1 < lines.length) end += 1;
       lines.splice(target.start, end - target.start);
-      await writeLines(backlog, lines);
+      await writeLines(roadmap, lines);
       // Per paper §2.3: deleted, not - [x] — audit is git log.
       console.log(
-        `deleted (done) #${target.id} [${target.priority}] ${target.title} — audit = git log -- ${backlog}`,
+        `deleted (done) #${target.id} [${target.priority}] ${target.title} — audit = git log -- ${roadmap}`,
       );
       return;
     }
 
     case "dedupe": {
-      if (!existsSync(backlog)) fail(`missing: ${backlog}`, 1);
-      const lines = await readLines(backlog);
+      if (!existsSync(roadmap)) fail(`missing: ${roadmap}`, 1);
+      const lines = await readLines(roadmap);
       const tasks = parseTasks(lines);
       const seen = new Set<string>();
       const dups: Task[] = [];
@@ -494,7 +494,7 @@ async function main() {
         if (lines[end]?.trim() === "" && end + 1 < lines.length) end += 1;
         lines.splice(d.start, end - d.start);
       }
-      await writeLines(backlog, lines);
+      await writeLines(roadmap, lines);
       for (const d of dups)
         console.log(`removed duplicate #${d.id} [${d.priority}] ${d.title}`);
       console.log(`removed ${dups.length} duplicate(s)`);
@@ -504,8 +504,8 @@ async function main() {
     case "move": {
       const to = normalizePriority(flags.to ?? "");
       if (!to) fail("move requires --to P1..P4");
-      if (!existsSync(backlog)) fail(`missing: ${backlog}`, 1);
-      const lines = await readLines(backlog);
+      if (!existsSync(roadmap)) fail(`missing: ${roadmap}`, 1);
+      const lines = await readLines(roadmap);
       const tasks = parseTasks(lines);
       const n = Number(flags.id);
       const target = tasks.find((t) => t.id === n);
@@ -524,17 +524,17 @@ async function main() {
       // Keep one blank line between the moved entry and a following heading.
       const afterMove = insertAt + block2.length;
       if (lines[afterMove]?.startsWith("## ")) lines.splice(afterMove, 0, "");
-      await writeLines(backlog, lines);
+      await writeLines(roadmap, lines);
       console.log(`moved #${target.id} → ${to}: ${target.title}`);
       return;
     }
 
     case "next": {
-      if (!existsSync(backlog)) {
-        console.log(`missing: ${backlog} (run init)`);
+      if (!existsSync(roadmap)) {
+        console.log(`missing: ${roadmap} (run init)`);
         process.exit(1);
       }
-      const lines = await readLines(backlog);
+      const lines = await readLines(roadmap);
       const tasks = parseTasks(lines);
       const sorted = [...tasks].sort((a, b) => {
         const pa = a.priority ? PRIORITY_ORDER.indexOf(a.priority) : 99;
