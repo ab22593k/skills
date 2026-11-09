@@ -48,7 +48,7 @@ describe("sectionEnd multi-blank trim", () => {
   test("add into multi-blank P1 collapses to single separators", () => {
     const dir = freshDir();
     writeFileSync(
-      join(dir, "pomona.md"),
+      join(dir, "ROADMAP.md"),
       [
         "## P1 — Do First",
         "",
@@ -82,7 +82,7 @@ describe("sectionEnd multi-blank trim", () => {
     expect(res.exit).toBe(0);
     expect(res.stdout).toContain("added [P1] New P1");
 
-    const text = readFileSync(join(dir, "pomona.md"), "utf-8");
+    const text = readFileSync(join(dir, "ROADMAP.md"), "utf-8");
     // No triple-blank run survives; one separator on each side of the new entry.
     expect(maxBlankRun(text)).toBeLessThanOrEqual(1);
     expect(text).toContain("- [ ] **New P1**");
@@ -95,7 +95,7 @@ describe("sectionEnd multi-blank trim", () => {
   test("add into trailing-blank EOF section leaves no blank run", () => {
     const dir = freshDir();
     writeFileSync(
-      join(dir, "pomona.md"),
+      join(dir, "ROADMAP.md"),
       [
         "## P1 — Do First",
         "",
@@ -124,7 +124,7 @@ describe("sectionEnd multi-blank trim", () => {
     );
     expect(res.exit).toBe(0);
 
-    const text = readFileSync(join(dir, "pomona.md"), "utf-8");
+    const text = readFileSync(join(dir, "ROADMAP.md"), "utf-8");
     expect(text).toContain("- [ ] **Parked**");
     expect(maxBlankRun(text)).toBeLessThanOrEqual(1);
   });
@@ -132,7 +132,7 @@ describe("sectionEnd multi-blank trim", () => {
   test("move into multi-blank destination collapses separators", () => {
     const dir = freshDir();
     writeFileSync(
-      join(dir, "pomona.md"),
+      join(dir, "ROADMAP.md"),
       [
         "## P1 — Do First",
         "",
@@ -156,7 +156,7 @@ describe("sectionEnd multi-blank trim", () => {
     expect(res.exit).toBe(0);
     expect(res.stdout).toContain("moved");
 
-    const text = readFileSync(join(dir, "pomona.md"), "utf-8");
+    const text = readFileSync(join(dir, "ROADMAP.md"), "utf-8");
     expect(maxBlankRun(text)).toBeLessThanOrEqual(1);
     expect(run(dir, "list").stdout).toContain("Existing P1");
   });
@@ -214,7 +214,7 @@ describe("sectionEnd multi-blank trim", () => {
     ).toBe(1);
     // done deletes (audit = git log), no -[x] marker, next returns P2.
     expect(run(dir, "done", "--id", "1").stdout).toContain("deleted (done)");
-    const text = readFileSync(join(dir, "pomona.md"), "utf-8");
+    const text = readFileSync(join(dir, "ROADMAP.md"), "utf-8");
     expect(text).not.toContain("- [x]");
     expect(run(dir, "next").stdout).toContain("Format checkout.ts");
   });

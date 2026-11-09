@@ -2,7 +2,7 @@
 /**
  * Pomona backlog lifecycle manager (bunsh-native).
  *
- * Manages `pomona.md` at the repo root — create/list/add/complete/dedupe
+ * Manages `ROADMAP.md` at the repo root — create/list/add/complete/dedupe
  * prioritized entries (P1–P4) — without scanning. Scanning stays with
  * agents; this script is the deterministic backlog mutation layer.
  *
@@ -10,8 +10,8 @@
  * with `bun run pomona/scripts/backlog.ts` in any Bun project.
  *
  * Usage:
- *   bun run pomona/scripts/backlog.ts init [--backlog pomona.md]
- *   bun run pomona/scripts/backlog.ts status [--backlog pomona.md] [--json]
+ *   bun run pomona/scripts/backlog.ts init [--backlog ROADMAP.md]
+ *   bun run pomona/scripts/backlog.ts status [--backlog ROADMAP.md] [--json]
  *   bun run pomona/scripts/backlog.ts list [--priority P1] [--open|--all] [--json]
  *   bun run pomona/scripts/backlog.ts add --priority P1 --title "Fix X" --file "src/a.ts" --source "ruff F401" --details "..." [--subtask "..."]
  *   bun run pomona/scripts/backlog.ts done --id 3 | --match "substring"
@@ -21,7 +21,7 @@
  *   bun run pomona/scripts/backlog.ts next [--json]
  *
  * Semantics follow pomona/SKILL.md + paper §2.3:
- * - Completed tasks are DELETED (audit = `git log -- pomona.md`), never marked - [x].
+ * - Completed tasks are DELETED (audit = `git log -- ROADMAP.md`), never marked - [x].
  * - Dedupe is against open `- [ ]` entries only.
  * - Priorities: P1 Do first → P2 Quick wins → P3 Plan the split → P4 Parking lot.
  */
@@ -271,13 +271,13 @@ function parseFlags(argv: string[]): {
 }
 
 function usage() {
-  console.log(`pomona backlog — lifecycle manager for pomona.md (Bun, zero deps)
+  console.log(`pomona backlog — lifecycle manager for ROADMAP.md (Bun, zero deps)
 
 Usage:
-  bun run pomona/scripts/backlog.ts <command> [options] [--backlog pomona.md]
+  bun run pomona/scripts/backlog.ts <command> [options] [--backlog ROADMAP.md]
 
 Commands:
-  init     Create pomona.md with P1–P4 headings (no-op if exists)
+  init     Create ROADMAP.md with P1–P4 headings (no-op if exists)
   status   Counts per priority + open total [--json]
   list     List open tasks [--priority P1] [--all] [--json]
   add      Add task: --priority P1 --title "..." --file "path" [--source "..."] [--details "..."] [--subtask "..." ...]
@@ -288,7 +288,7 @@ Commands:
   next     First open task in P1→P4 order [--json]
 
 Flags:
-  --backlog <path>   Backlog file (default: pomona.md)
+  --backlog <path>   Backlog file (default: ROADMAP.md)
   --json             Machine-readable output
   --help             This help
 `);
@@ -318,7 +318,7 @@ async function main() {
   }
 
   const backlog =
-    typeof flags.backlog === "string" ? flags.backlog : "pomona.md";
+    typeof flags.backlog === "string" ? flags.backlog : "ROADMAP.md";
   const asJson = flags.json === true;
 
   switch (cmd) {

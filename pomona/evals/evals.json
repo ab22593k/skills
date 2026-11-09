@@ -3,11 +3,11 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "I want to start improving code quality in this project. Please run a Pomona scan to find code quality issues — look at our code for linting rule violations, stale TODO/FIXME comments, dead code (unused imports, commented-out blocks), and test coverage gaps. Create a prioritized backlog file (pomona.md) at the project root with the findings categorized P1-P4 using the benefit x ease-of-review matrix. Don't make any code changes yet — just produce the backlog so I can review what you found and decide what to tackle first.",
-      "expected_output": "A pomona.md file with prioritized code quality tasks",
+      "prompt": "I want to start improving code quality in this project. Please run a Pomona scan to find code quality issues — look at our code for linting rule violations, stale TODO/FIXME comments, dead code (unused imports, commented-out blocks), and test coverage gaps. Create a prioritized backlog file (ROADMAP.md) at the project root with the findings categorized P1-P4 using the benefit x ease-of-review matrix. Don't make any code changes yet — just produce the backlog so I can review what you found and decide what to tackle first.",
+      "expected_output": "A ROADMAP.md file with prioritized code quality tasks",
       "files": [],
       "expectations": [
-        "The backlog file pomona.md was created at the project root",
+        "The backlog file ROADMAP.md was created at the project root",
         "Tasks are categorized into at least 2 priority levels (P1-P4)",
         "At least one task from the static analysis category (linting rule violations or type checking)",
         "At least one task from the TODO/dead code audit category",
@@ -31,11 +31,11 @@
     },
     {
       "id": 3,
-      "prompt": "I'd like to try the full Pomona continuous improvement cycle on this project. Set up the pomona.md, run the scanning workflow to fill it with prioritized tasks, then pick the highest-priority P1 task and implement the fix. Make the change small (~10 lines of diff as Pomona recommends). After making the change, write the commit message and PR description as specified by Pomona so I can see what would be submitted. Save the PR description to pomona-pr-description.md at the project root. Validate your changes with the project's linting commands if available.",
-      "expected_output": "A pomona.md with scanned tasks, a small code fix, and a pomona-pr-description.md with the PR description",
+      "prompt": "I'd like to try the full Pomona continuous improvement cycle on this project. Set up the ROADMAP.md, run the scanning workflow to fill it with prioritized tasks, then pick the highest-priority P1 task and implement the fix. Make the change small (~10 lines of diff as Pomona recommends). After making the change, write the commit message and PR description as specified by Pomona so I can see what would be submitted. Save the PR description to pomona-pr-description.md at the project root. Validate your changes with the project's linting commands if available.",
+      "expected_output": "A ROADMAP.md with scanned tasks, a small code fix, and a pomona-pr-description.md with the PR description",
       "files": [],
       "expectations": [
-        "A pomona.md file exists with scanned tasks in at least 2 priority levels",
+        "A ROADMAP.md file exists with scanned tasks in at least 2 priority levels",
         "A code change was made (diff is non-empty)",
         "The code change is small (roughly 10 lines of diff)",
         "A pomona-pr-description.md file was created with a PR title and description",
@@ -46,11 +46,11 @@
     },
     {
       "id": 4,
-      "prompt": "Use the bundled pomona backlog script (`bun run pomona/scripts/backlog.ts`) to manage pomona.md: initialize it, add a P1 task 'Fix failing test in checkout' for src/checkout.ts with source 'bun test', add a P2 quick win for formatting, then show status and list. Attempt to add the P1 task again (should be rejected as a duplicate). Then mark the P1 task done (which must delete it, not mark it - [x]) and show that next now returns the P2 task. Don't run a full scan.",
-      "expected_output": "pomona.md managed entirely via the backlog script: init/add/list/status/dedupe semantics verified, done deletes the entry, next respects P1→P4 order",
+      "prompt": "Use the bundled pomona backlog script (`bun run pomona/scripts/backlog.ts`) to manage ROADMAP.md: initialize it, add a P1 task 'Fix failing test in checkout' for src/checkout.ts with source 'bun test', add a P2 quick win for formatting, then show status and list. Attempt to add the P1 task again (should be rejected as a duplicate). Then mark the P1 task done (which must delete it, not mark it - [x]) and show that next now returns the P2 task. Don't run a full scan.",
+      "expected_output": "ROADMAP.md managed entirely via the backlog script: init/add/list/status/dedupe semantics verified, done deletes the entry, next respects P1→P4 order",
       "files": [],
       "expectations": [
-        "pomona.md was initialized with P1–P4 headings via `init`",
+        "ROADMAP.md was initialized with P1–P4 headings via `init`",
         "Two distinct tasks were added via `add` (one P1, one P2) with File/Source/Details fields",
         "Duplicate `add` of the P1 task was rejected as idempotent (no second copy)",
         "status/list output shows correct counts and P1 before P2",
