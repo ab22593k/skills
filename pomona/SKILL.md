@@ -1,9 +1,9 @@
 ---
 name: pomona
-description: "Continuous code-quality cycle: scan for lint/TODO/dead-code/test gaps, prioritize as P1-P4 in ROADMAP.md, fix the top task in a ~10-line PR. Use for automated maintenance, tech-debt cleanup, and small incremental fixes."
+description: "Continuous code-quality cycle: Automate verification, Enforce standards, and Maintain system health over time"
 ---
 
-# Pomona: Continuous Code Quality Improvement
+# **Pomona:** Continuous Code Quality Improvement
 
 Pomona system at Bloomberg implements a Kaizen-inspired cycle of automated discovery and incremental repair. It uses two coordinated workflows — **Scanning** and **Repair** — connected by a structured roadmap.
 
@@ -11,22 +11,18 @@ Pomona system at Bloomberg implements a Kaizen-inspired cycle of automated disco
 
 All tasks are categorized into four priority levels:
 
-| Benefit Level    | Easy to review      | Hard to review                       |
-| ---------------- | ------------------- | ------------------------------------ |
-| **High benefit** | **P1 — Do first**   | **P3 — Worth doing, plan the split** |
-| **Low benefit**  | **P2 — Quick wins** | **P4 — Parking lot (don't pick)**    |
+| Quadrant         | Easy to review      | Hard to review            |
+| ---------------- | ------------------- | ------------------------- |
+| **High benefit** | **P1 — Do first**   | **P3 — Worth doing**      |
+| **Low benefit**  | **P2 — Quick wins** | **P4 — Eliminate / Drop** |
 
-**High benefit** means: catches real bugs or prevents future bugs (mutable defaults, loop variable capture, missing exception chains); reduces maintenance burden (removing dead code, fixing misleading comments); or improves developer experience (better error messages, clearer code).
+**Do First (Crisis Management):** Critical production bugs, outages, immediate security vulnerabilities, or hard regulatory deadlines.
 
-Examples of what IS high benefit: security issues (unsafe temp directories, missing input validation), test gaps in core logic modules, dead code that could mislead maintainers, complex functions that are hard to reason about, commented-out code that has accumulated.
+**Worth doing (Strategic Capability):** Software architecture, refactoring, automated testing, edge-cases, technical debt reduction, system decoupling, and career growth.
 
-Examples of what IS high benefit for P1 specifically (the items to do first): fixing failing tests, adding a project-level lint configuration (ruff.toml, coverage config) so residuals become enforceable, fixing known test gaps in critical extraction backends. These unblock all downstream work.
+**Quick wins (Reactive Noise):** Constant interruptions, minor operational chatter, or low-impact feature requests demanding immediate attention.
 
-Examples of what IS NOT high benefit: missing language specifiers on fenced code blocks (cosmetic, no semantic impact), missing label references in markdown that are internal references (often intentional), empty keys in auto-generated lock files, heading hierarchy skips in documentation, micro-simplifications like SIM103 (needless `if...return True/else return False`). These are purely mechanical and should be P2/P4.
-
-**Easy to review** means: fully automated (auto-fix, formatting); mechanical and repetitive (reviewer can scan quickly); small in scope (single file or single rule); and does not introduce behavioural changes (pure refactoring).
-
-**"Out of scope" convention:** If a scan surfaces findings in auto-generated files (lockfiles, build artifacts) or files the user has explicitly excluded, list them briefly in a dedicated "Out of scope / generated artifacts" section rather than assigning them a priority. This prevents the same noise from being re-surfaced on every scan.
+**Eliminate / Drop (Waste & Vanity):** Low-value distractors, speculative future-proofing (YAGNI), or vanity metrics.
 
 ## Roadmap Format
 
@@ -45,7 +41,7 @@ Each entry follows this format:
     - [ ] Sub-task 1
 ```
 
-## Roadmap Script (Bun)
+## Roadmap Bun Script
 
 A zero-dependency Bun script bundled with this skill manages the roadmap lifecycle deterministically. Scanning stays with agents; mutations go through this script for predictable dedupe, priority, and delete-on-done semantics.
 
@@ -62,7 +58,7 @@ bun run pomona/scripts/roadmap.ts done --id 3             # delete completed (au
 
 Notes:
 
-- `--roadmap <path>` overrides the default `ROADMAP.md` (repo root).
+- `--roadmap <path>` overrides the default `./ROADMAP.md`.
 - `--json` on `list`/`status`/`next` yields machine-readable output for agents.
 - `add` is idempotent: a duplicate open entry (same normalized title + file) is rejected, not doubled.
 - `done`/`remove` **delete** the entry, never mark `- [x]` in-file.
@@ -80,57 +76,28 @@ Do **not** perform a fresh scan when P1/P2 still contain open tasks; work throug
 
 ### Step 2: Scanning — Discover Code Quality Tasks
 
-**Canonical Pomona is language-agnostic** The framework applies to any language/stack. The paper's scanning + aggregation is only the 2-step concat+dedup → Table 1 priority described below.
+**Canonical language-agnostic pomona** The framework applies to any language/stack. Launch multiple sub-agents IN PARALLEL, each exploring a different discovery areas:
 
-> **Bloomberg sample — Suggested extensions "our specific implementation" (not canonical Pomona):** The three sub-agents below are _one_ instantiation. Demoted from canonical — presented as suggested extensions. Adapt, replace, or omit per your language/stack.
+**Sub-agent 1 — Static analysis expansion:**
 
-Launch multiple sub-agents IN PARALLEL, each exploring a different discovery area:
+- **Enforce Automated Formatting and Style:** Integrate pre-commit hooks to automate code formatting (`dart format`, `gofmt`, `clang-format`) and verify file headers, license notices, and copyright years.
+- **Run Linter and Static Analysis Pass:** Execute static analyzers with fatal warnings (e.g., `dart analyze --fatal-infos`, `clang-tidy`, `pylint`) to catch type errors, violations of rules that have auto-fixes available (e.g., Collapse all auto-fixable style violations into one roadmap ticket per tool), unsafe assignments, and language-specific pitfalls.
+- **Audit Allowlist and Dependency Injections:** Review project dependency manifests and allowlists to prevent unauthorized third-party package additions or security vulnerabilities
+- **Scan for Leftover TODO Markers and Commented-Out Code:** Run static checks to flag unresolved `TODO` comments or blocks of commented-out code.
+- **Verify System Architectural Layering:** Scan dependencies to prevent unintended cross-layer coupling and architectural boundary violations
 
-**Sub-agent 1 — Static analysis expansion:** _(Language-agnostic pattern — ruff strings below are the Python worked example only. Substitute the stack equivalent: TS/JS → `eslint`/`Biome`, Rust → `cargo clippy`/`rustfmt`, Go → `golangci-lint`/`staticcheck`, etc. Do not apply ruff rule IDs or commands to non-Python stacks.)_
+**Sub-agent 2 — Test coverage gaps and code structure:**
 
-- Identify linting rules that could be enabled or tightened for this project. Look at the project's language and existing config files (e.g., `.ruff.toml`, `.eslintrc`, `.cargo.toml`, `go.mod`).
-- Find violations of rules that have auto-fixes available. These are P1/P2 because they're high-benefit (catch bugs) and easy to review (automated).
-- **When reporting Static analysis residuals, report under both the currently enabled rule set and the broader suggested rule set.** "0 errors under default rules but 100+ under SIM/E501/PTH" is honest (Python/ruff worked example; equivalents: `eslint` default vs strict, `cargo clippy` default vs pedantic/nursery, `golangci-lint` default vs strict); "0 errors" alone is misleading when the user should enable more rules.
-- **Collapse all auto-fixable style violations into one roadmap ticket per tool** (e.g., "Apply all ruff auto-fixes" instead of listing each `COM812`, `D209`, `I001` separately — Python/ruff worked example; equivalents: `eslint --fix`, `cargo clippy --fix`, `gofmt`/`golangci-lint --fix`). The reviewer can batch-approve them as a single mechanical change.
-- **Triage markdown label references**: when static analysis reports `markdown/no-missing-label-refs`, quickly distinguish real broken links from intentional template placeholders (tags like `{install odoo}`, `{setup dev environment}`). Only roadmap the real broken links.
-- Look for type checking strictness that can be increased.
-- **Flag the absence of tool configuration files** (missing `.ruff.toml`, `go.mod`, `tsconfig.json`) as the single highest-leverage process finding — once a project has an agreed lint baseline, everything else becomes easier to implement and enforce.
-
-**Sub-agent 2 — TODO/dead code audit:**
-
-Scan ALL languages present in the repository, not just the primary language. For each language (Python, TypeScript, Rust, Go, Markdown, shell, config files), apply the appropriate search tools. _(Suggested extension — paper is language-agnostic; this breadth is Bloomberg's choice.)_
-
-- Search the codebase for `TODO|FIXME|HACK|XXX` comments and classify each:
-  - Self-documenting removals (the code is already done) → P1
-  - Clear fixes with obvious solutions → P1/P2
-  - Fixes requiring further domain investigation → P3
-  - Aspirational comments → P4
-- Search for comments that contradict the surrounding code.
-- Identify dead code: unused imports, commented-out code blocks (>3 consecutive commented lines), unreachable code after early returns, unused variables and functions.
-- For unused variable/function detection, use a **semantic tool** (e.g., `ruff check --select F841` for Python worked example; equivalents: `eslint --no-unused-vars`/`tsc --noUnusedLocals` for TS, `cargo clippy -W unused`/`cargo dead_code` analysis for Rust, `staticcheck`/`go vet` for Go, `vulture` for deeper Python analysis) in addition to grep-based heuristics. String searches alone miss unused functions, dead conditional branches, and code behind `if TYPE_CHECKING` or `if False:` guards (Python example).
-- For each category, enumerate which languages/files were examined and what tool/command was used (e.g., `ruff check --select F401` for Python worked example; equivalents: `eslint`, `cargo clippy`, `golangci-lint`, `grep -rn "TODO"`). Include the exact command and its output so findings are reproducible.
-- If a finding count is zero, confirm it by showing the command and its empty output — don't just assert "0 found."
-- **Include the exact git revision or tree hash** that was scanned so the result is anchored to a specific point in the project's history.
-- **Qualify "clean" results** with the methodology used: "No unused imports found via `ruff check --select F401`" is precise (Python/ruff worked example; equivalents: `eslint`, `cargo clippy`, `staticcheck`). "No unused imports found" is over-confident — it implies a level of semantic analysis the tool doesn't perform.
-- **State what was NOT checked** explicitly — e.g., "Unused functions/methods not assessed (ruff F841 only covers local variables, not function definitions — Python/ruff worked example; state equivalent scope for `eslint`/`clippy`/`staticcheck`)." This prevents readers from over-interpreting a narrow negative result.
-
-**Sub-agent 3 — Test coverage gaps and code structure:**
-
-- Compare source modules with test modules to find untested modules.
-- Prioritize pure-logic modules without heavy data dependencies (easiest to test) and modules with complex branching logic (highest value).
-- Check compliance with the repository's coding standards (agent config files, project conventions).
-- Find functions longer than 50 lines that could be decomposed.
-- **For each long function, propose a concrete extraction boundary** (e.g., "Pull chapter-heading detection into a pure function returning an enum" rather than just "decompose main()"). Specific proposals are reviewable; general ones are not.
-- **Report function-level coverage**, not just module presence. "All modules have test files" is not the same as "extraction backends are tested." Count specifically which functions lack tests (e.g., "extract_with_pymupdf: untested, extract_with_ebooklib: untested, \_handle_pdf_extraction: untested, main(): untested").
+- **Audit Test Pyramid Alignment:** Verify that the test suite maintains the recommended ratio: **\~80% small unit tests**, **\~15% medium integration tests**, and **\~5% large system/E2E tests**.
+- **Enforce the Humble Object Pattern on UI/Framework Boundaries:** Decouple business logic from hard-to-test UI, hardware, or third-party framework boundaries, keeping boundary code thin and anemic.
+- **Verify Test Confirmability & DAMP Principles:** Ensure tests use **Descriptive And Meaningful Phrases (DAMP)**, avoid brittle over-mocking, and test resulting state rather than internal method call order.
 
 > **I1–I9 demotion:** All detailed heuristics above (dual-rule reporting, collapse same-rule, markdown triage, missing-config flag, command enumeration + git-hash anchoring, clean-result qualification, NOT-checked disclosure, concrete extraction boundary, function-level coverage counting) are **Suggested extensions**. Keep as optional samples; do not present as canonical aggregation.
 
 **Aggregate results (2 steps only):**
 
 1. Concatenate all findings and remove duplicates — dedupe against each other and against current open `- [ ]` entries in `ROADMAP.md`. Since completed tasks are deleted (audit = `git log`), do not dedupe against `- [x]` history; a regressed issue should legitimately be re-added on next scan.
-2. Assign each unique finding a priority (P1–P4) using the priority matrix (Table 1) above. Err on the side of lower priority (P2/P4) when the benefit is marginal.
-
-> **Skill extensions:** Steps 3–7 below are skill additions. Paper stops at the 2 steps above; do not attribute these to §2.2. 3. Convert each finding to the roadmap format (Fig. 2) and append to the appropriate priority section of `ROADMAP.md` (open tasks only). 4. If a scan uncovered items outside the requested scope (e.g., package hygiene during a TODO audit), place them in a clearly labeled "Additional observations" section — never mix them into the priority roadmap. 5. Collapse repeated items of the same rule/tool into a single ticket — both within and across priority levels (e.g., 22 fenced-code-language violations → one P2 ticket; if spanning priorities, use the lower). 6. For each P1 and P2 item, optionally include a measurable acceptance criterion (e.g., "Reduce ESLint errors from 117 to <50") — useful but not paper-required. 7. Optionally include a "Measurement" block at the top of the roadmap with baseline numbers (lint errors by tool, files/LOC scanned, coverage %, functions >50 lines, untested modules) — skill polish, not paper.
+2. Assign each unique finding a priority (P1–P4) using the priority matrix (Table 1) above. Error on the side of lower priority (P2/P4) when the benefit is marginal.
 
 ### Step 3: Repair — Pick and Fix a Task
 
@@ -143,11 +110,8 @@ Select the first task from the highest non-empty priority category (P1 → P2 �
 **Implement the fix:**
 
 1. Make the code change targeting **~10 lines of diff** ("targeting ~10 lines of diff" / "aim for roughly 10 lines") as an aspiration, not a hard cap.
-2. **median 16, mean 29.4, range 5–139** (max 139 merged in ~1h). If a coherent fix exceeds ~10, apply the paper's split strategy — e.g., _"enable rules / add tests for one directory at a time"_ — or slice the task and add follow-up roadmap entries, rather than enforcing a hard "≤10, stop at 11+" budget. Do not apply invented counting rules (e.g., "whitespace/renames free").
-3. After making changes, validate with the project's test and linting commands.
-4. If validation fails, fix the issues and re-validate.
-5. **Report after-state metrics** in the PR description: how many errors remain after the fix (e.g., "ruff — 48 → 42 errors"). This turns progress from narrative to quantitative. Include **roadmap-excluded metrics** separately (paper §2.3: overall repo metrics not added to the P1–P4 roadmap, reported only in the PR/description) — do not inject them into `ROADMAP.md` priorities.
-6. If the fix addresses a security issue, include the **CWE reference** and explain why the old code was unsafe — not just what changed, but why the old pattern is dangerous.
+2. **median 16, mean 29.4, range 5–139** (max 139 merged in ~1h). If a coherent fix exceeds ~10, apply the split strategy — e.g., _"enable rules / add tests for one directory at a time"_ — or slice the task and add follow-up roadmap entries, rather than enforcing a hard "≤10, stop at 11+" budget. Do not apply invented counting rules (e.g., "whitespace/renames free").
+3. After making changes, return into **Step 2: Scanning — Discover Code Quality Tasks**.
 
 **Roadmap update:**
 
@@ -159,12 +123,4 @@ Select the first task from the highest non-empty priority category (P1 → P2 �
 
 Return to Step 1 to check the roadmap again. This creates the continuous improvement cycle.
 
-## Design Rationale
-
-**Why small changes?** Bloomberg's deployment achieved 88% acceptance (15/17 PRs merged) with a median time-to-close under 2 hours. 90% of surveyed engineers cited small diffs as the most appealing feature. Small changes reduce reviewer skepticism and cognitive load.
-
-**Why the roadmap?** A visible, prioritized roadmap in the repository gives engineers control and transparency. They can see what's being worked on, add their own tasks, and adjust priorities. The roadmap format also makes the system's behavior predictable and auditable.
-
-**Why human-in-the-loop?** Engineers (especially senior ones with 10+ years experience) remain wary of fully automated agentic judgment. The PR format with mandatory human review builds trust while still delivering value. The paper's survey found 8/10 engineers wanted to try Pomona, but many wanted control over prioritization.
-
-**Why parallel scanning sub-agents?** Different kinds of issues require different expertise. Running sub-agents in parallel is faster and each can focus on its domain. The aggregation step deduplicates and prioritizes, so the result is coherent.
+**Feedback Loops & Kaizen (Deming Cycle):** Return to **step 1** and establish continuous feedback loops that feed production incidents, user metrics, and post-incident reviews back into `ROADMAP.md`.
