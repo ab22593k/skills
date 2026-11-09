@@ -388,7 +388,7 @@ async function main() {
       } else if (tasks.length === 0) {
         console.log("no open tasks");
       } else {
-        // --id in `list` output is the global open id (stable for done/remove). Re-number after filter sort.
+        // Ids are the global open id (stable for done/remove); sorting/filtering does not renumber.
         for (const t of tasks) {
           console.log(
             `#${t.id} [${t.priority ?? "—"}] ${t.title}${t.file ? ` (${t.file})` : ""}`,

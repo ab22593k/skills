@@ -218,4 +218,62 @@ describe("sectionEnd multi-blank trim", () => {
     expect(text).not.toContain("- [x]");
     expect(run(dir, "next").stdout).toContain("Format checkout.ts");
   });
+
+  test("list keeps global ids after filter; done --id targets displayed task", () => {
+    const dir = freshDir();
+    expect(run(dir, "init").exit).toBe(0);
+    expect(
+      run(
+        dir,
+        "add",
+        "--priority",
+        "P1",
+        "--title",
+        "A",
+        "--file",
+        "a.ts",
+        "--source",
+        "r",
+      ).exit,
+    ).toBe(0);
+    expect(
+      run(
+        dir,
+        "add",
+        "--priority",
+        "P2",
+        "--title",
+        "B",
+        "--file",
+        "b.ts",
+        "--source",
+        "r",
+      ).exit,
+    ).toBe(0);
+    expect(
+      run(
+        dir,
+        "add",
+        "--priority",
+        "P2",
+        "--title",
+        "C",
+        "--file",
+        "c.ts",
+        "--source",
+        "r",
+      ).exit,
+    ).toBe(0);
+    // Filtered list must NOT renumber: P2 shows #2/#3, not #1/#2.
+    const filtered = run(dir, "list", "--priority", "P2").stdout;
+    expect(filtered).toContain("#2 [P2] B");
+    expect(filtered).toContain("#3 [P2] C");
+    expect(filtered).not.toContain("#1 [P2]");
+    // Global id 3 still targets C.
+    expect(run(dir, "done", "--id", "3").stdout).toContain("deleted (done)");
+    const after = run(dir, "list").stdout;
+    expect(after).toContain("A");
+    expect(after).toContain("B");
+    expect(after).not.toContain("C");
+  });
 });
