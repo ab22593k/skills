@@ -108,7 +108,7 @@ Do **not** perform a fresh scan when P1/P2 still contain open tasks; work throug
 
 ### Step 3: Repair — Pick and Fix a Task
 
-Select the first task from the highest non-empty priority category (P1 → P2 → P3 → P4). If a task has sub-tasks, pick the first sub-task.
+Select a scope-related batch tasks from the highest non-empty priority category (P1 → P2 → P3 → P4). If a task has sub-tasks, pick all sub-tasks.
 
 **Deduplication:** Before starting, check **open PRs** for an existing PR covering the same file/rule/task — deduplicates against open PRs to avoid duplicate work. If a matching open PR exists, skip and pick the next task.
 
