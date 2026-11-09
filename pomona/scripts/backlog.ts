@@ -225,17 +225,12 @@ function sectionEnd(lines: string[], priority: Priority): number {
     if (inSection) end = i + 1;
   }
   // Trim trailing blank lines of the section for insertion point.
-  while (
-    end > 0 &&
-    lines[end - 1]?.startsWith("## ") === false &&
-    lines[end - 1]?.trim() === ""
-  ) {
-    // Keep one blank line before next heading; return position before blanks.
-    if (end + 1 < lines.length && lines[end]?.startsWith("## ")) break;
+  // Callers (add/move) re-add a single blank separator, so remove all
+  // trailing blanks here to collapse multi-blank runs to that separator.
+  // Heading lines are non-blank, so the loop never consumes them.
+  while (end > 0 && lines[end - 1]?.trim() === "") {
+    lines.splice(end - 1, 1);
     end--;
-    if (end === 0) break;
-    // Stop at last non-blank content inside section.
-    break;
   }
   return end;
 }
@@ -523,11 +518,12 @@ async function main() {
       lines.splice(target.start, end - target.start);
       // Predict inserted position (before the removed range, so offset shrinks if moving forward).
       const insertAt = sectionEnd(lines, to);
-      const needsBlank =
-        insertAt > 0 &&
-        lines[insertAt - 1]?.trim() !== "" &&
-        !lines[insertAt - 1]?.startsWith("##");
-      lines.splice(insertAt, 0, ...(needsBlank ? ["", ...block] : block));
+      const needsBlank = insertAt > 0 && lines[insertAt - 1]?.trim() !== "";
+      const block2 = needsBlank ? ["", ...block] : block;
+      lines.splice(insertAt, 0, ...block2);
+      // Keep one blank line between the moved entry and a following heading.
+      const afterMove = insertAt + block2.length;
+      if (lines[afterMove]?.startsWith("## ")) lines.splice(afterMove, 0, "");
       await writeLines(backlog, lines);
       console.log(`moved #${target.id} → ${to}: ${target.title}`);
       return;
