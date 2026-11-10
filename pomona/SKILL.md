@@ -93,12 +93,6 @@ Do **not** perform a fresh scan when P1/P2 still contain open tasks; work throug
 - **Enforce the Humble Object Pattern on UI/Framework Boundaries:** Decouple business logic from hard-to-test UI, hardware, or third-party framework boundaries, keeping boundary code thin and anemic.
 - **Verify Test Confirmability & DAMP Principles:** Ensure tests use **Descriptive And Meaningful Phrases (DAMP)**, avoid brittle over-mocking, and test resulting state rather than internal method call order.
 
-**Sub-agent 3 — Design and Frontend Quality:**
-
-- **Enforce Visibility of System Status:** Audit all interactive workflows to ensure immediate visual feedback (loading spinners, progress bars, or status indicators) is rendered for every asynchronous operation.
-- **Prioritize Recognition Over Recall & Minimalist Design:** Group dense data into digestible visual chunks, removing clutter, jargon, and redundant fields that force users to write down or memorize information between steps
-- **Refine DESIGN.md Prescriptive & enforces premium standards:** Use using `skill:taste-design` to improve a design system from a concept.
-
 > **I1–I9 demotion:** All detailed heuristics above (dual-rule reporting, collapse same-rule, markdown triage, missing-config flag, command enumeration + git-hash anchoring, clean-result qualification, NOT-checked disclosure, concrete extraction boundary, function-level coverage counting) are **Suggested extensions**. Keep as optional samples; do not present as canonical aggregation.
 
 **Aggregate results (2 steps only):**
