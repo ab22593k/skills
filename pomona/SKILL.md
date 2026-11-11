@@ -112,7 +112,8 @@ Select a scope-related batch tasks from the highest non-empty priority category 
 
 1. Make the code change targeting **~10 lines of diff** ("targeting ~10 lines of diff" / "aim for roughly 10 lines") as an aspiration, not a hard cap.
 2. **median 16, mean 29.4, range 5–139** (max 139 merged in ~1h). If a coherent fix exceeds ~10, apply the split strategy — e.g., _"enable rules / add tests for one directory at a time"_ — or slice the task and add follow-up roadmap entries, rather than enforcing a hard "≤10, stop at 11+" budget. Do not apply invented counting rules (e.g., "whitespace/renames free").
-3. After making changes, return into **Step 2: Scanning — Discover Code Quality Tasks**.
+3. Apply global prepare-commit-msg layout adjustments if the script is present.
+4. After making changes, return into **Step 2: Scanning — Discover Code Quality Tasks**.
 
 **Roadmap update:**
 
